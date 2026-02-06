@@ -1,0 +1,17 @@
+package it.unicam.hackhub.hackhub.Application.Service;
+
+import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IIscrizioneHackathonService;
+import it.unicam.hackhub.hackhub.core.models.Hackathon;
+
+public class HackathonService implements IIscrizioneHackathonService {
+
+    @Override
+    public Hackathon iscriviTeamHackathon() {
+        return null;
+    }
+
+    @Override
+    public Hackathon disiscriviTeamHackathon() {
+        return null;
+    }
+}
