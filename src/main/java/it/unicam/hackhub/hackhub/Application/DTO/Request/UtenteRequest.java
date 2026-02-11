@@ -13,7 +13,6 @@ public class UtenteRequest {
     private String email;
     private String password;
     private String telefono;
-    private Ruolo ruolo;
     private String iban;
     private LocalDate dataNascita;
 
@@ -72,14 +71,6 @@ public class UtenteRequest {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public Ruolo getRuolo() {
-        return ruolo;
-    }
-
-    public void setRuolo(Ruolo ruolo) {
-        this.ruolo = ruolo;
     }
 
     public String getIban() {

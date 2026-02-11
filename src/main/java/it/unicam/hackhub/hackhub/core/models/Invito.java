@@ -25,9 +25,9 @@ public class Invito {
     @JoinColumn(name = "destinatario_id", nullable = false)
     private Utente destinatario;
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "team_id", nullable = false)
-    private Team team;*/
+    private Team team;
 
     @Enumerated(EnumType.STRING)
     @Column

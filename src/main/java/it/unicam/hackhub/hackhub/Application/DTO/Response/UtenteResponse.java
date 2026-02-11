@@ -3,23 +3,22 @@ package it.unicam.hackhub.hackhub.Application.DTO.Response;
 import it.unicam.hackhub.hackhub.core.enums.Ruolo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Setter
 @Getter
 @AllArgsConstructor
 public class UtenteResponse {
-    private final Long id;
-    private final String username;
-    private final String nome;
-    private final String cognome;
-    private final char sesso;
-    private final String email;
-    private final String telefono;
-    private final Ruolo ruolo;
-    private final String iban;
-    private final LocalDate dataNascita;
-    private final List<InvitoResponse> invitiInviati;
-    private final List<InvitoResponse> invitiRicevuti;
+    private String username;
+    private String nome;
+    private String cognome;
+    private char sesso;
+    private String email;
+    private String telefono;
+    private Ruolo ruolo;
+    private String iban;
+    private LocalDate dataNascita;
 }
