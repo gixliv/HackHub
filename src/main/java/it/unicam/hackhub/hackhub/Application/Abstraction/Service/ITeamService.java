@@ -12,5 +12,6 @@ public interface ITeamService {
     Team addMembro();
     List<Team> getMembriTeam();
     Team getMembroById();
+    Team getCreatoreTeam();
 
 }

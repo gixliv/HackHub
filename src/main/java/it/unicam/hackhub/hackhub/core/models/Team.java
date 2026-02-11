@@ -24,10 +24,6 @@ public class Team {
     @Column(unique = true)
     private String descrizione;
 
-    @OneToOne
-    @JoinColumn(name = "creatore_id")
-    private Utente creatore;
-
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MembroTeam> membri;
 

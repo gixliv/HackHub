@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "membri_team")
 public class MembroTeam {
-    //TODO class MembroTeam
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -41,4 +41,9 @@ public class TeamService implements ITeamService {
     public Team getMembroById() {
         return null;
     }
+
+    @Override
+    public Team getCreatoreTeam() {
+        return null;
+    }
 }
