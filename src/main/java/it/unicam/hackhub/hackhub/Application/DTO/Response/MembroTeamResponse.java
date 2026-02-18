@@ -2,12 +2,13 @@ package it.unicam.hackhub.hackhub.Application.DTO.Response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 public class MembroTeamResponse {
-    private UtenteResponse utenteId;
-    private TeamResponse teamId;
+    private Long utenteId;
+    private Long teamId;
 }
