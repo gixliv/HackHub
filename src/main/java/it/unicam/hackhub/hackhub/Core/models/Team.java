@@ -1,4 +1,4 @@
-package it.unicam.hackhub.hackhub.core.models;
+package it.unicam.hackhub.hackhub.Core.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;

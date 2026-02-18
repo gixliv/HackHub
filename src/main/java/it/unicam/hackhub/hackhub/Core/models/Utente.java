@@ -1,6 +1,6 @@
-package it.unicam.hackhub.hackhub.core.models;
+package it.unicam.hackhub.hackhub.Core.models;
 
-import it.unicam.hackhub.hackhub.core.enums.Ruolo;
+import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
