@@ -1,6 +1,6 @@
 package it.unicam.hackhub.hackhub.Application.Abstraction.Service;
 
-import it.unicam.hackhub.hackhub.core.models.Invito;
+import it.unicam.hackhub.hackhub.Core.models.Invito;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package it.unicam.hackhub.hackhub.Application.DTO.Request;
 
-import it.unicam.hackhub.hackhub.core.enums.Ruolo;
+import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
 
 import java.time.LocalDate;
 

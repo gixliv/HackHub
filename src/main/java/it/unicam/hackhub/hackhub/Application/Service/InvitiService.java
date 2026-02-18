@@ -3,8 +3,8 @@ package it.unicam.hackhub.hackhub.Application.Service;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryUtenti;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IInvioInvitiService;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IRicezioneInvitiService;
-import it.unicam.hackhub.hackhub.core.models.Invito;
-import it.unicam.hackhub.hackhub.core.models.Utente;
+import it.unicam.hackhub.hackhub.Core.models.Invito;
+import it.unicam.hackhub.hackhub.Core.models.Utente;
 
 import java.util.List;
 

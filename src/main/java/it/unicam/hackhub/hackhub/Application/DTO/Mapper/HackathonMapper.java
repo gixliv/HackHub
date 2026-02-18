@@ -2,7 +2,7 @@ package it.unicam.hackhub.hackhub.Application.DTO.Mapper;
 
 import it.unicam.hackhub.hackhub.Application.DTO.Request.HackathonRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.HackathonResponse;
-import it.unicam.hackhub.hackhub.core.models.Hackathon;
+import it.unicam.hackhub.hackhub.Core.models.Hackathon;
 import org.springframework.stereotype.Component;
 
 @Component

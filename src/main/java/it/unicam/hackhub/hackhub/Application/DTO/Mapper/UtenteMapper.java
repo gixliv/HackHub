@@ -2,7 +2,7 @@ package it.unicam.hackhub.hackhub.Application.DTO.Mapper;
 
 import it.unicam.hackhub.hackhub.Application.DTO.Request.UtenteRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.UtenteResponse;
-import it.unicam.hackhub.hackhub.core.models.Utente;
+import it.unicam.hackhub.hackhub.Core.models.Utente;
 
 public class UtenteMapper {
 

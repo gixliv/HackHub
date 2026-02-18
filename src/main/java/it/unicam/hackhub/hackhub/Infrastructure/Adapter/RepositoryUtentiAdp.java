@@ -3,7 +3,7 @@ package it.unicam.hackhub.hackhub.Infrastructure.Adapter;
 
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryUtenti;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryUtentiJpa;
-import it.unicam.hackhub.hackhub.core.models.Utente;
+import it.unicam.hackhub.hackhub.Core.models.Utente;
 
 import java.util.Optional;
 

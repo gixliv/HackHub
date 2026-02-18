@@ -2,8 +2,8 @@ package it.unicam.hackhub.hackhub.Application.DTO.Mapper;
 
 import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.TeamResponse;
-import it.unicam.hackhub.hackhub.core.models.MembroTeam;
-import it.unicam.hackhub.hackhub.core.models.Team;
+import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
+import it.unicam.hackhub.hackhub.Core.models.Team;
 
 import java.util.ArrayList;
 import java.util.List;

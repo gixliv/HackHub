@@ -1,6 +1,6 @@
 package it.unicam.hackhub.hackhub.Application.Abstraction.Service;
 
-import it.unicam.hackhub.hackhub.core.models.Team;
+import it.unicam.hackhub.hackhub.Core.models.Team;
 
 import java.util.List;
 

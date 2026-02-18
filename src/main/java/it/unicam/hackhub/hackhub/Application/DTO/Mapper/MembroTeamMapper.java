@@ -2,9 +2,9 @@ package it.unicam.hackhub.hackhub.Application.DTO.Mapper;
 
 import it.unicam.hackhub.hackhub.Application.DTO.Request.MembroTeamRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.MembroTeamResponse;
-import it.unicam.hackhub.hackhub.core.models.MembroTeam;
-import it.unicam.hackhub.hackhub.core.models.Team;
-import it.unicam.hackhub.hackhub.core.models.Utente;
+import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
+import it.unicam.hackhub.hackhub.Core.models.Team;
+import it.unicam.hackhub.hackhub.Core.models.Utente;
 
 public class MembroTeamMapper {
 

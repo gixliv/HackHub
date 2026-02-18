@@ -1,6 +1,6 @@
 package it.unicam.hackhub.hackhub.Application.DTO.Response;
 
-import it.unicam.hackhub.hackhub.core.enums.StatoInvito;
+import it.unicam.hackhub.hackhub.Core.enums.StatoInvito;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

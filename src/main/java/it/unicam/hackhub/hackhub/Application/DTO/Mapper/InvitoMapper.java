@@ -2,9 +2,9 @@ package it.unicam.hackhub.hackhub.Application.DTO.Mapper;
 
 import it.unicam.hackhub.hackhub.Application.DTO.Request.InvitoRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.InvitoResponse;
-import it.unicam.hackhub.hackhub.core.models.Invito;
-import it.unicam.hackhub.hackhub.core.models.Team;
-import it.unicam.hackhub.hackhub.core.models.Utente;
+import it.unicam.hackhub.hackhub.Core.models.Invito;
+import it.unicam.hackhub.hackhub.Core.models.Team;
+import it.unicam.hackhub.hackhub.Core.models.Utente;
 
 public class InvitoMapper {
     public Invito toEntity(InvitoRequest invitoRequest) {
