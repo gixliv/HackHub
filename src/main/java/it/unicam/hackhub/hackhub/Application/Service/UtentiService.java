@@ -5,6 +5,8 @@ import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IUtentiService;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UtentiService implements IUtentiService {
 
@@ -12,7 +14,18 @@ public class UtentiService implements IUtentiService {
 
     @Override
     public Utente getUtenteById(Long id) {
-        return repositoryUtenti.getUtenteById(id)
+        return repositoryUtenti.findById(id)
                 .orElse(null);
+    }
+
+    @Override
+    public Utente getUtenteByUsername(String username) {
+        return repositoryUtenti.findByUsername(username)
+                .orElse(null);
+    }
+
+    @Override
+    public List<Utente> getUtentiByRuolo(String ruolo) {
+        return repositoryUtenti.findAllByRuolo(ruolo);
     }
 }

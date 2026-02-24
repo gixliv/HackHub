@@ -17,7 +17,7 @@ public class InvitiService implements IInvitiService {
     @Override
     public Invito invitaUtente(Utente utente) {
         //TODO Qui va il DTO
-        repositoryUtenti.getUtenteById(utente.getId());
+        repositoryUtenti.findById(utente.getId());
         return null;
     }
 

@@ -5,6 +5,7 @@ import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryU
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryUtentiJpa;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 
+import java.util.List;
 import java.util.Optional;
 
 public class RepositoryUtentiAdp implements IRepositoryUtenti {
@@ -16,9 +17,18 @@ public class RepositoryUtentiAdp implements IRepositoryUtenti {
 
 
     @Override
-    public Optional<Utente> getUtenteById(Long id) {
+    public Optional<Utente> findById(Long id) {
         return repositoryUtentiJpa.findById(id);
 
     }
 
+    @Override
+    public Optional<Utente> findByUsername(String username) {
+        return repositoryUtentiJpa.findByUsername(username);
+    }
+
+    @Override
+    public List<Utente> findAllByRuolo(String ruolo) {
+        return repositoryUtentiJpa.findAllByRuolo(ruolo);
+    }
 }
