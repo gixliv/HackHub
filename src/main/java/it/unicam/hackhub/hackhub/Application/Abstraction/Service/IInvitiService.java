@@ -5,7 +5,9 @@ import it.unicam.hackhub.hackhub.Core.models.Utente;
 
 import java.util.List;
 
-public interface IInvioInvitiService {
+public interface IInvitiService {
 
     Invito invitaUtente(Utente utente);
+    List<Invito> getAllInviti();
+    Invito accettaInvito();
 }
