@@ -21,5 +21,4 @@ public class MembroTeam {
     @JoinColumn(name = "team_id")
     private Team team;
 
-
 }

@@ -6,12 +6,11 @@ import java.util.List;
 
 public interface ITeamService {
     Team creaTeam();
-    Team disiscriviTeamHackathon();
-    Team iscriviTeamHackathon();
-    Team getMembroById();
-    Team addMembro();
+
     Team eliminaTeam();
+
     List<Team> getMembriTeam();
+
     Team getCreatoreTeam();
 
 }
