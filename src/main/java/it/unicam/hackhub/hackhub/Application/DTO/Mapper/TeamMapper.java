@@ -4,6 +4,7 @@ import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.TeamResponse;
 import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
 import it.unicam.hackhub.hackhub.Core.models.Team;
+import it.unicam.hackhub.hackhub.Core.models.Utente;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,9 @@ public class TeamMapper {
         team.setNumeroMassimoComponenti(teamRequest.getNumeroMassimoComponenti());
         team.setNome(teamRequest.getNome());
         team.setDescrizione(teamRequest.getDescrizione());
+        Utente creatore = new Utente();
+        creatore.setId(teamRequest.getCreatore());
+        team.setCreatore(creatore);
         return  team;
     }
 
@@ -31,6 +35,7 @@ public class TeamMapper {
             }
         }
         teamresponse.setMembriId(membri);
+        teamresponse.setCreatoreId(team.getCreatore().getId());
         return  teamresponse;
     }
 }

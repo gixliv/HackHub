@@ -1,11 +1,12 @@
 package it.unicam.hackhub.hackhub.Application.Abstraction.Service;
 
+import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 
 import java.util.List;
 
 public interface ITeamService {
-    Team creaTeam();
+    Team creaTeam(TeamRequest request);
     Team disiscriviTeamHackathon();
     Team iscriviTeamHackathon();
     Team getMembroById();

@@ -2,6 +2,7 @@ package it.unicam.hackhub.hackhub.Infrastructure.Adapter;
 
 
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryUtenti;
+import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryUtentiJpa;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 
@@ -28,7 +29,7 @@ public class RepositoryUtentiAdp implements IRepositoryUtenti {
     }
 
     @Override
-    public List<Utente> findAllByRuolo(String ruolo) {
+    public List<Utente> findAllByRuolo(Ruolo ruolo) {
         return repositoryUtentiJpa.findAllByRuolo(ruolo);
     }
 }

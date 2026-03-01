@@ -2,6 +2,7 @@ package it.unicam.hackhub.hackhub.Application.Service;
 
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryUtenti;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IUtentiService;
+import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class UtentiService implements IUtentiService {
     }
 
     @Override
-    public List<Utente> getUtentiByRuolo(String ruolo) {
+    public List<Utente> getUtentiByRuolo(Ruolo ruolo) {
         return repositoryUtenti.findAllByRuolo(ruolo);
     }
 }

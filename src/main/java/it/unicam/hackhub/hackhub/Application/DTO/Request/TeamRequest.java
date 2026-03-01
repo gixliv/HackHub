@@ -5,6 +5,11 @@ public class TeamRequest {
     private int numeroMassimoComponenti;
     private String nome;
     private String descrizione;
+    private Long creatore;
+
+    public Long getCreatore() { return creatore;}
+
+    public void setCreatore(Long creatore) { this.creatore = creatore;}
 
     public int getNumeroMassimoComponenti() {
         return numeroMassimoComponenti;
