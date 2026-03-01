@@ -5,6 +5,8 @@ import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryU
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.ITeamService;
 import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
 import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
+import it.unicam.hackhub.hackhub.Core.models.Hackathon;
+import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 
@@ -40,17 +42,44 @@ public class TeamService implements ITeamService {
     }
 
     @Override
-    public Team eliminaTeam() {
-        return null;
+    public boolean eliminaTeam(Long id) {
+        Team team = repositoryTeam.findById(id).orElseThrow(null);
+        repositoryTeam.eliminaTeam(team.getId());
+        return repositoryTeam.findById(team.getId()).isPresent();
     }
 
     @Override
-    public List<Team> getMembriTeam() {
-        return List.of();
+    public List<MembroTeam> getMembriTeam(Long id) {
+        Team team = repositoryTeam.findById(id).orElseThrow(null);
+        return team.getMembri();
     }
 
     @Override
-    public Team getCreatoreTeam() {
-        return null;
+    public Utente getCreatoreTeam(Long id) {
+        Team team = repositoryTeam.findById(id).orElseThrow(null);
+        return team.getCreatore();
+    }
+
+    @Override
+    public Team updateTeam(Long id, int numeroMassimoComponenti, String nome, String descrizione){
+        Team team = repositoryTeam.findById(id).orElseThrow(null);
+        if (nome != null && !nome.isBlank()) team.setNome(nome);
+        if (descrizione != null && !descrizione.isBlank()) team.setDescrizione(descrizione);
+        if (numeroMassimoComponenti > 0) team.setNumeroMassimoComponenti(numeroMassimoComponenti);
+        return repositoryTeam.updateTeam(team).orElseThrow(null);
+    }
+
+    @Override
+    public Team removeHackathon(Long id) {
+        Team team = repositoryTeam.findById(id).orElseThrow(null);
+        repositoryTeam.removeHackathon(team.getId());
+        return team;
+    }
+
+    @Override
+    public Team addHackathon(Long idTeam, Hackathon hackathon){
+        Team team = repositoryTeam.findById(idTeam).orElseThrow(null);
+        repositoryTeam.addHackathon(team.getId(), hackathon);
+        return team;
     }
 }

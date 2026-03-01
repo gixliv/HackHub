@@ -2,6 +2,7 @@ package it.unicam.hackhub.hackhub.Infrastructure.Adapter;
 
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryTeam;
 import it.unicam.hackhub.hackhub.Core.models.Hackathon;
+import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryHackathonJpa;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryTeamJpa;
@@ -35,7 +36,7 @@ public class RepositoryTeamAdp implements IRepositoryTeam {
         return Optional.of(team);
     }
     @Override
-    public Optional<Team> removeHackathonId(Long idTeam) {
+    public Optional<Team> removeHackathon(Long idTeam) {
         Team team = repositoryTeamJpa.findById(idTeam).orElse(null);
         assert team != null;
         team.setHackathon(null);
@@ -43,7 +44,7 @@ public class RepositoryTeamAdp implements IRepositoryTeam {
         return Optional.of(team);
     }
     @Override
-    public Optional<Team> addHackathonId(Long idTeam, Hackathon hackathon) {
+    public Optional<Team> addHackathon(Long idTeam, Hackathon hackathon) {
         Team team = repositoryTeamJpa.findById(idTeam).orElse(null);
         assert team != null;
         team.setHackathon(hackathon);

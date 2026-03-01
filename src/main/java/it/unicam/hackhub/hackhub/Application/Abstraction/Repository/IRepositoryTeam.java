@@ -1,6 +1,7 @@
 package it.unicam.hackhub.hackhub.Application.Abstraction.Repository;
 
 import it.unicam.hackhub.hackhub.Core.models.Hackathon;
+import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface IRepositoryTeam {
     Optional<Team> insertInto(Team team);
     Optional<Team> updateTeam(Team team);
     Optional<Team> eliminaTeam(Long id);
-    Optional<Team> removeHackathonId(Long idTeam);
-    Optional<Team> addHackathonId(Long idTeam, Hackathon hackathon);
+    Optional<Team> removeHackathon(Long idTeam);
+    Optional<Team> addHackathon(Long idTeam, Hackathon hackathon);
     List<Team> getAll();
 }
