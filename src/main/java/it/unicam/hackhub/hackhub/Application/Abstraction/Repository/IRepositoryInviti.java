@@ -13,5 +13,4 @@ public interface IRepositoryInviti {
     Optional<Invito> changeState(Long id, StatoInvito stato);
     Optional<Invito> updateInvito(Invito invito);
     Optional<Invito> removeInvito(Long id);
-    List<Invito> getAllInviti(Utente utente);
 }
