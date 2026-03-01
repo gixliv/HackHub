@@ -6,7 +6,7 @@ import it.unicam.hackhub.hackhub.Core.models.Utente;
 import java.util.List;
 import java.util.Optional;
 
-public interface IRepositoryUtenti{
+public interface IRepositoryUtenti {
 
     Optional<Utente> findById(Long id);
 
