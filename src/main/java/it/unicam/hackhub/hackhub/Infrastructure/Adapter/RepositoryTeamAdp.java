@@ -6,10 +6,12 @@ import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryHackathonJpa;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryTeamJpa;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class RepositoryTeamAdp implements IRepositoryTeam {
     private final RepositoryTeamJpa repositoryTeamJpa;
 

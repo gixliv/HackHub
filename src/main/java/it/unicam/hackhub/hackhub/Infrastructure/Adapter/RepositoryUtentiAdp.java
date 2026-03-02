@@ -5,10 +5,12 @@ import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryU
 import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryUtentiJpa;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class RepositoryUtentiAdp implements IRepositoryUtenti {
     private final RepositoryUtentiJpa repositoryUtentiJpa;
 

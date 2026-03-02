@@ -14,9 +14,11 @@ import it.unicam.hackhub.hackhub.Core.models.Invito;
 import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class InvitiService implements IInvitiService {
     private final IRepositoryUtenti repositoryUtenti;
     private final IRepositoryTeam repositoryTeam;

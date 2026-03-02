@@ -1,4 +1,76 @@
 package it.unicam.hackhub.hackhub.Presentation.Controllers;
 
+import it.unicam.hackhub.hackhub.Application.Abstraction.Service.ITeamService;
+import it.unicam.hackhub.hackhub.Application.DTO.Mapper.TeamMapper;
+import it.unicam.hackhub.hackhub.Application.DTO.Mapper.UtenteMapper;
+import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
+import it.unicam.hackhub.hackhub.Application.DTO.Response.TeamResponse;
+import it.unicam.hackhub.hackhub.Application.DTO.Response.UtenteResponse;
+import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
+import it.unicam.hackhub.hackhub.Core.models.Team;
+import it.unicam.hackhub.hackhub.Core.models.Utente;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("api/team")
 public class TeamController {
+    private final ITeamService teamService;
+
+    public TeamController(ITeamService teamService) {
+        this.teamService = teamService;
+    }
+
+    @PostMapping
+    @PreAuthorize("hasRole('UTENTE_GENERICO')")
+    public String creaTeam(@RequestBody TeamRequest teamRequest) {
+        if (teamRequest == null) {
+            throw new IllegalArgumentException();
+        }
+        teamService.creaTeam(teamRequest);
+        return "Team creato";
+    }
+
+    //da rivedere
+    @GetMapping("/membri/{teamId}")
+    public List<MembroTeam> getMembriTeam(@PathVariable Long teamId) {
+        if (teamId == null) {
+            throw new IllegalArgumentException();
+        }
+        return teamService.getMembriTeam(teamId);
+    }
+
+    @GetMapping("/creatore/{teamId}")
+    public UtenteResponse getCreatoreTeam(@PathVariable Long teamId) {
+        if (teamId == null) {
+            throw new IllegalArgumentException();
+        }
+        Utente utente = teamService.getCreatoreTeam(teamId);
+        UtenteMapper  utenteMapper = new UtenteMapper();
+        return utenteMapper.toResponse(utente);
+    }
+
+    @DeleteMapping("/{idTeam}")
+    @PreAuthorize("hasRole('CREATORE_TEAM')")
+    public String deleteTeam(@PathVariable Long idTeam) {
+        if (idTeam == null) {
+            throw new IllegalArgumentException();
+        }
+        teamService.eliminaTeam(idTeam);
+        return "Team eliminato";
+    }
+
+    @PutMapping("/{idTeam}")
+    @PreAuthorize("hasRole('CREATORE_TEAM')")
+    public TeamResponse updateTeam(@PathVariable Long idTeam, @RequestBody TeamRequest teamRequest) {
+        if (teamRequest == null) {
+            throw new IllegalArgumentException();
+        }
+        Team team = teamService.updateTeam(idTeam, teamRequest.getNumeroMassimoComponenti(), teamRequest.getNome(), teamRequest.getDescrizione());
+        TeamMapper  teamMapper = new TeamMapper();
+        return teamMapper.toResponse(team);
+    }
+
 }

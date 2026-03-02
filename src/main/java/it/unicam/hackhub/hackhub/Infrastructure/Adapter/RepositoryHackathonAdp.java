@@ -2,7 +2,9 @@ package it.unicam.hackhub.hackhub.Infrastructure.Adapter;
 
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryHackathon;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryHackathonJpa;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class RepositoryHackathonAdp implements IRepositoryHackathon {
     private final RepositoryHackathonJpa repositoryHackathonJpa;
 
