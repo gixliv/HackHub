@@ -10,7 +10,5 @@ import java.util.Optional;
 public interface IRepositoryInviti {
     Optional<Invito> insertInto(Invito invito);
     Optional<Invito> findInvitoById(Long id);
-    Optional<Invito> changeState(Long id, StatoInvito stato);
     Optional<Invito> updateInvito(Invito invito);
-    Optional<Invito> removeInvito(Long id);
 }

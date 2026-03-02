@@ -1,6 +1,5 @@
 package it.unicam.hackhub.hackhub.Application.Service;
 
-import it.unicam.hackhub.hackhub.Application.Service.MembriTeamService;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryInviti;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryMembriTeam;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryTeam;
@@ -34,8 +33,8 @@ public class InvitiService implements IInvitiService {
     public Invito invitaUtente(InvitoRequest request) {
         Utente utenteDest = repositoryUtenti.findById(request.getDestinatarioId()).orElseThrow(null);
         Utente utenteMitt = repositoryUtenti.findById(request.getMittenteId()).orElseThrow(null);
-        MembroTeam membroTeam = repositoryMembriTeam.findMembroById(utenteMitt.getId());
-        Team team= repositoryTeam.findTeamById(request.getTeamId());
+        MembroTeam membroTeam = repositoryMembriTeam.findMembroById(utenteMitt.getId()).orElseThrow(null);
+        Team team= repositoryTeam.findById(request.getTeamId()).orElseThrow(null);
         Invito invito=new Invito();
 
         if(utenteMitt.getRuolo().equals(Ruolo.CREATORE_TEAM) && utenteDest.getRuolo().equals(Ruolo.UTENTE_GENERICO))

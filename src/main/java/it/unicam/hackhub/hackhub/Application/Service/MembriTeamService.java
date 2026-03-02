@@ -69,7 +69,7 @@ public class MembriTeamService implements IMembriTeamService {
 
         if (utente == null || team == null) return null;
 
-        Optional<MembroTeam> existing = Optional.ofNullable(repositoryMembriTeam.findByUserId(utente.getId()));
+        Optional<MembroTeam> existing = Optional.ofNullable(repositoryMembriTeam.findUtenteById(utente.getId()));
         if (existing.isPresent() && existing.get().getTeam().equals(team)) {
             return null;
         }
@@ -83,6 +83,6 @@ public class MembriTeamService implements IMembriTeamService {
 
     @Override
     public MembroTeam getMembroById(MembroTeamRequest membroTeamRequest) {
-        return repositoryMembriTeam.findByUserId(membroTeamRequest.getUtenteId());
+        return repositoryMembriTeam.findUtenteById(membroTeamRequest.getUtenteId());
     }
 }

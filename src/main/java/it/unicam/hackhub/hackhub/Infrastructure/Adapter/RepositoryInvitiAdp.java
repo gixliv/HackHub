@@ -27,21 +27,11 @@ public class RepositoryInvitiAdp implements IRepositoryInviti {
         return repositoryInvitiJpa.findById(id);
     }
 
-    //da vedere perché si può fare direttamente con update
-    @Override
-    public Optional<Invito> changeState(Long id, StatoInvito stato) {
-        return Optional.empty();
-    }
 
     @Override
     public Optional<Invito> updateInvito(Invito invito) {
-        return Optional.of(repositoryInvitiJpa.save(invito));
-    }
-
-    @Override
-    public Optional<Invito> removeInvito(Long id) {
-        Invito invito = repositoryInvitiJpa.findById(id).orElseThrow();
         repositoryInvitiJpa.delete(invito);
         return Optional.of(invito);
     }
+
 }

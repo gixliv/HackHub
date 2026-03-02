@@ -2,22 +2,24 @@ package it.unicam.hackhub.hackhub.Application.Abstraction.Repository;
 
 import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
 import it.unicam.hackhub.hackhub.Core.models.Team;
-import it.unicam.hackhub.hackhub.Core.models.Utente;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IRepositoryMembriTeam {
+    //vedi come abbiamo fatto noi
     MembroTeam save(MembroTeam membroTeam);
 
-    Optional<MembroTeam> findById(Long id);
+    Optional<MembroTeam> findMembroById(Long id);
 
-    MembroTeam findByUserId(Long idUtente);
+    MembroTeam findUtenteById(Long idUtente);
 
-    MembroTeam removeMember(Long utenteId, Long teamId);
+    MembroTeam removeMembro(Long utenteId, Long teamId);
 
+    //togliere, esiste già in teamService
     List<MembroTeam> findAllByTeam(Team team);
 
+    //ridondante esiste removeMembro sopra, da rivedere comuunque
     MembroTeam delete(MembroTeam membroTeam);
 
 }

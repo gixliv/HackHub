@@ -18,12 +18,12 @@ public class RepositoryMembriTeamAdp implements IRepositoryMembriTeam {
     }
 
     @Override
-    public Optional<MembroTeam> findById(Long id) {
+    public Optional<MembroTeam> findMembroById(Long id) {
         return repositoryMembriTeamJpa.findById(id);
     }
 
     @Override
-    public MembroTeam findByUserId(Long idUtente) {
+    public MembroTeam findUtenteById(Long idUtente) {
         return repositoryMembriTeamJpa.findAll()
                 .stream()
                 .filter(m -> m.getUtente().getId().equals(idUtente))
@@ -32,7 +32,7 @@ public class RepositoryMembriTeamAdp implements IRepositoryMembriTeam {
     }
 
     @Override
-    public MembroTeam removeMember(Long utenteId, Long teamId) {
+    public MembroTeam removeMembro(Long utenteId, Long teamId) {
         Optional<MembroTeam> membroOpt = repositoryMembriTeamJpa.findAll()
                 .stream()
                 .filter(m ->
@@ -62,11 +62,6 @@ public class RepositoryMembriTeamAdp implements IRepositoryMembriTeam {
     public MembroTeam delete(MembroTeam membroTeam) {
         repositoryMembriTeamJpa.delete(membroTeam);
         return membroTeam;
-    }
-
-    @Override
-    public Optional<MembroTeam> findByUtente(Utente utente) {
-        return repositoryMembriTeamJpa.findByUtente(utente);
     }
 
     @Override
