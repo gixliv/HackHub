@@ -12,5 +12,5 @@ public interface IRepositoryUtenti {
 
     Optional<Utente> findByUsername(String username);
 
-    List<Utente> findAllByRole(Ruolo ruolo);
+    List<Utente> findAllByRuolo(Ruolo ruolo);
 }

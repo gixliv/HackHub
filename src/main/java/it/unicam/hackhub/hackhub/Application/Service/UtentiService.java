@@ -27,6 +27,6 @@ public class UtentiService implements IUtentiService {
 
     @Override
     public List<Utente> getUtentiByRuolo(Ruolo ruolo) {
-        return repositoryUtenti.findAllByRole(ruolo);
+        return repositoryUtenti.findAllByRuolo(ruolo);
     }
 }

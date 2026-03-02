@@ -1,7 +1,14 @@
 package it.unicam.hackhub.hackhub.Infrastructure.Adapter;
 
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryInviti;
+import it.unicam.hackhub.hackhub.Core.enums.StatoInvito;
+import it.unicam.hackhub.hackhub.Core.models.Invito;
+import it.unicam.hackhub.hackhub.Core.models.Utente;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryInvitiJpa;
+import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryTeamJpa;
+
+import java.util.List;
+import java.util.Optional;
 
 public class RepositoryInvitiAdp implements IRepositoryInviti {
     private final RepositoryInvitiJpa repositoryInvitiJpa;
@@ -10,4 +17,31 @@ public class RepositoryInvitiAdp implements IRepositoryInviti {
         this.repositoryInvitiJpa = repositoryInvitiJpa;
     }
 
+    @Override
+    public Optional<Invito> insertInto(Invito invito) {
+        return Optional.of(repositoryInvitiJpa.save(invito));
+    }
+
+    @Override
+    public Optional<Invito> findInvitoById(Long id) {
+        return repositoryInvitiJpa.findById(id);
+    }
+
+    //da vedere perché si può fare direttamente con update
+    @Override
+    public Optional<Invito> changeState(Long id, StatoInvito stato) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Invito> updateInvito(Invito invito) {
+        return Optional.of(repositoryInvitiJpa.save(invito));
+    }
+
+    @Override
+    public Optional<Invito> removeInvito(Long id) {
+        Invito invito = repositoryInvitiJpa.findById(id).orElseThrow();
+        repositoryInvitiJpa.delete(invito);
+        return Optional.of(invito);
+    }
 }

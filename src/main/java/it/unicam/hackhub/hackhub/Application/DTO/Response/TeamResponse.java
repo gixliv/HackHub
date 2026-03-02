@@ -14,5 +14,6 @@ public class TeamResponse {
     private String nome;
     private String descrizione;
     private int numeroMassimoComponenti;
+    private Long creatoreId;
     private List<Long> membriId;
 }

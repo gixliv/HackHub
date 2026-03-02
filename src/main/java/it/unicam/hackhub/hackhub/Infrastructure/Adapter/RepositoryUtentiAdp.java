@@ -29,7 +29,7 @@ public class RepositoryUtentiAdp implements IRepositoryUtenti {
     }
 
     @Override
-    public List<Utente> findAllByRole(Ruolo ruolo) {
-        return repositoryUtentiJpa.findAllByRole(ruolo);
+    public List<Utente> findAllByRuolo(Ruolo ruolo) {
+        return repositoryUtentiJpa.findAllByRuolo(ruolo);
     }
 }
