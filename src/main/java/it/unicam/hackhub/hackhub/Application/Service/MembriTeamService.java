@@ -30,6 +30,9 @@ public class MembriTeamService implements IMembriTeamService {
         this.repositoryHackathon = repositoryHackathon;
     }
 
+    //todo da rivedere logica sbagliata
+
+
     @Override
     public void disiscriviTeamHackathon(TeamRequest teamRequest, HackathonRequest hackathonRequest) {
 

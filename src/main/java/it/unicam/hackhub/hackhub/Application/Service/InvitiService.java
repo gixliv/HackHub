@@ -1,5 +1,7 @@
 package it.unicam.hackhub.hackhub.Application.Service;
 
+import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IMembriTeamService;
+import it.unicam.hackhub.hackhub.Application.Service.MembriTeamService;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryInviti;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryMembriTeam;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryTeam;
@@ -21,12 +23,14 @@ public class InvitiService implements IInvitiService {
     private final IRepositoryTeam repositoryTeam;
     private final IRepositoryMembriTeam repositoryMembriTeam;
     private final IRepositoryInviti repositoryInviti;
+    private final IMembriTeamService membriTeamService;
 
-    public InvitiService(IRepositoryUtenti repositoryUtenti, IRepositoryTeam repositoryTeam, IRepositoryMembriTeam repositoryMembriTeam, IRepositoryInviti repositoryInviti) {
+    public InvitiService(IRepositoryUtenti repositoryUtenti, IRepositoryTeam repositoryTeam, IRepositoryMembriTeam repositoryMembriTeam, IRepositoryInviti repositoryInviti, IMembriTeamService membriTeamService) {
         this.repositoryUtenti = repositoryUtenti;
         this.repositoryTeam = repositoryTeam;
         this.repositoryMembriTeam = repositoryMembriTeam;
         this.repositoryInviti = repositoryInviti;
+        this.membriTeamService = membriTeamService;
     }
 
     @Override
@@ -58,7 +62,7 @@ public class InvitiService implements IInvitiService {
     }
 
     @Override
-    public Invito accettaInvito(Long id) {
+    public boolean accettaInvito(Long id) {
         Invito invito= repositoryInviti.findInvitoById(id).orElseThrow(null);
 
         Utente utente= invito.getDestinatario();
@@ -68,18 +72,21 @@ public class InvitiService implements IInvitiService {
         invito.setStato(StatoInvito.ACCETTATO);
         utente.setRuolo(Ruolo.MEMBRO_TEAM);
         repositoryUtenti.updateUtente(utente);
-        MembriTeamService membro= new MembriTeamService();
         MembroTeamRequest request=new MembroTeamRequest();
         request.setUtenteId(utente.getId());
         request.setTeamId(invito.getTeam().getId());
-        membro.addMembro(request);
+        membriTeamService.addMembro(request);
         repositoryInviti.updateInvito(invito);
+
+        return repositoryInviti.findInvitoById(invito.getId()).isPresent();
     }
 
     @Override
-    public Invito rifiutaInvito(Long id) {
+    public boolean rifiutaInvito(Long id) {
         Invito invito= repositoryInviti.findInvitoById(id).orElseThrow(null);
         invito.setStato(StatoInvito.RIFIUTATO);
         repositoryInviti.updateInvito(invito);
+
+        return repositoryInviti.findInvitoById(invito.getId()).isPresent();
     }
 }

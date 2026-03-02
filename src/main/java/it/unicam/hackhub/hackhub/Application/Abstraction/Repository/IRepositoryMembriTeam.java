@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IRepositoryMembriTeam {
-    //vedi come abbiamo fatto noi
+    //todo vedi come abbiamo fatto noi
     MembroTeam save(MembroTeam membroTeam);
 
     Optional<MembroTeam> findMembroById(Long id);
@@ -16,10 +16,10 @@ public interface IRepositoryMembriTeam {
 
     MembroTeam removeMembro(Long utenteId, Long teamId);
 
-    //togliere, esiste già in teamService
+    //todo togliere, esiste già in teamService
     List<MembroTeam> findAllByTeam(Team team);
 
-    //ridondante esiste removeMembro sopra, da rivedere comuunque
+    //todo ridondante esiste removeMembro sopra, da rivedere comuunque
     MembroTeam delete(MembroTeam membroTeam);
 
 }

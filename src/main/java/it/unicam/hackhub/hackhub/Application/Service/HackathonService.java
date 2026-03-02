@@ -4,7 +4,7 @@ import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IHackathonServi
 import it.unicam.hackhub.hackhub.Core.models.Hackathon;
 
 public class HackathonService implements IHackathonService {
-
+    //todo da rivedere, con it2
     @Override
     public Hackathon iscriviTeamHackathon() {
         return null;
