@@ -32,4 +32,21 @@ public class RepositoryUtentiAdp implements IRepositoryUtenti {
     public List<Utente> findAllByRuolo(Ruolo ruolo) {
         return repositoryUtentiJpa.findAllByRuolo(ruolo);
     }
+
+    @Override
+    public Optional<Utente> updateUtente(Utente utente) {
+        return Optional.of(repositoryUtentiJpa.save(utente));
+    }
+
+    @Override
+    public Optional<Utente> deleteUtente(Long id) {
+        Utente utente = repositoryUtentiJpa.findById(id).orElseThrow(null);
+        repositoryUtentiJpa.delete(utente);
+        return Optional.of(utente);
+    }
+
+    @Override
+    public Optional<Utente> insertInto(Utente utente) {
+        return Optional.of(repositoryUtentiJpa.save(utente));
+    }
 }
