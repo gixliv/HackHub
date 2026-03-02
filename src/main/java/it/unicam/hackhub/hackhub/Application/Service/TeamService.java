@@ -68,18 +68,4 @@ public class TeamService implements ITeamService {
         if (numeroMassimoComponenti > 0) team.setNumeroMassimoComponenti(numeroMassimoComponenti);
         return repositoryTeam.updateTeam(team).orElseThrow(null);
     }
-
-    @Override
-    public Team removeHackathon(Long id) {
-        Team team = repositoryTeam.findById(id).orElseThrow(null);
-        repositoryTeam.removeHackathon(team.getId());
-        return team;
-    }
-
-    @Override
-    public Team addHackathon(Long idTeam, Hackathon hackathon){
-        Team team = repositoryTeam.findById(idTeam).orElseThrow(null);
-        repositoryTeam.addHackathon(team.getId(), hackathon);
-        return team;
-    }
 }

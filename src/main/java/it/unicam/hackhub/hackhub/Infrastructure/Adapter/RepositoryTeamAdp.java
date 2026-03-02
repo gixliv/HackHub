@@ -36,23 +36,6 @@ public class RepositoryTeamAdp implements IRepositoryTeam {
         return Optional.of(team);
     }
     @Override
-    public Optional<Team> removeHackathon(Long idTeam) {
-        Team team = repositoryTeamJpa.findById(idTeam).orElse(null);
-        assert team != null;
-        team.setHackathon(null);
-        repositoryTeamJpa.save(team);
-        return Optional.of(team);
-    }
-    @Override
-    public Optional<Team> addHackathon(Long idTeam, Hackathon hackathon) {
-        Team team = repositoryTeamJpa.findById(idTeam).orElse(null);
-        assert team != null;
-        team.setHackathon(hackathon);
-        repositoryTeamJpa.save(team);
-        return Optional.of(team);
-    }
-
-    @Override
     public List<Team> getAll() {
         return repositoryTeamJpa.findAll();
     }

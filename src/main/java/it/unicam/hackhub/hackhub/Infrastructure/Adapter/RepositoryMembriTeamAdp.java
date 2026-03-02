@@ -28,6 +28,9 @@ public class RepositoryMembriTeamAdp implements IRepositoryMembriTeam {
                 .stream()
                 .filter(m -> m.getUtente().getId().equals(idUtente))
                 .findFirst()
+    public MembroTeam findByUserId(Long idUtente) {
+        return repositoryMembriTeamJpa
+                .findByUtenteId(idUtente)
                 .orElse(null);
     }
 
@@ -40,6 +43,9 @@ public class RepositoryMembriTeamAdp implements IRepositoryMembriTeam {
                                 m.getTeam().getId().equals(teamId)
                 )
                 .findFirst();
+    public MembroTeam removeMember(Long utenteId, Long teamId) {
+        Optional<MembroTeam> membroOpt =
+                repositoryMembriTeamJpa.findByUtenteIdAndTeamId(utenteId, teamId);
 
         if (membroOpt.isPresent()) {
             MembroTeam membro = membroOpt.get();
@@ -50,13 +56,12 @@ public class RepositoryMembriTeamAdp implements IRepositoryMembriTeam {
         return null;
     }
 
+
     @Override
     public List<MembroTeam> findAllByTeam(Team team) {
-        return repositoryMembriTeamJpa.findAll()
-                .stream()
-                .filter(m -> m.getTeam().equals(team))
-                .toList();
+        return repositoryMembriTeamJpa.findAllByTeam(team);
     }
+
 
     @Override
     public MembroTeam delete(MembroTeam membroTeam) {

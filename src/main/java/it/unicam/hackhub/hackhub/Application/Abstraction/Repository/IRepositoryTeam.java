@@ -12,7 +12,5 @@ public interface IRepositoryTeam {
     Optional<Team> insertInto(Team team);
     Optional<Team> updateTeam(Team team);
     Optional<Team> eliminaTeam(Long id);
-    Optional<Team> removeHackathon(Long idTeam);
-    Optional<Team> addHackathon(Long idTeam, Hackathon hackathon);
     List<Team> getAll();
 }
