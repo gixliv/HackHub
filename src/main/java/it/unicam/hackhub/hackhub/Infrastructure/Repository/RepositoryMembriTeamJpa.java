@@ -5,6 +5,7 @@ import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface RepositoryMembriTeamJpa extends JpaRepository<MembroTeam, Long> {

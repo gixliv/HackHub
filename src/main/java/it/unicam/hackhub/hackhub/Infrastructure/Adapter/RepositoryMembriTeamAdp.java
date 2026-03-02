@@ -3,7 +3,6 @@ package it.unicam.hackhub.hackhub.Infrastructure.Adapter;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryMembriTeam;
 import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
 import it.unicam.hackhub.hackhub.Core.models.Team;
-import it.unicam.hackhub.hackhub.Core.models.Utente;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryMembriTeamJpa;
 
 import java.util.List;
@@ -24,22 +23,15 @@ public class RepositoryMembriTeamAdp implements IRepositoryMembriTeam {
 
     @Override
     public MembroTeam findByUserId(Long idUtente) {
-        return repositoryMembriTeamJpa.findAll()
-                .stream()
-                .filter(m -> m.getUtente().getId().equals(idUtente))
-                .findFirst()
+        return repositoryMembriTeamJpa
+                .findByUtenteId(idUtente)
                 .orElse(null);
     }
 
     @Override
     public MembroTeam removeMember(Long utenteId, Long teamId) {
-        Optional<MembroTeam> membroOpt = repositoryMembriTeamJpa.findAll()
-                .stream()
-                .filter(m ->
-                        m.getUtente().getId().equals(utenteId) &&
-                                m.getTeam().getId().equals(teamId)
-                )
-                .findFirst();
+        Optional<MembroTeam> membroOpt =
+                repositoryMembriTeamJpa.findByUtenteIdAndTeamId(utenteId, teamId);
 
         if (membroOpt.isPresent()) {
             MembroTeam membro = membroOpt.get();
@@ -50,23 +42,17 @@ public class RepositoryMembriTeamAdp implements IRepositoryMembriTeam {
         return null;
     }
 
+
     @Override
     public List<MembroTeam> findAllByTeam(Team team) {
-        return repositoryMembriTeamJpa.findAll()
-                .stream()
-                .filter(m -> m.getTeam().equals(team))
-                .toList();
+        return repositoryMembriTeamJpa.findAllByTeam(team);
     }
+
 
     @Override
     public MembroTeam delete(MembroTeam membroTeam) {
         repositoryMembriTeamJpa.delete(membroTeam);
         return membroTeam;
-    }
-
-    @Override
-    public Optional<MembroTeam> findByUtente(Utente utente) {
-        return repositoryMembriTeamJpa.findByUtente(utente);
     }
 
     @Override
