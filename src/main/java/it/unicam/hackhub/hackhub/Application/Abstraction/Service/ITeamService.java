@@ -13,9 +13,5 @@ public interface ITeamService {
     boolean eliminaTeam(Long id);
     List<MembroTeam> getMembriTeam(Long id);
     Utente getCreatoreTeam(Long id);
-
     Team updateTeam(Long id, int numeroMassimoComponenti, String nome, String descrizione);
-
-    Team removeHackathon(Long idTeam);
-    Team addHackathon(Long idTeam, Hackathon hackathon);
 }
