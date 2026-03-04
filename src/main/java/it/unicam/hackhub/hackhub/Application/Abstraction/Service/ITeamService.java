@@ -1,7 +1,6 @@
 package it.unicam.hackhub.hackhub.Application.Abstraction.Service;
 
 import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
-import it.unicam.hackhub.hackhub.Core.models.Hackathon;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 
@@ -15,6 +14,6 @@ public interface ITeamService {
     Utente getCreatoreTeam(Long idUtente);
     //todo verificare opzionalità parametri
     Team updateTeam(Long idUtente, int numeroMassimoComponenti, String nome, String descrizione);
-    Utente addMembro(Long idUtente, Long idTeam);
-    Utente getMembroById(Long idUtente);
+    boolean setMembro(Long idUtente, Long idTeam);
+    Utente getMembroById(Long idUtente, Long idTeam);
 }

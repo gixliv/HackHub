@@ -51,4 +51,9 @@ public class RepositoryTeamAdp implements IRepositoryTeam {
         return repositoryTeamJpa.findAll();
     }
 
+    @Override
+    public Optional<Team> findTeamByName(String name) {
+        return repositoryTeamJpa.findByName(name);
+    }
+
 }

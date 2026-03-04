@@ -14,4 +14,5 @@ public interface IRepositoryTeam {
     Optional<Team> updateTeam(Team team);
     Optional<Team> eliminaTeam(Long id);
     List<Team> getAllTeam();
+    Optional<Team> findTeamByName(String name);
 }

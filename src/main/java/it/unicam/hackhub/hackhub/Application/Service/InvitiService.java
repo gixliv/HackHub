@@ -20,31 +20,31 @@ public class InvitiService implements IInvitiService {
     private final IRepositoryUtenti repositoryUtenti;
     private final IRepositoryTeam repositoryTeam;
     private final IRepositoryInviti repositoryInviti;
+    private final TeamService teamService;
 
-    public InvitiService(IRepositoryUtenti repositoryUtenti, IRepositoryTeam repositoryTeam, IRepositoryInviti repositoryInviti) {
+    public InvitiService(IRepositoryUtenti repositoryUtenti, IRepositoryTeam repositoryTeam, IRepositoryInviti repositoryInviti, TeamService teamService) {
         this.repositoryUtenti = repositoryUtenti;
         this.repositoryTeam = repositoryTeam;
         this.repositoryInviti = repositoryInviti;
+        this.teamService = teamService;
     }
 
     @Override
     public Invito invitaUtente(InvitoRequest request) {
         Utente utenteDest = repositoryUtenti.findById(request.getDestinatarioId()).orElseThrow(EntityNotFoundException::new);
         Utente utenteMitt = repositoryUtenti.findById(request.getMittenteId()).orElseThrow(EntityNotFoundException::new);
-        MembroTeam membroTeam = repositoryMembriTeam.findMembroById(utenteMitt.getId()).orElseThrow(EntityNotFoundException::new);
-        Team team= repositoryTeam.findById(request.getTeamId()).orElseThrow(EntityNotFoundException::new);
-        Invito invito=new Invito();
+        Team team = repositoryTeam.findTeamById(request.getTeamId()).orElseThrow(EntityNotFoundException::new);
+        Invito invito = new Invito();
 
-        if(utenteMitt.getRuolo().equals(Ruolo.CREATORE_TEAM) && utenteDest.getRuolo().equals(Ruolo.UTENTE_GENERICO))
-            if(membroTeam.getTeam().equals(request.getTeamId())){
+        if (utenteMitt.getRuolo().equals(Ruolo.CREATORE_TEAM) && utenteDest.getRuolo().equals(Ruolo.UTENTE_GENERICO))
+            if (utenteMitt.getTeam().equals(request.getTeamId())) {
                 invito.setDescrizione(request.getDescrizione());
                 invito.setTeam(team);
                 invito.setDestinatario(utenteDest);
                 invito.setMittente(utenteMitt);
                 invito.setStato(StatoInvito.PENDENTE);
                 repositoryInviti.insertInto(invito);
-            }
-            else throw new RuntimeException("Il team inserito non corrisponde al team di appartenenza");
+            } else throw new RuntimeException("Il team inserito non corrisponde al team di appartenenza");
         else throw new RuntimeException("Unathorized");
 
         return invito;
@@ -58,19 +58,18 @@ public class InvitiService implements IInvitiService {
 
     @Override
     public boolean accettaInvito(Long id) {
-        Invito invito= repositoryInviti.findInvitoById(id).orElseThrow(EntityNotFoundException::new);
+        Invito invito = repositoryInviti.findInvitoById(id).orElseThrow(EntityNotFoundException::new);
 
-        Utente utente= invito.getDestinatario();
-        if(utente.getRuolo().equals(Ruolo.MEMBRO_TEAM) || utente.getRuolo().equals(Ruolo.CREATORE_TEAM))
+        Utente utente = invito.getDestinatario();
+        if (utente.getRuolo().equals(Ruolo.MEMBRO_TEAM) || utente.getRuolo().equals(Ruolo.CREATORE_TEAM))
             throw new RuntimeException("Impossibile accettare l'invito, utente già appartenente ad un team.");
 
         invito.setStato(StatoInvito.ACCETTATO);
         utente.setRuolo(Ruolo.MEMBRO_TEAM);
-        repositoryUtenti.updateUtente(utente);
-        MembroTeamRequest request=new MembroTeamRequest();
-        request.setUtenteId(utente.getId());
-        request.setTeamId(invito.getTeam().getId());
-        membriTeamService.addMembro(request);
+        if (!teamService.setMembro(utente.getId(), invito.getTeam().getId())) {
+            throw new RuntimeException("setMembro non andato a buon fine");
+        }
+
         repositoryInviti.updateInvito(invito);
 
         return repositoryInviti.findInvitoById(invito.getId()).isEmpty();
@@ -78,7 +77,7 @@ public class InvitiService implements IInvitiService {
 
     @Override
     public boolean rifiutaInvito(Long id) {
-        Invito invito= repositoryInviti.findInvitoById(id).orElseThrow(EntityNotFoundException::new);
+        Invito invito = repositoryInviti.findInvitoById(id).orElseThrow(EntityNotFoundException::new);
         invito.setStato(StatoInvito.RIFIUTATO);
         repositoryInviti.updateInvito(invito);
 
