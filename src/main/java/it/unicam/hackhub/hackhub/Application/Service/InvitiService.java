@@ -50,6 +50,7 @@ public class InvitiService implements IInvitiService {
                 invito.setTeam(team);
                 invito.setDestinatario(utenteDest);
                 invito.setMittente(utenteMitt);
+                invito.setStato(StatoInvito.PENDENTE);
                 repositoryInviti.insertInto(invito);
             }
             else throw new RuntimeException("Il team inserito non corrisponde al team di appartenenza");

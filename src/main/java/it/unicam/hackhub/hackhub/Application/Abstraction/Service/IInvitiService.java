@@ -12,4 +12,6 @@ public interface IInvitiService {
     Invito invitaUtente(InvitoRequest invito);
     List<Invito> getAllInviti(Long id);
     boolean accettaInvito(Long id);
-    boolean rifiutaInvito(Long id);}
+    boolean rifiutaInvito(Long id);
+
+}

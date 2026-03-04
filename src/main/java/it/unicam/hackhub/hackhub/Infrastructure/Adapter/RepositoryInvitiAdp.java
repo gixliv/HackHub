@@ -6,6 +6,7 @@ import it.unicam.hackhub.hackhub.Core.models.Invito;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryInvitiJpa;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryTeamJpa;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,7 +33,9 @@ public class RepositoryInvitiAdp implements IRepositoryInviti {
 
     @Override
     public Optional<Invito> updateInvito(Invito invito) {
-        repositoryInvitiJpa.delete(invito);
+        repositoryInvitiJpa.findById(invito.getId()).orElseThrow(EntityNotFoundException::new);
+        if(invito.getStato().equals(StatoInvito.ACCETTATO) || invito.getStato().equals(StatoInvito.RIFIUTATO))
+            repositoryInvitiJpa.delete(invito);
         return Optional.of(invito);
     }
 
