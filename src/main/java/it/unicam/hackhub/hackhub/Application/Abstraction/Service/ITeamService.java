@@ -2,7 +2,6 @@ package it.unicam.hackhub.hackhub.Application.Abstraction.Service;
 
 import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
 import it.unicam.hackhub.hackhub.Core.models.Hackathon;
-import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 
@@ -10,8 +9,12 @@ import java.util.List;
 
 public interface ITeamService {
     Team creaTeam(TeamRequest request);
-    boolean eliminaTeam(Long id);
-    List<MembroTeam> getMembriTeam(Long id);
-    Utente getCreatoreTeam(Long id);
-    Team updateTeam(Long id, int numeroMassimoComponenti, String nome, String descrizione);
+    boolean eliminaTeam(Long idTeam);
+    boolean eliminaMembro(Long idUtente, Long idTeam);
+    List<Utente> getMembriTeam(Long idTeam);
+    Utente getCreatoreTeam(Long idUtente);
+    //todo verificare opzionalità parametri
+    Team updateTeam(Long idUtente, int numeroMassimoComponenti, String nome, String descrizione);
+    Utente addMembro(Long idUtente, Long idTeam);
+    Utente getMembroById(Long idUtente);
 }

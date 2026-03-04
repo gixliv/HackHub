@@ -2,7 +2,6 @@ package it.unicam.hackhub.hackhub.Application.DTO.Mapper;
 
 import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.TeamResponse;
-import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 
@@ -30,7 +29,7 @@ public class TeamMapper {
         teamresponse.setNumeroMassimoComponenti(team.getNumeroMassimoComponenti());
         List<Long> membri = new ArrayList<>();
         if (team.getMembri() != null) {
-            for (MembroTeam membro : team.getMembri()) {
+            for (Utente membro : team.getMembri()) {
                 membri.add(membro.getId());
             }
         }

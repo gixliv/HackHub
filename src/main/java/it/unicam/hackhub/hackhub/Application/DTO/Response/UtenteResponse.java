@@ -22,4 +22,5 @@ public class UtenteResponse {
     private Ruolo ruolo;
     private String iban;
     private LocalDate dataNascita;
+    private Long teamId;
 }

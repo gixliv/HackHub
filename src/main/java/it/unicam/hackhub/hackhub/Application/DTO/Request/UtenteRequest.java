@@ -1,7 +1,5 @@
 package it.unicam.hackhub.hackhub.Application.DTO.Request;
 
-import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
-
 import java.time.LocalDate;
 
 public class UtenteRequest {
@@ -15,6 +13,7 @@ public class UtenteRequest {
     private String telefono;
     private String iban;
     private LocalDate dataNascita;
+    private Long teamId;
 
 
     public String getUsername() {
@@ -85,7 +84,9 @@ public class UtenteRequest {
         return dataNascita;
     }
 
-    public void setDataNascita(LocalDate dataNascita) {
-        this.dataNascita = dataNascita;
-    }
+    public void setDataNascita(LocalDate dataNascita) {this.dataNascita = dataNascita;}
+
+    public Long getTeamId(){ return teamId; }
+
+    public void SetTeamId(Long teamId){ this.teamId = teamId; }
 }

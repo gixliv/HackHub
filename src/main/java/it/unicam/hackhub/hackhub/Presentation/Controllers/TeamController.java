@@ -6,7 +6,6 @@ import it.unicam.hackhub.hackhub.Application.DTO.Mapper.UtenteMapper;
 import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.TeamResponse;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.UtenteResponse;
-import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +34,7 @@ public class TeamController {
 
     //da rivedere
     @GetMapping("/membri/{teamId}")
-    public List<MembroTeam> getMembriTeam(@PathVariable Long teamId) {
+    public List<Utente> getMembriTeam(@PathVariable Long teamId) {
         if (teamId == null) {
             throw new IllegalArgumentException();
         }

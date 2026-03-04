@@ -1,11 +1,10 @@
 package it.unicam.hackhub.hackhub.Infrastructure.Adapter;
 
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryTeam;
-import it.unicam.hackhub.hackhub.Core.models.Hackathon;
-import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
 import it.unicam.hackhub.hackhub.Core.models.Team;
-import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryHackathonJpa;
+import it.unicam.hackhub.hackhub.Core.models.Utente;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryTeamJpa;
+import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryUtentiJpa;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Repository;
 
@@ -15,15 +14,24 @@ import java.util.Optional;
 @Repository
 public class RepositoryTeamAdp implements IRepositoryTeam {
     private final RepositoryTeamJpa repositoryTeamJpa;
+    private final RepositoryUtentiJpa repositoryUtentiJpa;
 
-    public RepositoryTeamAdp(RepositoryTeamJpa repositoryTeamJpa) {
+    public RepositoryTeamAdp(RepositoryTeamJpa repositoryTeamJpa, RepositoryUtentiJpa repositoryUtentiJpa) {
         this.repositoryTeamJpa = repositoryTeamJpa;
+        this.repositoryUtentiJpa = repositoryUtentiJpa;
     }
 
     @Override
-    public Optional<Team> findById(Long id) {
+    public Optional<Team> findTeamById(Long id) {
         return repositoryTeamJpa.findById(id);
     }
+
+    @Override
+    public boolean checkMembroById(Long idUtente, Long idTeam) {
+        Utente utente =repositoryUtentiJpa.findById(idUtente).orElseThrow(EntityNotFoundException::new);
+        return utente.getTeam().getId().equals(idTeam);
+    }
+
     @Override
     public Optional<Team> insertInto(Team team) {
         return Optional.of(repositoryTeamJpa.save(team));
@@ -39,7 +47,7 @@ public class RepositoryTeamAdp implements IRepositoryTeam {
         return Optional.of(team);
     }
     @Override
-    public List<Team> getAll() {
+    public List<Team> getAllTeam() {
         return repositoryTeamJpa.findAll();
     }
 

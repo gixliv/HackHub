@@ -48,6 +48,10 @@ public class Utente {
     @Column(nullable = false)
     private LocalDate dataNascita;
 
+    @ManyToOne
+    @JoinColumn(name="team_id")
+    private Team team;
+
     @OneToMany(mappedBy = "mittente", orphanRemoval = true)
     private List<Invito> invitiInviati;
 

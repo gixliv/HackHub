@@ -1,18 +1,13 @@
 package it.unicam.hackhub.hackhub.Application.Service;
 
-import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IMembriTeamService;
-import it.unicam.hackhub.hackhub.Application.Service.MembriTeamService;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryInviti;
-import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryMembriTeam;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryTeam;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryUtenti;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IInvitiService;
 import it.unicam.hackhub.hackhub.Application.DTO.Request.InvitoRequest;
-import it.unicam.hackhub.hackhub.Application.DTO.Request.MembroTeamRequest;
 import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
 import it.unicam.hackhub.hackhub.Core.enums.StatoInvito;
 import it.unicam.hackhub.hackhub.Core.models.Invito;
-import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,16 +19,12 @@ import java.util.List;
 public class InvitiService implements IInvitiService {
     private final IRepositoryUtenti repositoryUtenti;
     private final IRepositoryTeam repositoryTeam;
-    private final IRepositoryMembriTeam repositoryMembriTeam;
     private final IRepositoryInviti repositoryInviti;
-    private final IMembriTeamService membriTeamService;
 
-    public InvitiService(IRepositoryUtenti repositoryUtenti, IRepositoryTeam repositoryTeam, IRepositoryMembriTeam repositoryMembriTeam, IRepositoryInviti repositoryInviti, IMembriTeamService membriTeamService) {
+    public InvitiService(IRepositoryUtenti repositoryUtenti, IRepositoryTeam repositoryTeam, IRepositoryInviti repositoryInviti) {
         this.repositoryUtenti = repositoryUtenti;
         this.repositoryTeam = repositoryTeam;
-        this.repositoryMembriTeam = repositoryMembriTeam;
         this.repositoryInviti = repositoryInviti;
-        this.membriTeamService = membriTeamService;
     }
 
     @Override

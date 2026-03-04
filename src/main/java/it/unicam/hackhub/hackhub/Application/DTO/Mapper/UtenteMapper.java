@@ -2,6 +2,7 @@ package it.unicam.hackhub.hackhub.Application.DTO.Mapper;
 
 import it.unicam.hackhub.hackhub.Application.DTO.Request.UtenteRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.UtenteResponse;
+import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 
 public class UtenteMapper {
@@ -18,6 +19,10 @@ public class UtenteMapper {
         utente.setTelefono(utenteRequest.getTelefono());
         utente.setIban(utenteRequest.getIban());
         utente.setDataNascita(utenteRequest.getDataNascita());
+
+        Team team= new Team();
+        team.setId(utenteRequest.getTeamId());
+        utente.setTeam(team);
         return utente;
     }
 
@@ -33,6 +38,7 @@ public class UtenteMapper {
         response.setRuolo(utente.getRuolo());
         response.setIban(utente.getIban());
         response.setDataNascita(utente.getDataNascita());
+        response.setTeamId(utente.getTeam().getId());
         return response;
     }
 }
