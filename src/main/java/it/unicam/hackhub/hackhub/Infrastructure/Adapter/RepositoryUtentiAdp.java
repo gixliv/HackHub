@@ -5,6 +5,7 @@ import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryU
 import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryUtentiJpa;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class RepositoryUtentiAdp implements IRepositoryUtenti {
 
     @Override
     public Optional<Utente> deleteUtente(Long id) {
-        Utente utente = repositoryUtentiJpa.findById(id).orElseThrow(null);
+        Utente utente = repositoryUtentiJpa.findById(id).orElseThrow(EntityNotFoundException::new);
         repositoryUtentiJpa.delete(utente);
         return Optional.of(utente);
     }

@@ -9,6 +9,7 @@ import it.unicam.hackhub.hackhub.Core.models.Hackathon;
 import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class TeamService implements ITeamService {
     @Override
     public Team creaTeam(TeamRequest request) {
         Team team = new Team();
-        Utente creatore = repositoryUtenti.findById(request.getCreatore()).orElseThrow(null);
+        Utente creatore = repositoryUtenti.findById(request.getCreatore()).orElseThrow(EntityNotFoundException::new);
         if (creatore.getRuolo() == Ruolo.CREATORE_TEAM) throw new RuntimeException("Sei già creatore di un team");
         List<Team> allTeam = repositoryTeam.getAll();
         for (Team t : allTeam) {
@@ -45,29 +46,29 @@ public class TeamService implements ITeamService {
 
     @Override
     public boolean eliminaTeam(Long id) {
-        Team team = repositoryTeam.findById(id).orElseThrow(null);
+        Team team = repositoryTeam.findById(id).orElseThrow(EntityNotFoundException::new);
         repositoryTeam.eliminaTeam(team.getId());
-        return repositoryTeam.findById(team.getId()).isPresent();
+        return repositoryTeam.findById(team.getId()).isEmpty();
     }
 
     @Override
     public List<MembroTeam> getMembriTeam(Long id) {
-        Team team = repositoryTeam.findById(id).orElseThrow(null);
+        Team team = repositoryTeam.findById(id).orElseThrow(EntityNotFoundException::new);
         return team.getMembri();
     }
 
     @Override
     public Utente getCreatoreTeam(Long id) {
-        Team team = repositoryTeam.findById(id).orElseThrow(null);
+        Team team = repositoryTeam.findById(id).orElseThrow(EntityNotFoundException::new);
         return team.getCreatore();
     }
 
     @Override
     public Team updateTeam(Long id, int numeroMassimoComponenti, String nome, String descrizione){
-        Team team = repositoryTeam.findById(id).orElseThrow(null);
+        Team team = repositoryTeam.findById(id).orElseThrow(EntityNotFoundException::new);
         if (nome != null && !nome.isBlank()) team.setNome(nome);
         if (descrizione != null && !descrizione.isBlank()) team.setDescrizione(descrizione);
         if (numeroMassimoComponenti > 0) team.setNumeroMassimoComponenti(numeroMassimoComponenti);
-        return repositoryTeam.updateTeam(team).orElseThrow(null);
+        return repositoryTeam.updateTeam(team).orElseThrow(RuntimeException::new);
     }
 }

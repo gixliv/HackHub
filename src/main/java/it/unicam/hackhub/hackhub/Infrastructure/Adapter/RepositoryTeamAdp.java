@@ -6,6 +6,7 @@ import it.unicam.hackhub.hackhub.Core.models.MembroTeam;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryHackathonJpa;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryTeamJpa;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class RepositoryTeamAdp implements IRepositoryTeam {
     }
     @Override
     public Optional<Team> eliminaTeam(Long id) {
-        Team team = repositoryTeamJpa.findById(id).orElse(null);
+        Team team = repositoryTeamJpa.findById(id).orElseThrow(EntityNotFoundException::new);
         repositoryTeamJpa.delete(team);
         return Optional.of(team);
     }
