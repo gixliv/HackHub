@@ -33,7 +33,7 @@ public class Team {
     @JoinColumn(name = "creatore_id")
     private Utente creatore;
 
-    //TODO verificare se funziona effettivamente sqlrestriction!!!!!!
+
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
     @SQLRestriction("ruolo= 'MEMBRO_TEAM' ")
     private List<Utente> membri;

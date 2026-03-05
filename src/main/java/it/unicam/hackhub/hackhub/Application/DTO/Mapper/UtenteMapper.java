@@ -38,7 +38,7 @@ public class UtenteMapper {
         response.setRuolo(utente.getRuolo());
         response.setIban(utente.getIban());
         response.setDataNascita(utente.getDataNascita());
-        response.setTeamId(utente.getTeam().getId());
+        response.setNomeTeam(utente.getTeam().getNome());
         return response;
     }
 }

@@ -11,6 +11,7 @@ import it.unicam.hackhub.hackhub.Core.models.Utente;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,11 +35,17 @@ public class TeamController {
 
     //da rivedere
     @GetMapping("/membri/{teamId}")
-    public List<Utente> getMembriTeam(@PathVariable Long teamId) {
+    public List<UtenteResponse> getMembriTeam(@PathVariable Long teamId) {
         if (teamId == null) {
             throw new IllegalArgumentException();
         }
-        return teamService.getMembriTeam(teamId);
+        List<UtenteResponse> response=new ArrayList<>();
+        UtenteMapper utenteMapper= new UtenteMapper();
+        List<Utente> utenti=teamService.getMembriTeam(teamId);
+        for (Utente utente: utenti){
+            response.add(utenteMapper.toResponse(utente));
+        }
+        return response;
     }
 
     @GetMapping("/creatore/{teamId}")
