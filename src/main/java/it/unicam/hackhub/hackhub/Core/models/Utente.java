@@ -26,7 +26,7 @@ public class Utente {
     @Column(nullable = false)
     private String cognome;
 
-    @Column
+    @Column(nullable = false)
     private char sesso;
 
     @Column(unique = true, nullable = false)

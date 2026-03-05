@@ -39,6 +39,9 @@ public class TeamService implements ITeamService {
         team.setNome(request.getNome());
         team.setNumeroMassimoComponenti(request.getNumeroMassimoComponenti());
         repositoryTeam.insertInto(team);
+        creatore.setRuolo(Ruolo.CREATORE_TEAM);
+        creatore.setTeam(team);
+        repositoryUtenti.updateUtente(creatore);
         return team;
     }
 
