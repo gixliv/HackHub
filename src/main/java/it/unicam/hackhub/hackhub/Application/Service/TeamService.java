@@ -77,7 +77,7 @@ public class TeamService implements ITeamService {
     public boolean setMembro(Long idUtente, Long idTeam) {
         Utente utente = repositoryUtenti.findById(idUtente).orElseThrow(EntityNotFoundException::new);
         Team team = repositoryTeam.findTeamById(idTeam).orElseThrow(EntityNotFoundException::new);
-        if (utente.getTeam().getId() == null) {
+        if (utente.getTeam() == null) {
             utente.setTeam(team);
             return true;
         }
