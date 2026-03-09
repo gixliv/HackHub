@@ -29,13 +29,12 @@ public class InvitiController {
 
     @PostMapping("/invita/{username}")
     @PreAuthorize("hasRole('CREATORE_TEAM')")
-    public String invitaUtente(@RequestParam Long idMittente, @RequestParam String descrizione, @RequestParam Long idTeam, @PathVariable String username){
+    public String invitaUtente(@RequestParam Long idMittente, @RequestParam String descrizione, @PathVariable String username){
         Utente utente= repositoryUtenti.findByUsername(username).orElseThrow(EntityNotFoundException::new);
         InvitoRequest  request= new InvitoRequest();
         request.setDestinatarioId(utente.getId());
         request.setDescrizione(descrizione);
         request.setMittenteId(idMittente);
-        request.setTeamId(idTeam);
         invitiService.invitaUtente(request);
         return "Utente invitato";
     }

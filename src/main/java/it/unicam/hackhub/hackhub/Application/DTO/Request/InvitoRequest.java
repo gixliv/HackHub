@@ -5,7 +5,6 @@ public class InvitoRequest {
     private String descrizione;
     private Long mittenteId;
     private Long destinatarioId;
-    private Long teamId;
 
     public String getDescrizione() {
         return descrizione;
@@ -31,9 +30,4 @@ public class InvitoRequest {
         this.destinatarioId = destinatarioId;
     }
 
-    public Long getTeamId() {return teamId;}
-
-    public void setTeamId(Long teamId) {
-        this.teamId = teamId;
-    }
 }

@@ -23,11 +23,6 @@ public class InvitoMapper {
         destinatario.setId(invitoRequest.getDestinatarioId());
         invito.setDestinatario(destinatario);
 
-        // Crea un riferimento a Team
-        Team team = new Team();
-        team.setId(invitoRequest.getTeamId());
-        invito.setTeam(team);
-
         return invito;
     }
 
