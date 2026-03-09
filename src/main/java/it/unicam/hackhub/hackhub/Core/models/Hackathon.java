@@ -1,10 +1,13 @@
 package it.unicam.hackhub.hackhub.Core.models;
 
+import it.unicam.hackhub.hackhub.Core.enums.HackathonStato;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,10 +36,17 @@ public class Hackathon {
     @Column(nullable = false)
     private String luogo;
 
-    //TODO membri dello staff, stato
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private HackathonStato stato;
 
     @Column(nullable = false)
     private int dimensioneMaxTeam;
 
+    @Column(nullable = false)
+    private int numMaxTeam;
+
+    @OneToMany(mappedBy = "hackathon", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Team> team;
 
 }
