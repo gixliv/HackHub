@@ -1,6 +1,6 @@
 package it.unicam.hackhub.hackhub.Core.enums;
 
-public enum HackathonStato {
+public enum StatoHackathon {
     IN_ISCRIZIONE,
     IN_CORSO,
     IN_VALUTAZIONE,

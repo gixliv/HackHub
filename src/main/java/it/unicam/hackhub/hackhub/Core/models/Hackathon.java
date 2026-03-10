@@ -1,10 +1,9 @@
 package it.unicam.hackhub.hackhub.Core.models;
 
-import it.unicam.hackhub.hackhub.Core.enums.HackathonStato;
+import it.unicam.hackhub.hackhub.Core.enums.StatoHackathon;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -38,7 +37,7 @@ public class Hackathon {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private HackathonStato stato;
+    private StatoHackathon stato;
 
     @Column(nullable = false)
     private int dimensioneMaxTeam;
