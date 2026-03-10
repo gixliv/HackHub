@@ -50,14 +50,12 @@ public class InvitiService implements IInvitiService {
 
     @Override
     public List<Invito> getAllInviti(Long id) {
-        if(id==null) throw new IllegalArgumentException();
         Utente utente = repositoryUtenti.findById(id).orElseThrow(EntityNotFoundException::new);
         return utente.getInvitiRicevuti();
     }
 
     @Override
     public boolean accettaInvito(Long id) {
-        if(id==null) throw new IllegalArgumentException();
         Invito invito = repositoryInviti.findInvitoById(id).orElseThrow(EntityNotFoundException::new);
 
         Utente utente = invito.getDestinatario();
@@ -82,7 +80,6 @@ public class InvitiService implements IInvitiService {
 
     @Override
     public boolean rifiutaInvito(Long id) {
-        if(id==null) throw new IllegalArgumentException();
         Invito invito = repositoryInviti.findInvitoById(id).orElseThrow(EntityNotFoundException::new);
         invito.setStato(StatoInvito.RIFIUTATO);
         repositoryInviti.updateInvito(invito);
