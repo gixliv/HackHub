@@ -11,6 +11,7 @@ public class HackathonRequest {
     private LocalDate dataFine;
     private String luogo;
     private int dimensioneMaxTeam;
+    private int numMaxTeam;
 
     public String getNome() {
         return nome;
@@ -67,4 +68,8 @@ public class HackathonRequest {
     public void setDimensioneMaxTeam(int dimensioneMaxTeam) {
         this.dimensioneMaxTeam = dimensioneMaxTeam;
     }
+
+    public int getNumMaxTeam() {return numMaxTeam;}
+
+    public void setNumMaxTeam(int numMaxTeam) {this.numMaxTeam = numMaxTeam;}
 }

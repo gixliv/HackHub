@@ -45,7 +45,7 @@ public class Hackathon {
     @Column(nullable = false)
     private int numMaxTeam;
 
-    @OneToMany(mappedBy = "hackathon", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Team> team;
+    @OneToMany(mappedBy = "hackathon", cascade = CascadeType.ALL)
+    private List<Team> teams;
 
 }

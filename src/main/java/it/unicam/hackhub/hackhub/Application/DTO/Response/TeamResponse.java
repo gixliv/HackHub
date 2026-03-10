@@ -16,4 +16,5 @@ public class TeamResponse {
     private int numeroMassimoComponenti;
     private Long creatoreId;
     private List<Long> membriId;
+    private Long hackathonId;
 }

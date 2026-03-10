@@ -38,7 +38,7 @@ public class TeamService implements ITeamService {
         team.setDescrizione(request.getDescrizione());
         team.setNome(request.getNome());
         team.setNumeroMassimoComponenti(request.getNumeroMassimoComponenti());
-        repositoryTeam.insertInto(team);
+        team= repositoryTeam.insertInto(team).orElseThrow(EntityNotFoundException::new);
         creatore.setRuolo(Ruolo.CREATORE_TEAM);
         creatore.setTeam(team);
         repositoryUtenti.updateUtente(creatore);
@@ -79,6 +79,7 @@ public class TeamService implements ITeamService {
         Team team = repositoryTeam.findTeamById(idTeam).orElseThrow(EntityNotFoundException::new);
         if (utente.getTeam() == null) {
             utente.setTeam(team);
+            repositoryUtenti.updateUtente(utente);
             return true;
         }
         return false;

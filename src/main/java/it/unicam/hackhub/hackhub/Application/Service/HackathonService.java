@@ -10,6 +10,7 @@ import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,18 +36,19 @@ public class HackathonService implements IHackathonService {
 
        if(hackathon.getStato()!= StatoHackathon.IN_ISCRIZIONE) throw new RuntimeException("Hackathon non in fase di iscrizione!!");
        if(team.getNumeroMassimoComponenti() > hackathon.getDimensioneMaxTeam()) throw new RuntimeException("Il team ha un numero di componenti superiore a quello previsto");
-       if(hackathon.getTeam().size() >= hackathon.getNumMaxTeam()) throw new RuntimeException("Impossibile iscriversi all'hackathon numero massimo di team raggiunti");
+       if(hackathon.getTeams().size() >= hackathon.getNumMaxTeam()) throw new RuntimeException("Impossibile iscriversi all'hackathon numero massimo di team raggiunti");
        if(LocalDate.now().isAfter(hackathon.getScadenzaIscrizioni())) throw new RuntimeException("Le iscrizioni sono chiuse");
 
        team.setHackathon(hackathon);
        repositoryTeam.updateTeam(team);
-       hackathon.getTeam().add(team);
+       hackathon.getTeams().add(team);
        repositoryHackathon.updateHackathon(hackathon);
 
        return hackathon;
     }
 
     @Override
+    @Transactional
     public Hackathon disiscriviTeamHackathon(Long idHackathon, Long idUtente) {
         Hackathon hackathon= repositoryHackathon.findHackathonById(idHackathon).orElseThrow (()-> new EntityNotFoundException("Hackathon non presente"));
         Utente utente=repositoryUtenti.findById(idUtente).orElseThrow(()-> new EntityNotFoundException("Utente non presente"));
@@ -54,7 +56,7 @@ public class HackathonService implements IHackathonService {
 
         if(hackathon.getStato()!= StatoHackathon.IN_ISCRIZIONE) throw new RuntimeException("Impossibile effettuare disiscrizione, l'hackathon è in "+ hackathon.getStato());
 
-        hackathon.getTeam().remove(team);
+        hackathon.getTeams().remove(team);
         repositoryHackathon.updateHackathon(hackathon);
         team.setHackathon(null);
         repositoryTeam.updateTeam(team);
@@ -65,7 +67,7 @@ public class HackathonService implements IHackathonService {
     @Override
     public List<Team> getAllTeams(Long idHackathon) {
         Hackathon hackathon= repositoryHackathon.findHackathonById(idHackathon).orElseThrow (()-> new EntityNotFoundException("Hackathon non presente"));
-        return hackathon.getTeam();
+        return hackathon.getTeams();
 
     }
 }

@@ -35,6 +35,7 @@ public class TeamMapper {
         }
         teamresponse.setMembriId(membri);
         teamresponse.setCreatoreId(team.getCreatore().getId());
+        teamresponse.setHackathonId(team.getHackathon().getId());
         return  teamresponse;
     }
 }
