@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public interface IRepositoryHackathon {
     //TODO
-    Optional<Hackathon> getHackathonById(Long id);
-    Optional<Hackathon> getHackathonByName(String name);
+    Optional<Hackathon> findHackathonById(Long id);
+    Optional<Hackathon> findHackathonByName(String name);
     Optional<Hackathon> updateHackathon(Hackathon hackathon);
     List<Hackathon> getAllHackathon();
 }

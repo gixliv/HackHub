@@ -19,12 +19,12 @@ public class RepositoryHackathonAdp implements IRepositoryHackathon {
 
 
     @Override
-    public Optional<Hackathon> getHackathonById(Long id) {
+    public Optional<Hackathon> findHackathonById(Long id) {
         return repositoryHackathonJpa.findById(id);
     }
 
     @Override
-    public Optional<Hackathon> getHackathonByName(String name) {
+    public Optional<Hackathon> findHackathonByName(String name) {
         return repositoryHackathonJpa.findByNome(name);
     }
 
