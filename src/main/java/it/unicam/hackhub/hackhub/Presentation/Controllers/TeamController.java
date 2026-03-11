@@ -1,11 +1,14 @@
 package it.unicam.hackhub.hackhub.Presentation.Controllers;
 
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.ITeamService;
+import it.unicam.hackhub.hackhub.Application.DTO.Mapper.HackathonMapper;
 import it.unicam.hackhub.hackhub.Application.DTO.Mapper.TeamMapper;
 import it.unicam.hackhub.hackhub.Application.DTO.Mapper.UtenteMapper;
 import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
+import it.unicam.hackhub.hackhub.Application.DTO.Response.HackathonResponse;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.TeamResponse;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.UtenteResponse;
+import it.unicam.hackhub.hackhub.Core.models.Hackathon;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 import org.springframework.web.bind.annotation.*;
@@ -77,6 +80,30 @@ public class TeamController {
         Team team = teamService.updateTeam(idTeam, teamRequest.getNumeroMassimoComponenti(), teamRequest.getNome(), teamRequest.getDescrizione());
         TeamMapper  teamMapper = new TeamMapper();
         return teamMapper.toResponse(team);
+    }
+
+    @PutMapping("/espelli/{idUtente}")
+    @PreAuthorize("hasRole('CREATORE_TEAM')")
+    public String eliminaMembro(@PathVariable Long idUtente, @RequestParam Long idTeam) {
+        teamService.eliminaMembro(idUtente, idTeam);
+        return "Membro eliminato";
+    }
+
+    @GetMapping("/hackathon/{idTeam}")
+    public HackathonResponse getHackathon(@PathVariable Long idTeam) {
+        Hackathon hackathon = teamService.getHackathon(idTeam);
+        HackathonMapper hackathonMapper = new HackathonMapper();
+        return  hackathonMapper.toResponse(hackathon);
+    }
+
+    @GetMapping
+    public List<TeamResponse> getAllTeams() {
+        TeamMapper teamMapper = new TeamMapper();
+        List<TeamResponse> response=new ArrayList<>();
+        for (Team team: teamService.getAllTeams()) {
+            response.add(teamMapper.toResponse(team));
+        }
+        return response;
     }
 
 }

@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class InvitoResponse {
     private String descrizione;
-    private Long mittenteId;
-    private Long destinatarioId;
+    private String nomeMittente;
+    private String nomeDestinatario;
     private StatoInvito stato;
 }

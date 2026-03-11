@@ -47,7 +47,7 @@ public class RepositoryTeamAdp implements IRepositoryTeam {
         return Optional.of(team);
     }
     @Override
-    public List<Team> getAllTeam() {
+    public List<Team> findAllTeam() {
         return repositoryTeamJpa.findAll();
     }
 

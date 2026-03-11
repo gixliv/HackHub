@@ -30,8 +30,8 @@ public class InvitoMapper {
         if (invito == null) return null;
         InvitoResponse invitoResponse = new InvitoResponse();
         invitoResponse.setDescrizione(invito.getDescrizione());
-        invitoResponse.setMittenteId(invito.getMittente().getId());
-        invitoResponse.setDestinatarioId(invito.getDestinatario().getId());
+        invitoResponse.setNomeMittente(invito.getMittente().getNome());
+        invitoResponse.setNomeDestinatario(invito.getDestinatario().getNome());
         invitoResponse.setStato(invito.getStato());
         return invitoResponse;
     }

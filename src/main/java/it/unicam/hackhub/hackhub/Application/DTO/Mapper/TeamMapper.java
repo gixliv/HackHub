@@ -27,15 +27,15 @@ public class TeamMapper {
         teamresponse.setNome(team.getNome());
         teamresponse.setDescrizione(team.getDescrizione());
         teamresponse.setNumeroMassimoComponenti(team.getNumeroMassimoComponenti());
-        List<Long> membri = new ArrayList<>();
+        List<String> membri = new ArrayList<>();
         if (team.getMembri() != null) {
             for (Utente membro : team.getMembri()) {
-                membri.add(membro.getId());
+                membri.add(membro.getNome());
             }
         }
-        teamresponse.setMembriId(membri);
-        teamresponse.setCreatoreId(team.getCreatore().getId());
-        teamresponse.setHackathonId(team.getHackathon().getId());
+        teamresponse.setNomeMembri(membri);
+        teamresponse.setNomeCreatore(team.getCreatore().getNome());
+        if (team.getHackathon()!=null)teamresponse.setNomeHackathon(team.getHackathon().getNome());
         return  teamresponse;
     }
 }

@@ -5,6 +5,7 @@ import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryU
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.ITeamService;
 import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
 import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
+import it.unicam.hackhub.hackhub.Core.models.Hackathon;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 import it.unicam.hackhub.hackhub.Presentation.Exeptions.MemberNotFoundInTeamException;
@@ -12,6 +13,7 @@ import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -93,14 +95,23 @@ public class TeamService implements ITeamService {
     }
 
     @Override
-    public boolean eliminaMembro(Long idUtente, Long idTeam) {
-        Utente utente = repositoryUtenti.findById(idUtente).orElseThrow(EntityNotFoundException::new);
-        if(repositoryTeam.checkMembroById(idUtente, idTeam)){
-            utente.setTeam(null);
-            utente.setRuolo(Ruolo.UTENTE_GENERICO);
-            repositoryUtenti.updateUtente(utente);
-            return true;
-        }
-        return false;
+    public Hackathon getHackathon(Long idTeam) {
+        Team team  = repositoryTeam.findTeamById(idTeam).orElseThrow(EntityNotFoundException::new);
+        return team.getHackathon();
     }
+
+    @Override
+    public List<Team> getAllTeams() {
+        return repositoryTeam.findAllTeam();
+    }
+
+    @Override
+    public boolean eliminaMembro(Long idUtente, Long idTeam) {
+        Utente utente = getMembroById(idUtente, idTeam);
+        utente.setTeam(null);
+        utente.setRuolo(Ruolo.UTENTE_GENERICO);
+        repositoryUtenti.updateUtente(utente);
+        return true;
+    }
+
 }
