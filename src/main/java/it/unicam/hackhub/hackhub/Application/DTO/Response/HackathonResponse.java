@@ -21,5 +21,5 @@ public class HackathonResponse {
     private int dimensioneMaxTeam;
     private int numMaxTeam;
     private StatoHackathon stato;
-    private List<Long> teamsId;
+    private List<String> Nometeams;
 }

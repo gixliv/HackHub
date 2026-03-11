@@ -40,12 +40,12 @@ public class HackathonMapper {
         response.setDimensioneMaxTeam(hackathon.getDimensioneMaxTeam());
         response.setNumMaxTeam(hackathon.getNumMaxTeam());
         response.setStato(hackathon.getStato());
-        List<Long> teams=new ArrayList<>();
+        List<String> teams=new ArrayList<>();
         if(hackathon.getTeams()!=null)
             for(Team team: hackathon.getTeams()){
-                teams.add(team.getId());
+                teams.add(team.getNome());
             }
-        response.setTeamsId(teams);
+        response.setNometeams(teams);
         return response;
     }
 }

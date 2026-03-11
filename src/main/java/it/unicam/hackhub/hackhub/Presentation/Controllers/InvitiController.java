@@ -59,18 +59,18 @@ public class InvitiController {
         return invitoResp;
     }
 
-    @PutMapping("/accetta/{idUtente}")
+    @PutMapping("/accetta/{idInvito}")
     @PreAuthorize("hasRole('UTENTE_GENERICO')")
-    public String accettaInvito(@PathVariable Long idUtente){
-        if(idUtente == null) throw new IllegalArgumentException();
-        invitiService.accettaInvito(idUtente);
+    public String accettaInvito(@PathVariable Long idInvito){
+        if(idInvito == null) throw new IllegalArgumentException();
+        invitiService.accettaInvito(idInvito);
         return "Invito accettato";
     }
 
-    @DeleteMapping("/rifiuta/{idUtente}")
-    public String rifiutaInvito(@PathVariable Long idUtente){
-        if(idUtente == null) throw new IllegalArgumentException();
-        invitiService.rifiutaInvito(idUtente);
+    @DeleteMapping("/rifiuta/{idInvito}")
+    public String rifiutaInvito(@PathVariable Long idInvito){
+        if(idInvito == null) throw new IllegalArgumentException();
+        invitiService.rifiutaInvito(idInvito);
         return "Invito rifiutato";
     }
 }
