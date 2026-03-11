@@ -26,7 +26,7 @@ public class Team {
     @Column(unique = true)
     private String nome;
 
-    @Column(unique = true)
+    @Column
     private String descrizione;
 
     @ManyToOne

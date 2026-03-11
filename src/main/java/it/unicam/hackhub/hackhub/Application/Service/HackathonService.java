@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HackathonService implements IHackathonService {
@@ -69,5 +70,15 @@ public class HackathonService implements IHackathonService {
         Hackathon hackathon= repositoryHackathon.findHackathonById(idHackathon).orElseThrow (()-> new EntityNotFoundException("Hackathon non presente"));
         return hackathon.getTeams();
 
+    }
+
+    @Override
+    public List<Hackathon> getAllHackathon() {
+        return repositoryHackathon.findAllHackathon();
+    }
+
+    @Override
+    public Optional<Hackathon> getHackathonByName(String name) {
+        return repositoryHackathon.findHackathonByName(name);
     }
 }

@@ -34,7 +34,7 @@ public class RepositoryHackathonAdp implements IRepositoryHackathon {
     }
 
     @Override
-    public List<Hackathon> getAllHackathon() {
+    public List<Hackathon> findAllHackathon() {
         return repositoryHackathonJpa.findAll();
     }
 }
