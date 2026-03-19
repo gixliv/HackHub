@@ -14,4 +14,6 @@ public interface IUtentiService {
     List<Utente> getUtentiByRuolo(Ruolo ruolo);
 
     boolean registrazione(UtenteRequest utente);
+
+    boolean login(String username, String password);
 }

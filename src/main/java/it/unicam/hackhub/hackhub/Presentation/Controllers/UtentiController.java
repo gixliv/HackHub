@@ -49,4 +49,10 @@ public class UtentiController {
         if (utentiService.registrazione(utenteRequest)) return "Registrazione avvenuta! Benvenuto "+utenteRequest.getUsername();
         else return "Registrazione non avvenuta";
     }
+
+    @PostMapping("/login")
+    public String login(@RequestParam String username, @RequestParam String password){
+        if(utentiService.login(username, password)) return "Accesso effettuato!";
+        return "Accesso fallito, riprova!";
+    }
 }

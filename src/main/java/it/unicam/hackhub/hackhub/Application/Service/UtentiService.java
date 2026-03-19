@@ -8,6 +8,7 @@ import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @Service
 public class UtentiService implements IUtentiService {
 
+    private PasswordEncoder passwordEncoder;
     private final IRepositoryUtenti repositoryUtenti;
 
     public UtentiService(IRepositoryUtenti repositoryUtenti) {
@@ -46,6 +48,13 @@ public class UtentiService implements IUtentiService {
         utente.setRuolo(Ruolo.UTENTE_GENERICO);
         repositoryUtenti.insertInto(utente);
         return repositoryUtenti.findById(utente.getId()).isPresent();
+    }
+
+    @Override
+    public boolean login(String username, String password) {
+        if(username==null || password==null) throw new IllegalArgumentException("inserire entrambe le credenziali");
+        Utente utente = repositoryUtenti.findByUsername(username).orElseThrow(EntityNotFoundException::new);
+        return passwordEncoder.matches(password, utente.getPassword());
     }
 
 }

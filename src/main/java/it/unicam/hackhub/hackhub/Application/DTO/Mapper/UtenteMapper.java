@@ -4,8 +4,11 @@ import it.unicam.hackhub.hackhub.Application.DTO.Request.UtenteRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.UtenteResponse;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UtenteMapper {
+
+    private PasswordEncoder passwordEncoder;
 
     public Utente toEntity(UtenteRequest utenteRequest) {
         if (utenteRequest == null) return null;
@@ -15,7 +18,7 @@ public class UtenteMapper {
         utente.setCognome(utenteRequest.getCognome());
         utente.setSesso(utenteRequest.getSesso());
         utente.setEmail(utenteRequest.getEmail());
-        utente.setPassword(utenteRequest.getPassword());
+        utente.setPassword(passwordEncoder.encode(utenteRequest.getPassword()));
         utente.setTelefono(utenteRequest.getTelefono());
         utente.setIban(utenteRequest.getIban());
         utente.setDataNascita(utenteRequest.getDataNascita());
