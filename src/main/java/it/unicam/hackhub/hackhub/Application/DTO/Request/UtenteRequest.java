@@ -1,7 +1,14 @@
 package it.unicam.hackhub.hackhub.Application.DTO.Request;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
+@Setter
+@Getter
+@NoArgsConstructor
 public class UtenteRequest {
 
     private String username;
@@ -13,80 +20,6 @@ public class UtenteRequest {
     private String telefono;
     private String iban;
     private LocalDate dataNascita;
-    private Long teamId;
 
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCognome() {
-        return cognome;
-    }
-
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
-    }
-
-    public char getSesso() {
-        return sesso;
-    }
-
-    public void setSesso(char sesso) {
-        this.sesso = sesso;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getIban() {
-        return iban;
-    }
-
-    public void setIban(String iban) {
-        this.iban = iban;
-    }
-
-    public LocalDate getDataNascita() {
-        return dataNascita;
-    }
-
-    public void setDataNascita(LocalDate dataNascita) {this.dataNascita = dataNascita;}
-
-    public Long getTeamId(){ return teamId; }
-
-    public void SetTeamId(Long teamId){ this.teamId = teamId; }
 }

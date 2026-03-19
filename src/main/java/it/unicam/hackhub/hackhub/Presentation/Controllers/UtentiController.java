@@ -42,4 +42,11 @@ public class UtentiController {
         }
         return utenteResponse;
     }
+
+    @PostMapping("/registrazione")
+    public String registrazione(@RequestBody UtenteRequest utenteRequest) {
+        if (utenteRequest == null) throw new IllegalArgumentException();
+        if (utentiService.registrazione(utenteRequest)) return "Registrazione avvenuta! Benvenuto "+utenteRequest.getUsername();
+        else return "Registrazione non avvenuta";
+    }
 }
