@@ -19,10 +19,6 @@ public class UtenteMapper {
         utente.setTelefono(utenteRequest.getTelefono());
         utente.setIban(utenteRequest.getIban());
         utente.setDataNascita(utenteRequest.getDataNascita());
-
-        Team team= new Team();
-        team.setId(utenteRequest.getTeamId());
-        utente.setTeam(team);
         return utente;
     }
 
@@ -38,7 +34,7 @@ public class UtenteMapper {
         response.setRuolo(utente.getRuolo());
         response.setIban(utente.getIban());
         response.setDataNascita(utente.getDataNascita());
-        response.setNomeTeam(utente.getTeam().getNome());
+        if (utente.getTeam()!=null)response.setNomeTeam(utente.getTeam().getNome());
         return response;
     }
 }

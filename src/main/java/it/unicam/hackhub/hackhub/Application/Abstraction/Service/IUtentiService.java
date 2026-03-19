@@ -13,5 +13,5 @@ public interface IUtentiService {
 
     List<Utente> getUtentiByRuolo(Ruolo ruolo);
 
-    Utente registrazione(UtenteRequest utente);
+    boolean registrazione(UtenteRequest utente);
 }
