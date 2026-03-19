@@ -12,6 +12,7 @@ import it.unicam.hackhub.hackhub.Presentation.Exeptions.MemberNotFoundInTeamExce
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +49,24 @@ public class TeamService implements ITeamService {
     }
 
     @Override
+    @Transactional
     public boolean eliminaTeam(Long id) {
         Team team = repositoryTeam.findTeamById(id).orElseThrow(EntityNotFoundException::new);
+
+        if (team.getMembri() != null) {
+            for (Utente membro : team.getMembri()) {
+                membro.setTeam(null);
+                membro.setRuolo(Ruolo.UTENTE_GENERICO);
+                repositoryUtenti.updateUtente(membro);
+            }
+        }
+
+        Utente creatore = team.getCreatore();
+        if (creatore != null) {
+            creatore.setTeam(null);
+            creatore.setRuolo(Ruolo.UTENTE_GENERICO);
+            repositoryUtenti.updateUtente(creatore);
+        }
         repositoryTeam.eliminaTeam(team.getId());
         return repositoryTeam.findTeamById(team.getId()).isEmpty();
     }

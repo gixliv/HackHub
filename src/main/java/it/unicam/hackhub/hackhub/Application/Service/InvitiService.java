@@ -74,7 +74,6 @@ public class InvitiService implements IInvitiService {
         }
 
         repositoryInviti.updateInvito(invito);
-
         return repositoryInviti.findInvitoById(invito.getId()).isEmpty();
     }
 

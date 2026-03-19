@@ -1,6 +1,7 @@
 package it.unicam.hackhub.hackhub.Core.models;
 
 import it.unicam.hackhub.hackhub.Core.enums.StatoHackathon;
+import it.unicam.hackhub.hackhub.Core.models.MembroStaff;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,5 +48,17 @@ public class Hackathon {
 
     @OneToMany(mappedBy = "hackathon", cascade = CascadeType.ALL)
     private List<Team> teams;
+
+    @ManyToOne
+    @JoinColumn(name = "organizzatore_id")
+    private MembroStaff organizzatore;
+
+    @ManyToOne
+    @JoinColumn(name = "giudice_id")
+    private MembroStaff giudice;
+
+    @ManyToMany
+    @JoinColumn(name = "mentore_id")
+    private List<MembroStaff> mentori;
 
 }

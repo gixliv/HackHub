@@ -1,5 +1,6 @@
 package it.unicam.hackhub.hackhub.Application.DTO.Request;
 
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,11 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TeamRequest {
+public class MembroStaffRequest {
 
-    private int numeroMassimoComponenti;
-    private String nome;
-    private String descrizione;
-    private Long creatore;
+    private String codiceFiscale;
+    private String nomeHackathon;
 
 }
