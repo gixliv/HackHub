@@ -2,6 +2,8 @@ package it.unicam.hackhub.hackhub.Application.Service;
 
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryUtenti;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IUtentiService;
+import it.unicam.hackhub.hackhub.Application.DTO.Mapper.UtenteMapper;
+import it.unicam.hackhub.hackhub.Application.DTO.Request.UtenteRequest;
 import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 import jakarta.persistence.EntityNotFoundException;
@@ -34,4 +36,13 @@ public class UtentiService implements IUtentiService {
     public List<Utente> getUtentiByRuolo(Ruolo ruolo) {
         return repositoryUtenti.findAllByRuolo(ruolo);
     }
+
+    @Override
+    public Utente registrazione(UtenteRequest request) {
+        UtenteMapper mapper = new UtenteMapper();
+        Utente utente = mapper.toEntity(request);
+        repositoryUtenti.insertInto(utente);
+        return utente;
+    }
+
 }
