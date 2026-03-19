@@ -58,7 +58,11 @@ public class Hackathon {
     private MembroStaff giudice;
 
     @ManyToMany
-    @JoinColumn(name = "mentore_id")
+    @JoinTable(
+            name = "hackathon_mentori",
+            joinColumns = @JoinColumn(name = "hackathon_id"),
+            inverseJoinColumns = @JoinColumn(name = "mentore_id")
+    )
     private List<MembroStaff> mentori;
 
 }

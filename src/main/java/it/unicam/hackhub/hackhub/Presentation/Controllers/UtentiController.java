@@ -55,4 +55,12 @@ public class UtentiController {
         if(utentiService.login(username, password)) return "Accesso effettuato!";
         return "Accesso fallito, riprova!";
     }
+
+    @PutMapping("/{idUtente}")
+    public UtenteResponse ModificaProfilo(@PathVariable Long idUtente, @RequestBody UtenteRequest utenteRequest) {
+        if (utenteRequest == null) throw new IllegalArgumentException();
+        Utente utente = utentiService.ModificaProfilo(idUtente, utenteRequest.getUsername(), utenteRequest.getNome(), utenteRequest.getCognome(), utenteRequest.getSesso(), utenteRequest.getEmail(), utenteRequest.getPassword(), utenteRequest.getTelefono(), utenteRequest.getIban(), utenteRequest.getDataNascita());
+        UtenteMapper utenteMapper = new UtenteMapper();
+        return utenteMapper.toResponse(utente);
+    }
 }

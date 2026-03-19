@@ -8,8 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UtenteMapper {
 
-    private PasswordEncoder passwordEncoder;
-
     public Utente toEntity(UtenteRequest utenteRequest) {
         if (utenteRequest == null) return null;
         Utente utente = new Utente();
@@ -18,7 +16,7 @@ public class UtenteMapper {
         utente.setCognome(utenteRequest.getCognome());
         utente.setSesso(utenteRequest.getSesso());
         utente.setEmail(utenteRequest.getEmail());
-        utente.setPassword(passwordEncoder.encode(utenteRequest.getPassword()));
+        utente.setPassword(utenteRequest.getPassword());
         utente.setTelefono(utenteRequest.getTelefono());
         utente.setIban(utenteRequest.getIban());
         utente.setDataNascita(utenteRequest.getDataNascita());

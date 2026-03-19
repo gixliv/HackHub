@@ -11,10 +11,10 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "MembriStaff")
+@DiscriminatorValue("MEMBRO_STAFF")
 public class MembroStaff extends Utente{
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String codiceFiscale;
 
     @ManyToOne
