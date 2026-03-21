@@ -4,7 +4,6 @@ import it.unicam.hackhub.hackhub.Core.models.Hackathon;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IHackathonService {
 
@@ -16,5 +15,7 @@ public interface IHackathonService {
 
     List<Hackathon> getAllHackathon();
 
-    Optional<Hackathon> getHackathonByName(String name);
+    Hackathon getHackathonByName(String name);
+
+    List<Hackathon> getAllMyHackathon(Long idUtente);
 }

@@ -4,8 +4,10 @@ import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryH
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryTeam;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryUtenti;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IHackathonService;
+import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
 import it.unicam.hackhub.hackhub.Core.enums.StatoHackathon;
 import it.unicam.hackhub.hackhub.Core.models.Hackathon;
+import it.unicam.hackhub.hackhub.Core.models.MembroStaff;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 import jakarta.persistence.EntityNotFoundException;
@@ -78,7 +80,20 @@ public class HackathonService implements IHackathonService {
     }
 
     @Override
-    public Optional<Hackathon> getHackathonByName(String name) {
-        return repositoryHackathon.findHackathonByName(name);
+    public Hackathon getHackathonByName(String name) {
+        return repositoryHackathon.findHackathonByName(name).orElseThrow(() -> new EntityNotFoundException("Hackaton non presente") );
+    }
+
+    @Override
+    public List<Hackathon> getAllMyHackathon(Long idUtente) {
+        MembroStaff membro = (MembroStaff)repositoryUtenti.findById(idUtente).orElseThrow(() -> new EntityNotFoundException("Hackaton non presente"));
+
+        if(membro.getRuolo().equals(Ruolo.GIUDICE)) return membro.getHackathonsGiudice();
+
+        if(membro.getRuolo().equals(Ruolo.MENTORE)) return membro.getHackathonsMentore();
+
+        if(membro.getRuolo().equals(Ruolo.ORGANIZZATORE)) return membro.getHackathonsOrganizzatore();
+
+        throw new EntityNotFoundException();
     }
 }
