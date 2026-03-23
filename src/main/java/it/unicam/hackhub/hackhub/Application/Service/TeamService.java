@@ -131,4 +131,16 @@ public class TeamService implements ITeamService {
         return true;
     }
 
+    @Override
+    public boolean abbandonaTeam(Long idUtente, Long idTeam) {
+        Utente utente=repositoryUtenti.findById(idUtente).orElseThrow(EntityNotFoundException::new);
+        Team team=repositoryTeam.findTeamById(idTeam).orElseThrow(EntityNotFoundException::new);
+
+        if(utente.getTeam().getNome().equals(team.getNome())){
+            eliminaMembro(idUtente,idTeam);
+            repositoryTeam.updateTeam(team);
+        }
+        return false;
+    }
+
 }

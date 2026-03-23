@@ -106,4 +106,12 @@ public class TeamController {
         return response;
     }
 
+    @PutMapping("/abbandona/{idTeam}")
+    @PreAuthorize("hasRole('MEMBRO_TEAM')")
+    public String abbandonaTeam( @RequestParam Long idUtente, @PathVariable Long idTeam) {
+        if(teamService.abbandonaTeam(idUtente, idTeam)) return "Team abbandonato";
+        return "Impossibile abbandonare il team";
+    }
+
+
 }

@@ -19,4 +19,5 @@ public interface ITeamService {
     Utente getMembroById(Long idUtente, Long idTeam);
     Hackathon getHackathon(Long idTeam);
     List<Team> getAllTeams();
+    boolean abbandonaTeam(Long idUtente, Long idTeam);
 }
