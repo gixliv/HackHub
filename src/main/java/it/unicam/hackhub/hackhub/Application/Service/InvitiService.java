@@ -11,6 +11,7 @@ import it.unicam.hackhub.hackhub.Core.models.Invito;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Core.models.Utente;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,6 +56,7 @@ public class InvitiService implements IInvitiService {
     }
 
     @Override
+    @Transactional
     public boolean accettaInvito(Long id) {
         Invito invito = repositoryInviti.findInvitoById(id).orElseThrow(EntityNotFoundException::new);
 

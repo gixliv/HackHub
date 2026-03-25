@@ -139,6 +139,7 @@ public class TeamService implements ITeamService {
         if(utente.getTeam().getNome().equals(team.getNome())){
             eliminaMembro(idUtente,idTeam);
             repositoryTeam.updateTeam(team);
+            return true;
         }
         return false;
     }

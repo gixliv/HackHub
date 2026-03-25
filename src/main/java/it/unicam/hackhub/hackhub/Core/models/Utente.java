@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "utenti")
-@DiscriminatorColumn(name = "ruolo_utente", discriminatorType = DiscriminatorType.STRING)
+//@DiscriminatorColumn(name = "ruolo_utente", discriminatorType = DiscriminatorType.STRING)
 public class Utente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
