@@ -26,7 +26,7 @@ public class HackathonController {
         this.hackathonService = hackathonService;
     }
 
-    //l'iscrizione del team all'hackathon avviene attraverso l'id, poichè la scelta viene effettuta da una lista di hackathon disponibili
+    //l'iscrizione del team all'hackathon avviene attraverso l'id, la scelta avverrà da una lista di hackathon disponibili
     @PutMapping("/iscrivi/{idHackathon}")
     @PreAuthorize("hasRole('MEMBRO_TEAM') || hasRole('CREATORE_TEAM')")
     public HackathonResponse iscriviTeamHackathon(@PathVariable Long idHackathon, @RequestParam Long idUtente) {
@@ -70,7 +70,7 @@ public class HackathonController {
         return teamResp;
     }
 
-    //lista di tutti i nomi degli hackathonn presenti nel sistema
+    //lista di tutti i nomi degli hackathon presenti nel sistema
     @GetMapping
     public List<String> getAllHackathons() {
         List<String> nomiResponse = new ArrayList<>();
@@ -94,7 +94,7 @@ public class HackathonController {
         return map.toResponse(hackaton);
     }
 
-    //il membro dello staff, attraverso il suo id, può visualizzare tutti i nomi degli hackathon a ciu viene assegnato come staff
+    //il membro dello staff, attraverso il suo id, può visualizzare tutti i nomi degli hackathon a cui viene assegnato come staff
     @GetMapping("/myHackatons/{idUtente}")
     @PreAuthorize("hasRole('MEMBRO_STAFF')")
     public List<String> getAllMyHackatons(@PathVariable Long idUtente){

@@ -27,7 +27,7 @@ public class InvitiController {
         this.repositoryUtenti = repositoryUtenti;
     }
 
-    //l'invito da parte di un creatore del team all'utente, può avvenire attraverso username inserendolo nella path, oltre all'inserimento di parametri necessari al fne di creare un invito
+    //l'invito da parte di un creatore del team all'utente attraverso username, oltre all'inserimento di parametri necessari al fine di creare un invito
     @PostMapping("/invita/{username}")
     @PreAuthorize("hasRole('CREATORE_TEAM')")
     public String invitaUtente(@RequestParam Long idMittente, @RequestParam String descrizione, @PathVariable String username){
@@ -41,7 +41,7 @@ public class InvitiController {
         return "Utente invitato";
     }
 
-    //l'invito da parte di un creatore del team all'utente, può avvenire attraverso file jason contenente la request
+    //l'invito da parte di un creatore del team all'utente
     @PostMapping("/invita")
     @PreAuthorize("hasRole('CREATORE_TEAM')")
     public String invitaUtente(@RequestBody InvitoRequest request){

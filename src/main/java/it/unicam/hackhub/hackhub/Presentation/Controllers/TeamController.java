@@ -71,7 +71,7 @@ public class TeamController {
         return "Team eliminato";
     }
 
-    //modifica, da parte del creatore del team, di alcuni o tutti i parametri di un team che sono stati inseriti alla sua creazione, attraverso file jason
+    //modifica, da parte del creatore del team, di alcuni o tutti i parametri di un team che sono stati inseriti alla sua creazione
     @PutMapping("/{idTeam}")
     @PreAuthorize("hasRole('CREATORE_TEAM')")
     public TeamResponse updateTeam(@PathVariable Long idTeam, @RequestBody TeamRequest teamRequest) {
