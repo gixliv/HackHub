@@ -36,7 +36,7 @@ public class HackathonService implements IHackathonService {
        Hackathon hackathon= repositoryHackathon.findHackathonById(idHackathon).orElseThrow (()-> new EntityNotFoundException("Hackathon non presente"));
        Utente utente=repositoryUtenti.findById(idUtente).orElseThrow(()-> new EntityNotFoundException("Utente non presente"));
        Team team=repositoryTeam.findTeamById(utente.getTeam().getId()).orElseThrow(()-> new EntityNotFoundException("Team non presente"));
-
+       //verifica di tutti i dati necessari per l'iscrizione di un team ad un hackathon
        if(hackathon.getStato()!= StatoHackathon.IN_ISCRIZIONE) throw new RuntimeException("Hackathon non in fase di iscrizione!!");
        if(team.getNumeroMassimoComponenti() > hackathon.getDimensioneMaxTeam()) throw new RuntimeException("Il team ha un numero di componenti superiore a quello previsto");
        if(hackathon.getTeams().size() >= hackathon.getNumMaxTeam()) throw new RuntimeException("Impossibile iscriversi all'hackathon numero massimo di team raggiunti");
@@ -67,6 +67,7 @@ public class HackathonService implements IHackathonService {
         return hackathon;
     }
 
+    //lista di tutti i team iscritti ad uno specifico hackathon
     @Override
     public List<Team> getAllTeams(Long idHackathon) {
         Hackathon hackathon= repositoryHackathon.findHackathonById(idHackathon).orElseThrow (()-> new EntityNotFoundException("Hackathon non presente"));
@@ -74,6 +75,7 @@ public class HackathonService implements IHackathonService {
 
     }
 
+    //lista di tutti gli hackathon presenti nel sistema
     @Override
     public List<Hackathon> getAllHackathon() {
         return repositoryHackathon.findAllHackathon();
@@ -84,6 +86,8 @@ public class HackathonService implements IHackathonService {
         return repositoryHackathon.findHackathonByName(name).orElseThrow(() -> new EntityNotFoundException("Hackaton non presente") );
     }
 
+    //lista di tutti gli hackathon a cui un membroStaff (giudice, mentore) viene assegnato come tale
+    //nel caso dell'organizzatore, lista di tutti gli hackathon che organizza
     @Override
     public List<Hackathon> getAllMyHackathon(Long idUtente) {
         MembroStaff membro = (MembroStaff)repositoryUtenti.findById(idUtente).orElseThrow(() -> new EntityNotFoundException("Hackaton non presente"));

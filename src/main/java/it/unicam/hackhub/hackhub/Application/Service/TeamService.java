@@ -53,6 +53,8 @@ public class TeamService implements ITeamService {
     public boolean eliminaTeam(Long id) {
         Team team = repositoryTeam.findTeamById(id).orElseThrow(EntityNotFoundException::new);
 
+        //quando il creatore del team decide di eliminare il team, è necessario che a tutti i membri del team venga scollegato il team e che venga modificato il ruolo
+        //in seguito verra effettuata la stessa operazione anche al creatore del team.
         if (team.getMembri() != null) {
             for (Utente membro : team.getMembri()) {
                 membro.setTeam(null);
@@ -68,6 +70,7 @@ public class TeamService implements ITeamService {
             repositoryUtenti.updateUtente(creatore);
         }
         repositoryTeam.eliminaTeam(team.getId());
+        //viene effettuata l'operazione di ricerca per verificare sia effettivamente andata a buon fine l'eliminazione
         return repositoryTeam.findTeamById(team.getId()).isEmpty();
     }
 
@@ -83,6 +86,8 @@ public class TeamService implements ITeamService {
         return team.getCreatore();
     }
 
+    //Qualora il creatore del team decida di apportare delle modifiche al team viene effettuata la modifica di alcuni o tutti i campi.
+    //in caso di modifica parziale, i campi non modificati restano invariati
     @Override
     public Team updateTeam(Long id, int numeroMassimoComponenti, String nome, String descrizione) {
         Team team = repositoryTeam.findTeamById(id).orElseThrow(EntityNotFoundException::new);
@@ -92,6 +97,8 @@ public class TeamService implements ITeamService {
         return repositoryTeam.updateTeam(team).orElseThrow(RuntimeException::new);
     }
 
+    //il metodo setMembro viene utilizzato qualora un utente accetta un invito ad unirsi ad un team
+    //l'utente può partecipare solo ad un team alla volta.
     @Override
     public boolean setMembro(Long idUtente, Long idTeam) {
         Utente utente = repositoryUtenti.findById(idUtente).orElseThrow(EntityNotFoundException::new);
@@ -117,11 +124,13 @@ public class TeamService implements ITeamService {
         return team.getHackathon();
     }
 
+    //lista di tutti i team presenti nel sistema
     @Override
     public List<Team> getAllTeams() {
         return repositoryTeam.findAllTeam();
     }
 
+    //eliminaMembro viene utiizzata qualora il creatore del team decide di espellere un membro dal suo team
     @Override
     public boolean eliminaMembro(Long idUtente, Long idTeam) {
         Utente utente = getMembroById(idUtente, idTeam);
@@ -131,6 +140,7 @@ public class TeamService implements ITeamService {
         return true;
     }
 
+    //abbandonaTeam viene utilizzata qualora un membro del team decide di uscire dal team
     @Override
     public boolean abbandonaTeam(Long idUtente, Long idTeam) {
         Utente utente=repositoryUtenti.findById(idUtente).orElseThrow(EntityNotFoundException::new);

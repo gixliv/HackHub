@@ -57,6 +57,7 @@ public class UtentiController {
         return "Accesso fallito, riprova!";
     }
 
+    //modifica da parte dell'utente di alcune o tutte le informazioni inserite durante la registrazione
     @PutMapping("/{idUtente}")
     public UtenteResponse ModificaProfilo(@PathVariable Long idUtente, @RequestBody UtenteRequest utenteRequest) {
         if (utenteRequest == null) throw new IllegalArgumentException();

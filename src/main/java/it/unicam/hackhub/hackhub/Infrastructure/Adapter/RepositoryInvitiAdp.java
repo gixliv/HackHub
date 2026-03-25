@@ -31,6 +31,7 @@ public class RepositoryInvitiAdp implements IRepositoryInviti {
     }
 
 
+    //l'update dell'invito effettua la rimozione dell'invito dal database, solo in caso di accettazione o rifiuto
     @Override
     public Optional<Invito> updateInvito(Invito invito) {
         repositoryInvitiJpa.findById(invito.getId()).orElseThrow(EntityNotFoundException::new);

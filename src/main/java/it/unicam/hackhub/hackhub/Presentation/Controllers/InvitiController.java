@@ -27,10 +27,12 @@ public class InvitiController {
         this.repositoryUtenti = repositoryUtenti;
     }
 
+    //l'invito da parte di un creatore del team all'utente, può avvenire attraverso username inserendolo nella path, oltre all'inserimento di parametri necessari al fne di creare un invito
     @PostMapping("/invita/{username}")
     @PreAuthorize("hasRole('CREATORE_TEAM')")
     public String invitaUtente(@RequestParam Long idMittente, @RequestParam String descrizione, @PathVariable String username){
         Utente utente= repositoryUtenti.findByUsername(username).orElseThrow(EntityNotFoundException::new);
+        //viene creata la request e inizzializzati i suoi parametri per l'effettiva creazione dell'oggetto
         InvitoRequest  request= new InvitoRequest();
         request.setDestinatarioId(utente.getId());
         request.setDescrizione(descrizione);
@@ -39,6 +41,7 @@ public class InvitiController {
         return "Utente invitato";
     }
 
+    //l'invito da parte di un creatore del team all'utente, può avvenire attraverso file jason contenente la request
     @PostMapping("/invita")
     @PreAuthorize("hasRole('CREATORE_TEAM')")
     public String invitaUtente(@RequestBody InvitoRequest request){
@@ -47,6 +50,7 @@ public class InvitiController {
         return "Utente invitato";
     }
 
+    //lista delle informazioni visibili degli inviti che un utente ha ricevuto
     @GetMapping("/{idUtente}")
     public List<InvitoResponse> getAllInviti(@PathVariable Long idUtente){
         if(idUtente == null) throw new IllegalArgumentException();

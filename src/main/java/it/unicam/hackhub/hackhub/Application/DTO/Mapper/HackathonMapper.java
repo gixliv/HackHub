@@ -40,6 +40,9 @@ public class HackathonMapper {
         response.setDimensioneMaxTeam(hackathon.getDimensioneMaxTeam());
         response.setNumMaxTeam(hackathon.getNumMaxTeam());
         response.setStato(hackathon.getStato());
+
+        //nell' entità hackathon la lista di team contiene oggetti di tipo team
+        //per la gestione della visibilità di alcune informazioni, viene selezionato solo il nome dei team per la response
         List<String> teams=new ArrayList<>();
         if(hackathon.getTeams()!=null)
             for(Team team: hackathon.getTeams()){

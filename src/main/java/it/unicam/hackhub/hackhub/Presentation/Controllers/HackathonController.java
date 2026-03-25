@@ -26,15 +26,19 @@ public class HackathonController {
         this.hackathonService = hackathonService;
     }
 
+    //l'iscrizione del team all'hackathon avviene attraverso l'id, poichè la scelta viene effettuta da una lista di hackathon disponibili
     @PutMapping("/iscrivi/{idHackathon}")
     @PreAuthorize("hasRole('MEMBRO_TEAM') || hasRole('CREATORE_TEAM')")
     public HackathonResponse iscriviTeamHackathon(@PathVariable Long idHackathon, @RequestParam Long idUtente) {
         if (idHackathon == null || idUtente == null) throw new IllegalArgumentException();
+        //dopo l'iscrizione del team all'hackathon, viene effettuato il mapping dell'hackathon per ottenere un hackathonResponse,
+        //saranno visibili oltre a delle informazioni, anche la lista dei nomi dei team iscritti all'hackathon
         HackathonMapper mapper = new HackathonMapper();
         Hackathon hackathon = hackathonService.iscriviTeamHackathon(idHackathon, idUtente);
         return mapper.toResponse(hackathon);
     }
 
+    //l'iscrizione del team all'hackathon avviene attraverso il nome, che verrà inserito in una search bar, per la ricerca tra gli hackathon presenti nel sistema.
     @PutMapping("/iscrivi/nome={nomeHackathon}")
     @PreAuthorize("hasRole('MEMBRO_TEAM') || hasRole('CREATORE_TEAM')")
     public HackathonResponse iscriviTeamHackathon(@PathVariable String nomeHackathon, @RequestParam Long idUtente) {
@@ -53,6 +57,7 @@ public class HackathonController {
         return "Team disiscritto";
     }
 
+    //lista di tutti i nomi dei team che si sono iscritti ad uno specifico hackathon
     @GetMapping("/teams/{idHackathon}")
     public List<TeamResponse> getAllTeams(@PathVariable Long idHackathon) {
         if (idHackathon == null) throw new IllegalArgumentException();
@@ -65,6 +70,7 @@ public class HackathonController {
         return teamResp;
     }
 
+    //lista di tutti i nomi degli hackathonn presenti nel sistema
     @GetMapping
     public List<String> getAllHackathons() {
         List<String> nomiResponse = new ArrayList<>();
@@ -78,6 +84,8 @@ public class HackathonController {
         throw new EntityNotFoundException();
     }
 
+    //in seguito a getAllHackathons, dalla lista dei nomi, l'utente può scegliere un hackathon.
+    //l'utente inserisce il nome dell'hackathon per avere delle informazioni a riguardo
     @GetMapping("/{nomeHackaton}")
     public HackathonResponse getHackaton(@PathVariable String nomeHackathon) {
         if (nomeHackathon == null) throw new IllegalArgumentException();
@@ -86,6 +94,7 @@ public class HackathonController {
         return map.toResponse(hackaton);
     }
 
+    //il membro dello staff, attraverso il suo id, può visualizzare tutti i nomi degli hackathon a ciu viene assegnato come staff
     @GetMapping("/myHackatons/{idUtente}")
     @PreAuthorize("hasRole('MEMBRO_STAFF')")
     public List<String> getAllMyHackatons(@PathVariable Long idUtente){

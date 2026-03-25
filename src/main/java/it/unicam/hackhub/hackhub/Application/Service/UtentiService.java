@@ -47,11 +47,14 @@ public class UtentiService implements IUtentiService {
     @Transactional
     public boolean registrazione(UtenteRequest request) {
         if (repositoryUtenti.findByUsername(request.getUsername()).isPresent()) throw new IllegalArgumentException("Utente già registrato");
+        //viene creato un mapper per l'utente che permette di trasformare la request in entità
         UtenteMapper mapper = new UtenteMapper();
         Utente utente = mapper.toEntity(request);
         utente.setRuolo(Ruolo.UTENTE_GENERICO);
+        //viene salvato nel campo password di utente, una password criptata, per la protezione di dati sensibili
         utente.setPassword(passwordEncoder.encode(utente.getPassword()));
         repositoryUtenti.insertInto(utente);
+        //se la registrazione è effettivamente adata a buon fine allora il metodo restituisce un valore "true"
         return repositoryUtenti.findById(utente.getId()).isPresent();
     }
 
@@ -60,9 +63,11 @@ public class UtentiService implements IUtentiService {
     public boolean login(String username, String password) {
         if(username==null || password==null) throw new IllegalArgumentException("inserire entrambe le credenziali");
         Utente utente = repositoryUtenti.findByUsername(username).orElseThrow(EntityNotFoundException::new);
+        //attraverso il passwordEncoder, viene effettuata la verifica della corrsipondenza della password inserita dall'utente con quella presente nel database
         return passwordEncoder.matches(password, utente.getPassword());
     }
 
+    //modificaProfilo viene utilizzata dall'utente in caso sia necessaria la modifica di alcuni dati inseriti durante la registrazione
     @Override
     public Utente ModificaProfilo(Long id, String username, String nome, String cognome, char sesso, String email, String password, String telefono, String iban, LocalDate dataNascita) {
         Utente utente = repositoryUtenti.findById(id).orElseThrow(EntityNotFoundException::new);

@@ -28,6 +28,9 @@ public class MembroStaffMapper {
         membroStaffResponse.setCodiceFiscale(membroStaff.getCodiceFiscale());
         membroStaffResponse.setNomeHackathon(membroStaff.getHackathon().getNome());
 
+        //nell' entità MembroStaff le liste di hackathon per giudice, mentore e organizzatori contengono oggetti di tipo hackathon
+        //per la gestione della visibilità di alcune informazioni, viene selezionato solo il nome degli hackathon, da ogni lista, per la response
+
         List<String> hackathons=new ArrayList<>();
         if(membroStaff.getHackathonsOrganizzatore()!=null){
             for(Hackathon hackathon: membroStaff.getHackathonsOrganizzatore()){

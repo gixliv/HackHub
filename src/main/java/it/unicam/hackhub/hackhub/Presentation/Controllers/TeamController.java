@@ -36,7 +36,7 @@ public class TeamController {
         return "Team creato";
     }
 
-    //da rivedere
+    //lista di utenti membri di uno specifico team
     @GetMapping("/membri/{teamId}")
     public List<UtenteResponse> getMembriTeam(@PathVariable Long teamId) {
         if (teamId == null) {
@@ -71,6 +71,7 @@ public class TeamController {
         return "Team eliminato";
     }
 
+    //modifica, da parte del creatore del team, di alcuni o tutti i parametri di un team che sono stati inseriti alla sua creazione, attraverso file jason
     @PutMapping("/{idTeam}")
     @PreAuthorize("hasRole('CREATORE_TEAM')")
     public TeamResponse updateTeam(@PathVariable Long idTeam, @RequestBody TeamRequest teamRequest) {
@@ -82,6 +83,7 @@ public class TeamController {
         return teamMapper.toResponse(team);
     }
 
+    //espulsione, da parte del creatore di uno specifico team, di un membro
     @PutMapping("/espelli/{idUtente}")
     @PreAuthorize("hasRole('CREATORE_TEAM')")
     public String eliminaMembro(@PathVariable Long idUtente, @RequestParam Long idTeam) {
@@ -89,6 +91,7 @@ public class TeamController {
         return "Membro eliminato";
     }
 
+    //visualizzazione di un hackathon a cui è iscritto uno specifico team
     @GetMapping("/hackathon/{idTeam}")
     public HackathonResponse getHackathon(@PathVariable Long idTeam) {
         Hackathon hackathon = teamService.getHackathon(idTeam);
@@ -96,6 +99,7 @@ public class TeamController {
         return  hackathonMapper.toResponse(hackathon);
     }
 
+    //lista di tutti i team presenti nel sistema
     @GetMapping
     public List<TeamResponse> getAllTeams() {
         TeamMapper teamMapper = new TeamMapper();
@@ -106,6 +110,7 @@ public class TeamController {
         return response;
     }
 
+    //uscita spontanea dal team da parte di un membro
     @PutMapping("/abbandona/{idTeam}")
     @PreAuthorize("hasRole('MEMBRO_TEAM')")
     public String abbandonaTeam( @RequestParam Long idUtente, @PathVariable Long idTeam) {

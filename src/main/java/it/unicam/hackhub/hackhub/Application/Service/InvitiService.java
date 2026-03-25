@@ -35,9 +35,12 @@ public class InvitiService implements IInvitiService {
         if(request.getDescrizione()==null) throw new IllegalArgumentException("descrizione non inserita");
         Utente utenteDest = repositoryUtenti.findById(request.getDestinatarioId()).orElseThrow(EntityNotFoundException::new);
         Utente utenteMitt = repositoryUtenti.findById(request.getMittenteId()).orElseThrow(EntityNotFoundException::new);
+
+        //il tenetativo di invitare un utente ad unirsi ad un team, di cui l'utente non ne è il creatore, genera un eccezione.
         if(repositoryTeam.findTeamById(utenteMitt.getTeam().getId()).isEmpty() || utenteMitt.getTeam()==null) throw new EntityNotFoundException("Team non trovato o nullo");
         Invito invito = new Invito();
 
+        //dalla request viene effettivamente creato un nuovo oggetto
         if (utenteMitt.getRuolo().equals(Ruolo.CREATORE_TEAM) && utenteDest.getRuolo().equals(Ruolo.UTENTE_GENERICO)){
                 invito.setDescrizione(request.getDescrizione());
                 invito.setDestinatario(utenteDest);
@@ -49,6 +52,7 @@ public class InvitiService implements IInvitiService {
         return invito;
     }
 
+    //lista di tutti gli inviti che l'utente ha ricevuto
     @Override
     public List<Invito> getAllInviti(Long id) {
         Utente utente = repositoryUtenti.findById(id).orElseThrow(EntityNotFoundException::new);
@@ -68,6 +72,8 @@ public class InvitiService implements IInvitiService {
         if(numMembri >= invito.getMittente().getTeam().getNumeroMassimoComponenti() )
             throw new RuntimeException("Impossibile accettare l'invito, numero massimo di componenti raggiunto.");
 
+        //l'accettazione dell'invito comporta il cambio di ruolo da utente a membroTeam e l'aggiunta dell'utente alla lista dei membri di quel team.
+        //l'invito viene rimosso dalla lista di tutti gli inviti
         invito.setStato(StatoInvito.ACCETTATO);
         utente.setRuolo(Ruolo.MEMBRO_TEAM);
         repositoryUtenti.updateUtente(utente);
@@ -82,6 +88,7 @@ public class InvitiService implements IInvitiService {
     @Override
     public boolean rifiutaInvito(Long id) {
         Invito invito = repositoryInviti.findInvitoById(id).orElseThrow(EntityNotFoundException::new);
+        //il rifiuto dell'invito comporta la rimozione dalla lista di tutti gli inviti
         invito.setStato(StatoInvito.RIFIUTATO);
         repositoryInviti.updateInvito(invito);
 

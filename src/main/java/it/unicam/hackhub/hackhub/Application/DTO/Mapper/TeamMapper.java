@@ -27,6 +27,8 @@ public class TeamMapper {
         teamresponse.setNome(team.getNome());
         teamresponse.setDescrizione(team.getDescrizione());
         teamresponse.setNumeroMassimoComponenti(team.getNumeroMassimoComponenti());
+        //nell' entità team la lista di membri del team contiene oggetti di tipo utente
+        //per la gestione della visibilità di alcune informazioni, viene selezionato solo il nome dei membri del team per la response
         List<String> membri = new ArrayList<>();
         if (team.getMembri() != null) {
             for (Utente membro : team.getMembri()) {
