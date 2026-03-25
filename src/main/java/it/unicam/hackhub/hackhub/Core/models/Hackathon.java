@@ -36,6 +36,7 @@ public class Hackathon {
     @Column(nullable = false)
     private String luogo;
 
+    //enum per la definizione dello stato attuale dell'hackathon
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private StatoHackathon stato;
@@ -46,17 +47,21 @@ public class Hackathon {
     @Column(nullable = false)
     private int numMaxTeam;
 
+    //lista dei team partecipanti ad uno specifico hackathon
     @OneToMany(mappedBy = "hackathon", cascade = CascadeType.ALL)
     private List<Team> teams;
 
+    //utente membro dello staff che ha organizzato uno specifico hackathon
     @ManyToOne
     @JoinColumn(name = "organizzatore_id")
     private MembroStaff organizzatore;
 
+    //utente membro dello staff a cui è stato assegnato il ruolo di giudice per uno specifico hackathon
     @ManyToOne
     @JoinColumn(name = "giudice_id")
     private MembroStaff giudice;
 
+    //utente o utenti membri dello staff a cui è stato assegnato il ruolo di mentore per uno specifico hackathon
     @ManyToMany
     @JoinTable(
             name = "hackathon_mentori",

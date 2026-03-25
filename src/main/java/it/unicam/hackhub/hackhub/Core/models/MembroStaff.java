@@ -11,23 +11,34 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@DiscriminatorValue("MEMBRO_STAFF")
+//la colonna degli id utente prodotti dalla join con la tabella padre
+@PrimaryKeyJoinColumn(name = "idUtente")
 public class MembroStaff extends Utente{
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String codiceFiscale;
 
+    //membro assegnato ad uno specifico hackathon in corso
     @ManyToOne
-    @JoinColumn(name = "hackathon_id")
+    @JoinColumn(name = "hackathon_id",  nullable = false)
     private Hackathon hackathon;
 
+    //lista degli hackathon di cui ha programmato l'organizzazione
     @OneToMany(mappedBy = "organizzatore")
     private List<Hackathon> hackathonsOrganizzatore;
 
+    //lista degli hackathon a cui è assegnato come giudice
     @OneToMany(mappedBy = "giudice")
     private List<Hackathon> hackathonsGiudice;
 
+    //lista degli hackathon a cui è assegnato come mentore
     @ManyToMany(mappedBy = "mentori")
     private List<Hackathon> hackathonsMentore;
 
+    //override di setRuolo per evitare che i ruoli assegnabili a membroStaff siano quelli utilizzati da utente
+    @Override
+    public void setRuolo(Ruolo ruolo) {
+        if (ruolo != null && !ruolo.isRuoloStaff()) throw new IllegalArgumentException("Ruolo non valido");
+        super.setRuolo(ruolo);
+    }
 }

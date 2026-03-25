@@ -55,6 +55,7 @@ public class UtentiService implements IUtentiService {
         return repositoryUtenti.findById(utente.getId()).isPresent();
     }
 
+    //Implementazione futura: aggiunta del token JWT/Cookie per la sessione
     @Override
     public boolean login(String username, String password) {
         if(username==null || password==null) throw new IllegalArgumentException("inserire entrambe le credenziali");

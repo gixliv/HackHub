@@ -50,6 +50,7 @@ public class UtentiController {
         else return "Registrazione non avvenuta";
     }
 
+    //Implementazione futura: aggiunta del token JWT/Cookie per la sessione
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password){
         if(utentiService.login(username, password)) return "Accesso effettuato!";

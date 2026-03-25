@@ -6,5 +6,13 @@ public enum Ruolo {
     UTENTE_GENERICO,
     ORGANIZZATORE,
     MENTORE,
-    GIUDICE,
+    GIUDICE;
+
+    public boolean isRuoloStaff(){
+        return this == GIUDICE || this == ORGANIZZATORE || this == MENTORE;
+    }
+
+    public boolean isRuoloUtente(){
+        return this == MEMBRO_TEAM || this == CREATORE_TEAM || this == UTENTE_GENERICO;
+    }
 }

@@ -17,14 +17,17 @@ public class Invito {
     @Column(nullable = false)
     private String descrizione;
 
+    //utente (creatore del team) mittente dell'invito
     @ManyToOne
     @JoinColumn(name = "mittente_id", nullable = false)
     private Utente mittente;
 
+    //utente destinatario dell'invito
     @ManyToOne
     @JoinColumn(name = "destinatario_id", nullable = false)
     private Utente destinatario;
 
+    //enum per identificare lo stato di accettazione dell'invito
     @Enumerated(EnumType.STRING)
     @Column
     private StatoInvito stato;
