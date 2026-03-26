@@ -4,6 +4,7 @@ import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryI
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryTeam;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryUtenti;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IInvitiService;
+import it.unicam.hackhub.hackhub.Application.DTO.Mapper.InvitoMapper;
 import it.unicam.hackhub.hackhub.Application.DTO.Request.InvitoRequest;
 import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
 import it.unicam.hackhub.hackhub.Core.enums.StatoInvito;
@@ -42,9 +43,8 @@ public class InvitiService implements IInvitiService {
 
         //dalla request viene effettivamente creato un nuovo oggetto
         if (utenteMitt.getRuolo().equals(Ruolo.CREATORE_TEAM) && utenteDest.getRuolo().equals(Ruolo.UTENTE_GENERICO)){
-                invito.setDescrizione(request.getDescrizione());
-                invito.setDestinatario(utenteDest);
-                invito.setMittente(utenteMitt);
+                InvitoMapper invitoMapper=new InvitoMapper();
+                invito = invitoMapper.toEntity(request);
                 invito.setStato(StatoInvito.PENDENTE);
                 repositoryInviti.insertInto(invito);
             } else throw new RuntimeException("Unathorized");

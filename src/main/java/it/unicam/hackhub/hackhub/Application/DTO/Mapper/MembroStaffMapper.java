@@ -8,7 +8,9 @@ import it.unicam.hackhub.hackhub.Core.models.MembroStaff;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MembroStaffMapper {
+public class MembroStaffMapper extends UtenteMapper {
+
+    private UtenteMapper utenteMapper;
 
     public MembroStaff toEntity(MembroStaffRequest membroStaffRequest){
         if(membroStaffRequest==null) return null;
@@ -18,13 +20,12 @@ public class MembroStaffMapper {
         Hackathon hackathon= new Hackathon();
         hackathon.setNome(membroStaffRequest.getNomeHackathon());
         membroStaff.setHackathon(hackathon);
-
         return membroStaff;
     }
 
     public MembroStaffResponse toResponse(MembroStaff membroStaff){
         if(membroStaff==null) return null;
-        MembroStaffResponse membroStaffResponse= new MembroStaffResponse();
+        MembroStaffResponse membroStaffResponse=(MembroStaffResponse) utenteMapper.toResponse(membroStaff);
         membroStaffResponse.setCodiceFiscale(membroStaff.getCodiceFiscale());
         membroStaffResponse.setNomeHackathon(membroStaff.getHackathon().getNome());
 

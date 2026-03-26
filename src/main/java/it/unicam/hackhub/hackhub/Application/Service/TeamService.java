@@ -3,6 +3,7 @@ package it.unicam.hackhub.hackhub.Application.Service;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryTeam;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryUtenti;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.ITeamService;
+import it.unicam.hackhub.hackhub.Application.DTO.Mapper.TeamMapper;
 import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
 import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
 import it.unicam.hackhub.hackhub.Core.models.Hackathon;
@@ -30,17 +31,14 @@ public class TeamService implements ITeamService {
 
     @Override
     public Team creaTeam(TeamRequest request) {
-        Team team = new Team();
         Utente creatore = repositoryUtenti.findById(request.getCreatore()).orElseThrow(EntityNotFoundException::new);
         if (creatore.getRuolo() == Ruolo.CREATORE_TEAM) throw new RuntimeException("Sei già creatore di un team");
         if (repositoryTeam.findTeamByName(request.getNome()).isPresent()) {
             throw new EntityExistsException("Team esistente");
         }
 
-        team.setCreatore(creatore);
-        team.setDescrizione(request.getDescrizione());
-        team.setNome(request.getNome());
-        team.setNumeroMassimoComponenti(request.getNumeroMassimoComponenti());
+        TeamMapper teamMapper=new TeamMapper();
+        Team team= teamMapper.toEntity(request);
         team= repositoryTeam.insertInto(team).orElseThrow(EntityNotFoundException::new);
         creatore.setRuolo(Ruolo.CREATORE_TEAM);
         creatore.setTeam(team);

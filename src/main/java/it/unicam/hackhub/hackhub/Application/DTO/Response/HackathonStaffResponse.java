@@ -1,17 +1,17 @@
 package it.unicam.hackhub.hackhub.Application.DTO.Response;
 
 import it.unicam.hackhub.hackhub.Core.enums.StatoHackathon;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.time.LocalDate;
 import java.util.List;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
-public class HackathonResponse {
+public class HackathonStaffResponse {
     private String nome;
     private String regolamento;
     private LocalDate scadenzaIscrizioni;
@@ -21,8 +21,8 @@ public class HackathonResponse {
     private int dimensioneMaxTeam;
     private int numMaxTeam;
     private StatoHackathon stato;
-    private List<String> Nometeams;
-    private String nomeOrganizzatore;
-    private String nomeGiudice;
-    private List<String> nomiMentori;
+    private List<String> nomeTeams;
+    private List<String> organizzatore;
+    private List<String> giudice;
+    private List<List<String>> mentori;
 }

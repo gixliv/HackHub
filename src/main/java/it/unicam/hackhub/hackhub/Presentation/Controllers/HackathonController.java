@@ -3,8 +3,10 @@ package it.unicam.hackhub.hackhub.Presentation.Controllers;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryHackathon;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IHackathonService;
 import it.unicam.hackhub.hackhub.Application.DTO.Mapper.HackathonMapper;
+import it.unicam.hackhub.hackhub.Application.DTO.Mapper.HackathonStaffMapper;
 import it.unicam.hackhub.hackhub.Application.DTO.Mapper.TeamMapper;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.HackathonResponse;
+import it.unicam.hackhub.hackhub.Application.DTO.Response.HackathonStaffResponse;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.TeamResponse;
 import it.unicam.hackhub.hackhub.Core.models.Hackathon;
 import it.unicam.hackhub.hackhub.Core.models.Team;
@@ -86,7 +88,7 @@ public class HackathonController {
 
     //in seguito a getAllHackathons, dalla lista dei nomi, l'utente può scegliere un hackathon.
     //l'utente inserisce il nome dell'hackathon per avere delle informazioni a riguardo
-    @GetMapping("/{nomeHackaton}")
+    @GetMapping("/{nomeHackathon}")
     public HackathonResponse getHackaton(@PathVariable String nomeHackathon) {
         if (nomeHackathon == null) throw new IllegalArgumentException();
         Hackathon hackaton = hackathonService.getHackathonByName(nomeHackathon);
@@ -95,9 +97,9 @@ public class HackathonController {
     }
 
     //il membro dello staff, attraverso il suo id, può visualizzare tutti i nomi degli hackathon a cui viene assegnato come staff
-    @GetMapping("/myHackatons/{idUtente}")
+    @GetMapping("/myHackathons/{idUtente}")
     @PreAuthorize("hasRole('MEMBRO_STAFF')")
-    public List<String> getAllMyHackatons(@PathVariable Long idUtente){
+    public List<String> getAllMyHackathons(@PathVariable Long idUtente){
         List<String> nomiResponse = new ArrayList<>();
         List<Hackathon> hackathons = hackathonService.getAllMyHackathon(idUtente);
         if(!hackathons.isEmpty()) {
@@ -107,6 +109,23 @@ public class HackathonController {
             return nomiResponse;
         }
         throw new EntityNotFoundException();
+    }
+
+    //il membro dello staff, dopo aver visto la lista dei suoi hackathon, visualizza i dettagli di uno specifico hackathon con informazioni aggiuntive
+    //sugli altri membri staff rispetto all'utente normale
+    @GetMapping("/myHackathons/{idUtente}/{nomeHackathon}")
+    @PreAuthorize("hasRole('MEMBRO_STAFF')")
+    public HackathonStaffResponse getMyHackathon(@PathVariable Long idUtente, @PathVariable String nomeHackathon){
+        if(idUtente==null || nomeHackathon==null) throw new IllegalArgumentException();
+        List<String> hackathons = getAllMyHackathons(idUtente);
+        for (String nomeH : hackathons){
+            if(nomeH.equals(nomeHackathon)){
+                Hackathon hackathon = hackathonService.getHackathonByName(nomeHackathon);
+                HackathonStaffMapper mapper = new HackathonStaffMapper();
+                return mapper.toResponse(hackathon);
+            }
+        }
+        throw new EntityNotFoundException("Nome hackathon non trovato");
     }
 
 }

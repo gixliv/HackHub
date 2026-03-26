@@ -3,6 +3,7 @@ package it.unicam.hackhub.hackhub.Application.DTO.Mapper;
 import it.unicam.hackhub.hackhub.Application.DTO.Request.HackathonRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.HackathonResponse;
 import it.unicam.hackhub.hackhub.Core.models.Hackathon;
+import it.unicam.hackhub.hackhub.Core.models.MembroStaff;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import org.springframework.stereotype.Component;
 
@@ -49,6 +50,17 @@ public class HackathonMapper {
                 teams.add(team.getNome());
             }
         response.setNometeams(teams);
+        response.setNomeOrganizzatore(hackathon.getOrganizzatore().getNome());
+        response.setNomeGiudice(hackathon.getGiudice().getNome());
+
+        //nell' entità hackathon la lista di mentori contiene oggetti di tipo MembroStaff
+        //per la gestione della visibilità di alcune informazioni, viene selezionato solo il nome dei mentori per la response
+        List<String> nomiMentori=new ArrayList<>();
+        if(hackathon.getMentori()!=null)
+            for(MembroStaff membri: hackathon.getMentori()){
+                nomiMentori.add(membri.getNome());
+            }
+        response.setNomiMentori(nomiMentori);
         return response;
     }
 }

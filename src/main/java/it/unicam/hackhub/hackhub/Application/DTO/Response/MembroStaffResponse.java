@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MembroStaffResponse {
+public class MembroStaffResponse extends UtenteResponse{
     private String codiceFiscale;
     private String nomeHackathon;
     private List<String> nomeHackathonsOrganizzatore;

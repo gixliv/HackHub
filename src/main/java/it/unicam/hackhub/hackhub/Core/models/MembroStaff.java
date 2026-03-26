@@ -18,20 +18,21 @@ public class MembroStaff extends Utente{
     @Column(unique = true, nullable = false)
     private String codiceFiscale;
 
-    //membro assegnato ad uno specifico hackathon in corso
+    //membro assegnato ad uno specifico hackathon a cui lui partecipa in questo slot di tempo
+    //se non sta partecipando ad hackathon in corso il campo rimarrà nullo
     @ManyToOne
-    @JoinColumn(name = "hackathon_id",  nullable = false)
+    @JoinColumn(name = "hackathon_id")
     private Hackathon hackathon;
 
-    //lista degli hackathon di cui ha programmato l'organizzazione
+    //lista degli hackathon che ha organizzato
     @OneToMany(mappedBy = "organizzatore")
     private List<Hackathon> hackathonsOrganizzatore;
 
-    //lista degli hackathon a cui è assegnato come giudice
+    //lista degli hackathon a cui è assegnato e a cui ha partecipato come giudice
     @OneToMany(mappedBy = "giudice")
     private List<Hackathon> hackathonsGiudice;
 
-    //lista degli hackathon a cui è assegnato come mentore
+    //lista degli hackathon a cui è assegnato e a cui ha partecipato come mentore
     @ManyToMany(mappedBy = "mentori")
     private List<Hackathon> hackathonsMentore;
 
