@@ -10,4 +10,5 @@ public interface IRepositoryHackathon {
     Optional<Hackathon> findHackathonByName(String name);
     Optional<Hackathon> updateHackathon(Hackathon hackathon);
     List<Hackathon> findAllHackathon();
+    Optional<Hackathon> deleteHackathonById(Long id);
 }

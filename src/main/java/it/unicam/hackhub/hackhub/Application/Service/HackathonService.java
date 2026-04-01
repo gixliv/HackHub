@@ -1,6 +1,7 @@
 package it.unicam.hackhub.hackhub.Application.Service;
 
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryHackathon;
+import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryMembriStaff;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryTeam;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryUtenti;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IHackathonService;
@@ -24,11 +25,13 @@ public class HackathonService implements IHackathonService {
     private final IRepositoryHackathon repositoryHackathon;
     private final IRepositoryUtenti repositoryUtenti;
     private final IRepositoryTeam repositoryTeam;
+    private final IRepositoryMembriStaff repositoryMembriStaff;
 
-    public HackathonService(IRepositoryHackathon repositoryHackathon, IRepositoryUtenti repositoryUtenti, IRepositoryTeam repositoryTeam) {
+    public HackathonService(IRepositoryHackathon repositoryHackathon, IRepositoryUtenti repositoryUtenti, IRepositoryTeam repositoryTeam, IRepositoryMembriStaff repositoryMembriStaff) {
         this.repositoryHackathon = repositoryHackathon;
         this.repositoryUtenti = repositoryUtenti;
         this.repositoryTeam = repositoryTeam;
+        this.repositoryMembriStaff= repositoryMembriStaff;
     }
 
     @Override
@@ -97,5 +100,22 @@ public class HackathonService implements IHackathonService {
         else if(membro.getRuolo().equals(Ruolo.ORGANIZZATORE)) return membro.getHackathonsOrganizzatore();
 
         throw new EntityNotFoundException();
+    }
+
+    public boolean deleteHackathon(Long idHackathon) {
+        Hackathon hackathon=repositoryHackathon.findHackathonById(idHackathon).orElseThrow(()-> new EntityNotFoundException("Hackathon non presente"));
+        List<Team> teams=hackathon.getTeams();
+        for(Team team:teams){
+            team.setHackathon(null);
+            repositoryTeam.updateTeam(team);
+        }
+        List<MembroStaff> membri=hackathon.getMentori();
+        membri.add(hackathon.getGiudice());
+        for(MembroStaff membro:membri){
+            membro.setHackathon(null);
+            repositoryMembriStaff.updateMembroStaff(membro);
+        }
+        repositoryHackathon.deleteHackathonById(hackathon.getId());
+        return repositoryHackathon.findHackathonById(hackathon.getId()).isEmpty();
     }
 }

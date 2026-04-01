@@ -3,9 +3,11 @@ package it.unicam.hackhub.hackhub.Infrastructure.Adapter;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryMembriStaff;
 import it.unicam.hackhub.hackhub.Core.models.MembroStaff;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryMembriStaffJpa;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 public class RepositoryMembriStaffAdp implements IRepositoryMembriStaff {
     private final RepositoryMembriStaffJpa repositoryMembriStaffJpa;
 

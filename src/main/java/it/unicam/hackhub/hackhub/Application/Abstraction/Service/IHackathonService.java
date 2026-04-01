@@ -18,4 +18,6 @@ public interface IHackathonService {
     Hackathon getHackathonByName(String name);
 
     List<Hackathon> getAllMyHackathon(Long idUtente);
+
+    boolean deleteHackathon(Long idHackathon);
 }
