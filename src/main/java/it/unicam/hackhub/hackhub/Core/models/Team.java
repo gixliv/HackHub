@@ -45,5 +45,8 @@ public class Team {
     @JoinColumn(name = "hackathon_id")
     private Hackathon hackathon;
 
+    @OneToOne
+    @JoinColumn(name = "sottomissione_id")
+    private Sottomissione sottomissione;
     
 }

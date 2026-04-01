@@ -89,7 +89,7 @@ public class HackathonController {
     //in seguito a getAllHackathons, dalla lista dei nomi, l'utente può scegliere un hackathon.
     //l'utente inserisce il nome dell'hackathon per avere delle informazioni a riguardo
     @GetMapping("/{nomeHackathon}")
-    public HackathonResponse getHackaton(@PathVariable String nomeHackathon) {
+    public HackathonResponse getHackathon(@PathVariable String nomeHackathon) {
         if (nomeHackathon == null) throw new IllegalArgumentException();
         Hackathon hackaton = hackathonService.getHackathonByName(nomeHackathon);
         HackathonMapper map = new HackathonMapper();

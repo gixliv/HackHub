@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -69,5 +70,12 @@ public class Hackathon {
             inverseJoinColumns = @JoinColumn(name = "mentore_id")
     )
     private List<MembroStaff> mentori;
+
+    @OneToMany(mappedBy = "hackathon", cascade = CascadeType.ALL)
+    private List<Sottomissione> sottomissioni = new ArrayList<>();
+
+    @OneToMany(mappedBy = "hackathon")
+    private List<RichiestaSupporto> richiesteSupporto = new ArrayList<>();
+
 
 }

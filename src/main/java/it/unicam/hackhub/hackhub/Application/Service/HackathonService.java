@@ -93,10 +93,8 @@ public class HackathonService implements IHackathonService {
         MembroStaff membro = (MembroStaff)repositoryUtenti.findById(idUtente).orElseThrow(() -> new EntityNotFoundException("Hackaton non presente"));
 
         if(membro.getRuolo().equals(Ruolo.GIUDICE)) return membro.getHackathonsGiudice();
-
-        if(membro.getRuolo().equals(Ruolo.MENTORE)) return membro.getHackathonsMentore();
-
-        if(membro.getRuolo().equals(Ruolo.ORGANIZZATORE)) return membro.getHackathonsOrganizzatore();
+        else if(membro.getRuolo().equals(Ruolo.MENTORE)) return membro.getHackathonsMentore();
+        else if(membro.getRuolo().equals(Ruolo.ORGANIZZATORE)) return membro.getHackathonsOrganizzatore();
 
         throw new EntityNotFoundException();
     }
