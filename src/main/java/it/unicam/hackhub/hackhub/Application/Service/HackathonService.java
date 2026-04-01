@@ -120,4 +120,22 @@ public class HackathonService implements IHackathonService {
         repositoryHackathon.deleteHackathonById(hackathon.getId());
         return repositoryHackathon.findHackathonById(hackathon.getId()).isEmpty();
     }
+
+    // se l'hackathon si trova ancora in iscrizione oppure in corso aggiunta di un nuovo mentore
+    @Override
+    public boolean addMentore(Long idUtente, Long idHackathon) {
+        Hackathon hackathon=repositoryHackathon.findHackathonById(idHackathon).orElseThrow(()-> new EntityNotFoundException("Hackathon non presente"));
+        MembroStaff mentore=repositoryMembriStaff.findMembroStaffById(idUtente).orElseThrow(()-> new EntityNotFoundException("Mentore non presente"));
+        if (!(hackathon.getStato()==StatoHackathon.IN_ISCRIZIONE||hackathon.getStato()==StatoHackathon.IN_CORSO)) throw new RuntimeException("Hackathon non in iscrizione o in corso");
+        if (mentore.getHackathon()==null){
+            hackathon.getMentori().add(mentore);
+            mentore.setHackathon(hackathon);
+            repositoryHackathon.updateHackathon(hackathon);
+            repositoryMembriStaff.updateMembroStaff(mentore);
+            return true;
+        }
+        return false;
+    }
+
+
 }

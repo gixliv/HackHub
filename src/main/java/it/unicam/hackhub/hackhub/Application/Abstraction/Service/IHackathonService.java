@@ -20,4 +20,6 @@ public interface IHackathonService {
     List<Hackathon> getAllMyHackathon(Long idUtente);
 
     boolean deleteHackathon(Long idHackathon);
+
+    boolean addMentore(Long idUtente, Long idHackathon);
 }

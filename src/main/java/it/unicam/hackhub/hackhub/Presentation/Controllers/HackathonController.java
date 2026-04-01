@@ -136,4 +136,13 @@ public class HackathonController {
         return "Hackathon eliminato";
     }
 
+    @PutMapping("/{idHackathon}/{idUtente}")
+    @PreAuthorize("hasRole('ORGANIZZATORE')")
+    public String addMembro(@PathVariable Long idUtente,@PathVariable Long idHackathon) {
+        if (idUtente == null) throw new IllegalArgumentException();
+        if (idHackathon == null) throw new IllegalArgumentException();
+        hackathonService.addMentore(idUtente, idHackathon);
+        return "Membro aggiunto";
+    }
+
 }
