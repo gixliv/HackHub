@@ -128,4 +128,12 @@ public class HackathonController {
         throw new EntityNotFoundException("Nome hackathon non trovato");
     }
 
+    @DeleteMapping("/{idHackathon}")
+    @PreAuthorize("hasRole('ORGANIZZATORE')")
+    public String deleteHackathon(@PathVariable Long idHackathon) {
+        if (idHackathon == null) throw new IllegalArgumentException();
+        hackathonService.deleteHackathon(idHackathon);
+        return "Hackathon eliminato";
+    }
+
 }
