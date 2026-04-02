@@ -12,10 +12,10 @@ import org.hibernate.annotations.SQLRestriction;
 @Table(name= "richiestaSupporto")
 public class RichiestaSupporto {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String descrizione;
 
     @ManyToOne

@@ -12,16 +12,16 @@ import java.io.File;
 @Table(name= "sottomissione")
 public class Sottomissione {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String titolo;
 
-    @Column
+    @Column(nullable = false)
     private String descrizione;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String linkRepository;
 
     @ManyToOne
