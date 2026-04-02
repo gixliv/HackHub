@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/hackathon")
@@ -130,9 +129,9 @@ public class HackathonController {
 
     @DeleteMapping("/{idHackathon}")
     @PreAuthorize("hasRole('ORGANIZZATORE')")
-    public String deleteHackathon(@PathVariable Long idHackathon) {
+    public String annullaHackathon(@PathVariable Long idHackathon) {
         if (idHackathon == null) throw new IllegalArgumentException();
-        hackathonService.deleteHackathon(idHackathon);
+        hackathonService.annullaHackathon(idHackathon);
         return "Hackathon eliminato";
     }
 
