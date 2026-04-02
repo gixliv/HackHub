@@ -4,6 +4,7 @@ package it.unicam.hackhub.hackhub.Core.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLRestriction;
 
 @Getter
 @Setter
@@ -16,6 +17,11 @@ public class RichiestaSupporto {
 
     @Column
     private String descrizione;
+
+    @ManyToOne
+    @JoinColumn(name = "mentore_id")
+    @SQLRestriction("ruolo = 'MENTORE' ")
+    private MembroStaff mentore;
 
     @ManyToOne
     @JoinColumn(name = "hackathon_id")

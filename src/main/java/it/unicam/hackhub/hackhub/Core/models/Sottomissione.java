@@ -22,7 +22,7 @@ public class Sottomissione {
     private String descrizione;
 
     @Column
-    private File File;
+    private String linkRepository;
 
     @ManyToOne
     @JoinColumn(name = "hackathon_id")
