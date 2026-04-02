@@ -103,7 +103,7 @@ public class HackathonService implements IHackathonService {
     }
 
     //eliminazione dell'hackathon da parte dell'organizzatore solo quando si trova ancora in iscrizione
-    public boolean deleteHackathon(Long idHackathon) {
+    public boolean annullaHackathon(Long idHackathon) {
         Hackathon hackathon=repositoryHackathon.findHackathonById(idHackathon).orElseThrow(()-> new EntityNotFoundException("Hackathon non presente"));
         if (hackathon.getStato()!=StatoHackathon.IN_ISCRIZIONE) throw new RuntimeException("Hackathon non in iscrizione");
         List<Team> teams=hackathon.getTeams();
@@ -113,6 +113,7 @@ public class HackathonService implements IHackathonService {
         }
         List<MembroStaff> membri=hackathon.getMentori();
         membri.add(hackathon.getGiudice());
+        membri.add(hackathon.getOrganizzatore());
         for(MembroStaff membro:membri){
             membro.setHackathon(null);
             repositoryMembriStaff.updateMembroStaff(membro);
