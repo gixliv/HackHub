@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IRichiestaSupportoService {
 
-    RichiestaSupportoResponse inviaRichiestaSupporto(RichiestaSupportoRequest request);
+    RichiestaSupporto inviaRichiestaSupporto(RichiestaSupportoRequest request);
     List<RichiestaSupporto> getAllRichiesteSupporto(Long idHackathon);
 
 }

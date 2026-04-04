@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ISottomissioneService {
 
-    SottomissioneResponse inviaSottomissione(SottomissioneRequest request);
-    SottomissioneResponse aggiornaSottomissione(Long idSottomissione, SottomissioneRequest request);
+    Sottomissione inviaSottomissione(SottomissioneRequest request);
+    Sottomissione aggiornaSottomissione(Long idSottomissione, SottomissioneRequest request);
     List<Sottomissione> getAllSottomissioni(Long idHackathon);
 }

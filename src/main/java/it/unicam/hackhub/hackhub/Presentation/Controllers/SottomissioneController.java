@@ -25,10 +25,12 @@ public class SottomissioneController {
     @PreAuthorize("hasRole('MEMBRO_TEAM') || hasRole('CREATORE_TEAM')")
     public SottomissioneResponse inviaSottomissione(@RequestBody SottomissioneRequest request){
         if(request == null) throw new IllegalArgumentException();
-        return sottomissioneService.inviaSottomissione(request);
+        SottomissioneMapper response= new SottomissioneMapper();
+        Sottomissione sottomissione= sottomissioneService.inviaSottomissione(request);
+        return response.toResponse(sottomissione);
     }
 
-    @PutMapping("/midifica/{idSottomissione}")
+    @PutMapping("/modifica/{idSottomissione}")
     @PreAuthorize("hasRole('MEMBRO_TEAM') || hasRole('CREATORE_TEAM')")
     public SottomissioneResponse aggiornaSottomissione(@PathVariable Long idSottomissione, @RequestParam String titolo, @RequestParam String descrizione, @RequestParam String linkRepository){
         if(idSottomissione==null) throw new IllegalArgumentException("Sottomissione non inserita");
@@ -36,7 +38,8 @@ public class SottomissioneController {
         if(descrizione!=null) request.setDescrizione(descrizione);
         if(titolo!=null) request.setTitolo(titolo);
         if(linkRepository!=null) request.setLinkRepository(linkRepository);
-        return sottomissioneService.aggiornaSottomissione(idSottomissione, request);
+        SottomissioneMapper mapp= new SottomissioneMapper();
+        return mapp.toResponse(sottomissioneService.aggiornaSottomissione(idSottomissione, request));
     }
 
     @GetMapping("/all/{idHackathon}")

@@ -1,5 +1,6 @@
 package it.unicam.hackhub.hackhub.Presentation.Controllers;
 
+import it.unicam.hackhub.hackhub.Application.DTO.Mapper.RichiestaSupportoMapper;
 import it.unicam.hackhub.hackhub.Application.DTO.Request.RichiestaSupportoRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.RichiestaSupportoResponse;
 import it.unicam.hackhub.hackhub.Core.models.RichiestaSupporto;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("api/richiestaSupporto")
 public class RichiestaSupportoController {
 
@@ -23,14 +24,20 @@ public class RichiestaSupportoController {
     @PreAuthorize("hasRole('MEMBRO_TEAM') || hasRole('CREATORE_TEAM')")
     public RichiestaSupportoResponse inviaRichiestaSupporto(@RequestBody RichiestaSupportoRequest request) {
         if (request == null) throw new IllegalArgumentException();
-        return richiestaSupportoService.inviaRichiestaSupporto(request);
+        RichiestaSupporto richiestaSupporto = richiestaSupportoService.inviaRichiestaSupporto(request);
+        RichiestaSupportoMapper map = new RichiestaSupportoMapper();
+        return map.toResponse(richiestaSupporto);
     }
 
     @GetMapping("/all/{idHackathon}")
     @PreAuthorize("hasRole('MEMBRO_STAFF')")
-    public List<RichiestaSupporto> getAllRichiesteSupporto(@PathVariable Long idHackathon) {
+    public List<RichiestaSupportoResponse> getAllRichiesteSupporto(@PathVariable Long idHackathon) {
         if (idHackathon == null) throw new IllegalArgumentException();
-        return richiestaSupportoService.getAllRichiesteSupporto(idHackathon);
+        List<RichiestaSupportoResponse> response = new java.util.ArrayList<>();
+        RichiestaSupportoMapper map = new RichiestaSupportoMapper();
+        for (RichiestaSupporto r : richiestaSupportoService.getAllRichiesteSupporto(idHackathon))
+            response.add(map.toResponse(r));
+        return response;
     }
 
 }

@@ -32,7 +32,7 @@ public class SottomissioneService implements ISottomissioneService {
     //Viene creata una nuova sottomissione e aggiunta al team solo se il team non ne aveva già create altre
     //la sottomissione viene aggiunta all'hackathon solo se l'hackathon è in corso
     @Override
-    public SottomissioneResponse inviaSottomissione(SottomissioneRequest request) {
+    public Sottomissione inviaSottomissione(SottomissioneRequest request) {
         if(request==null) return null;
         Team team=repositoryTeam.findTeamById(request.getIdTeam()).orElseThrow(EntityNotFoundException::new);
         Hackathon hackathon=repositoryHackathon.findHackathonById(request.getIdHackathon()).orElseThrow(EntityNotFoundException::new);
@@ -42,6 +42,11 @@ public class SottomissioneService implements ISottomissioneService {
 
         SottomissioneMapper mapper= new SottomissioneMapper();
         Sottomissione sottomissione =mapper.toEntity(request);
+
+        // Popola le relazioni sull'oggetto sottomissione prima di fare qualsiasi altra cosa.
+        sottomissione.setTeam(team);
+        sottomissione.setHackathon(hackathon);
+
         repositorySottomissione.insertInto(sottomissione);
 
         team.setSottomissione(sottomissione);
@@ -50,23 +55,19 @@ public class SottomissioneService implements ISottomissioneService {
         hackathon.getSottomissioni().add(sottomissione);
         repositoryHackathon.updateHackathon(hackathon);
 
-        return mapper.toResponse(sottomissione);
+        return sottomissione;
     }
 
     //Una sottomissione può essere aggiornata in caso di modifiche al linkRepository, alla descrizione o al titolo
     //Quando un team effettua modifiche ai file presenti nel linkRepository non è necessario un aggiornamento, i file si autoaggiornano ad ogni modifica
     @Override
-    public SottomissioneResponse aggiornaSottomissione(Long idSottomissione, SottomissioneRequest request) {
+    public Sottomissione aggiornaSottomissione(Long idSottomissione, SottomissioneRequest request) {
         if(request==null) return null;
         Sottomissione sottomissione=repositorySottomissione.findSottomissioneById(idSottomissione).orElseThrow(() -> new EntityNotFoundException("Sottomissione non presente, impossibile aggiornare"));
-        if(request.getDescrizione()== null) request.setDescrizione(sottomissione.getDescrizione());
-        if(request.getTitolo()== null) request.setTitolo(sottomissione.getTitolo());
-        if(request.getLinkRepository()==null) request.setLinkRepository(sottomissione.getLinkRepository());
-        request.setIdTeam(sottomissione.getTeam().getId());
-        SottomissioneMapper mapper= new SottomissioneMapper();
-        sottomissione= mapper.toEntity(request);
-        repositorySottomissione.updateSottomissione(sottomissione);
-        return mapper.toResponse(sottomissione);
+        if(request.getDescrizione()!= null && !request.getDescrizione().isBlank()) sottomissione.setDescrizione(request.getDescrizione());
+        if(request.getTitolo()!= null && !request.getTitolo().isBlank()) sottomissione.setTitolo(request.getTitolo());
+        if(request.getLinkRepository()!=null && !request.getLinkRepository().isBlank()) sottomissione.setLinkRepository(request.getLinkRepository());
+        return repositorySottomissione.updateSottomissione(sottomissione).orElseThrow(EntityNotFoundException::new);
     }
 
     //La lista di tutte le sottomissioni presenti in uno specifico hackathon può essere richiesta dal giudice

@@ -36,7 +36,7 @@ public class RichiestaSupportoService implements IRichiestaSupportoService {
 
     @Override
     @Transactional
-    public RichiestaSupportoResponse inviaRichiestaSupporto(RichiestaSupportoRequest request) {
+    public RichiestaSupporto inviaRichiestaSupporto(RichiestaSupportoRequest request) {
         if(request==null) throw new EntityNotFoundException();
         Team team=repositoryTeam.findTeamById(request.getTeamId()).orElseThrow(EntityNotFoundException::new);
         Hackathon hackathon=repositoryHackathon.findHackathonById(request.getHackathonId()).orElseThrow(EntityNotFoundException::new);
@@ -47,6 +47,11 @@ public class RichiestaSupportoService implements IRichiestaSupportoService {
 
         RichiestaSupportoMapper map= new RichiestaSupportoMapper();
         RichiestaSupporto richiestaSupporto=map.toEntity(request);
+
+        richiestaSupporto.setTeam(team);
+        richiestaSupporto.setHackathon(hackathon);
+        richiestaSupporto.setMentore(mentore);
+
         repositoryRichiestaSupporto.insertInto(richiestaSupporto);
         repositoryRichiestaSupporto.updateRichiestaSupporto(richiestaSupporto);
 
@@ -54,7 +59,7 @@ public class RichiestaSupportoService implements IRichiestaSupportoService {
         repositoryHackathon.updateHackathon(hackathon);
 
         //if(repositoryRichiestaSupporto.findRichiestaSupportoById(richiestaSupporto.getId()).isPresent())
-            return map.toResponse(richiestaSupporto);
+            return richiestaSupporto;
         //throw new EntityNotFoundException("Richiesta di supporto non inviata");
     }
 
