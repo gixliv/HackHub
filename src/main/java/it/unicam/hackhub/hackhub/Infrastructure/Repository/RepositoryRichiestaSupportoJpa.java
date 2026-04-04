@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface RepositoryRichiestaSupportoJpa extends JpaRepository<RichiestaSupporto, Long> {
 
-    List<RichiestaSupporto> findAllRichiesteSupporto(Long hackathonId);
+    List<RichiestaSupporto> findAllByHackathonId(Long hackathonId);
 }

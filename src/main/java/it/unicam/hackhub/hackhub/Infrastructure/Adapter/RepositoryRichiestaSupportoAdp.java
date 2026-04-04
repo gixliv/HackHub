@@ -35,6 +35,6 @@ public class RepositoryRichiestaSupportoAdp implements IRepositoryRichiestaSuppo
 
     @Override
     public List<RichiestaSupporto> findAllRichiesteSupporto(Long idHackathon) {
-        return repositoryRichiestaSupportoJpa.findAllRichiesteSupporto(idHackathon);
+        return repositoryRichiestaSupportoJpa.findAllByHackathonId(idHackathon);
     }
 }
