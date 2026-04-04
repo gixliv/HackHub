@@ -24,11 +24,11 @@ public class Sottomissione {
     @Column(nullable = false, unique = true)
     private String linkRepository;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hackathon_id")
     private Hackathon hackathon;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teams_id")
     private Team team;
 

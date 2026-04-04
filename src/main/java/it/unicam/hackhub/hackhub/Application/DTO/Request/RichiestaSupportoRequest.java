@@ -11,4 +11,5 @@ public class RichiestaSupportoRequest {
     private String descrizione;
     private Long mentoreId;
     private Long teamId;
+    private Long hackathonId;
 }

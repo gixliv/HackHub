@@ -35,7 +35,7 @@ public class SottomissioneService implements ISottomissioneService {
     public SottomissioneResponse inviaSottomissione(SottomissioneRequest request) {
         if(request==null) return null;
         Team team=repositoryTeam.findTeamById(request.getIdTeam()).orElseThrow(EntityNotFoundException::new);
-        Hackathon hackathon=repositoryHackathon.findHackathonById(team.getHackathon().getId()).orElseThrow(EntityNotFoundException::new);
+        Hackathon hackathon=repositoryHackathon.findHackathonById(request.getIdHackathon()).orElseThrow(EntityNotFoundException::new);
 
         if(!(hackathon.getStato().equals(StatoHackathon.IN_CORSO))) throw new RuntimeException("L'hackathon non è in corso");
         if(repositorySottomissione.findSottomissioneByTeamId(team.getId()).isPresent()) throw new RuntimeException("Sottomissione già esistente, effettuare un aggiornamento se necessario");

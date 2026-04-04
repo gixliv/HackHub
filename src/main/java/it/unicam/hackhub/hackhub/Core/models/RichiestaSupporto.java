@@ -18,16 +18,16 @@ public class RichiestaSupporto {
     @Column(nullable = false)
     private String descrizione;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentore_id")
     @SQLRestriction("ruolo = 'MENTORE' ")
     private MembroStaff mentore;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hackathon_id")
     private Hackathon hackathon;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teams_id")
     private Team team;
 

@@ -13,4 +13,5 @@ public class SottomissioneRequest {
     private String descrizione;
     private String linkRepository;
     private Long idTeam;
+    private Long idHackathon;
 }

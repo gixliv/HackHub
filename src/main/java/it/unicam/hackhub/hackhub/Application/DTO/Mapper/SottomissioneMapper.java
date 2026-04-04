@@ -18,7 +18,7 @@ public class SottomissioneMapper {
         team.setId(request.getIdTeam());
         sottomissione.setTeam(team);
         Hackathon hackathon= new Hackathon();
-        hackathon.setId(team.getHackathon().getId());
+        hackathon.setId(request.getIdHackathon());
         sottomissione.setHackathon(hackathon);
         return sottomissione;
     }

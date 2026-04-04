@@ -53,16 +53,16 @@ public class Utente {
     private LocalDate dataNascita;
 
     //team a cui appartiene l'utente nel caso in cui sia membro o creatore del team
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="team_id")
     private Team team;
 
     //lista di inviti che ha inviato nel caso in cui sia creatore del team
-    @OneToMany(mappedBy = "mittente", orphanRemoval = true)
+    @OneToMany(mappedBy = "mittente", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Invito> invitiInviati;
 
     //lista di inviti ricevuti
-    @OneToMany(mappedBy = "destinatario", orphanRemoval = true)
+    @OneToMany(mappedBy = "destinatario", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Invito> invitiRicevuti;
 
 

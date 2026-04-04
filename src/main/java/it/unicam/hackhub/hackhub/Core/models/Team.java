@@ -30,7 +30,7 @@ public class Team {
     private String descrizione;
 
     //utente definito come creatore di uno specifico team
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creatore_id")
     private Utente creatore;
 
@@ -41,11 +41,11 @@ public class Team {
     private List<Utente> membri;
 
     //specifico hackathon a cui il team si è iscritto
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hackathon_id")
     private Hackathon hackathon;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sottomissione_id")
     private Sottomissione sottomissione;
     

@@ -49,21 +49,21 @@ public class Hackathon {
     private int numMaxTeam;
 
     //lista dei team partecipanti ad uno specifico hackathon
-    @OneToMany(mappedBy = "hackathon", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "hackathon", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Team> teams;
 
     //utente membro dello staff che ha organizzato uno specifico hackathon
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organizzatore_id")
     private MembroStaff organizzatore;
 
     //utente membro dello staff a cui è stato assegnato il ruolo di giudice per uno specifico hackathon
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "giudice_id")
     private MembroStaff giudice;
 
     //utente o utenti membri dello staff a cui è stato assegnato il ruolo di mentore per uno specifico hackathon
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "hackathon_mentori",
             joinColumns = @JoinColumn(name = "hackathon_id"),
@@ -71,10 +71,10 @@ public class Hackathon {
     )
     private List<MembroStaff> mentori;
 
-    @OneToMany(mappedBy = "hackathon", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "hackathon", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Sottomissione> sottomissioni = new ArrayList<>();
 
-    @OneToMany(mappedBy = "hackathon")
+    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY)
     private List<RichiestaSupporto> richiesteSupporto = new ArrayList<>();
 
 

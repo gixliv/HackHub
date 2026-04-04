@@ -19,7 +19,7 @@ public class RichiestaSupportoMapper {
         richiestaSupporto.setTeam(team);
 
         Hackathon hackathon = new Hackathon();
-        hackathon.setId(team.getHackathon().getId());
+        hackathon.setId(request.getHackathonId());
         richiestaSupporto.setHackathon(hackathon);
 
         MembroStaff mentore = new MembroStaff();

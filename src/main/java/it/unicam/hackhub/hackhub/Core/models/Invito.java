@@ -18,12 +18,12 @@ public class Invito {
     private String descrizione;
 
     //utente (creatore del team) mittente dell'invito
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mittente_id", nullable = false)
     private Utente mittente;
 
     //utente destinatario dell'invito
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "destinatario_id", nullable = false)
     private Utente destinatario;
 

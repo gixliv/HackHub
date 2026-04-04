@@ -14,6 +14,7 @@ import it.unicam.hackhub.hackhub.Core.models.MembroStaff;
 import it.unicam.hackhub.hackhub.Core.models.RichiestaSupporto;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,10 +35,11 @@ public class RichiestaSupportoService implements IRichiestaSupportoService {
     }
 
     @Override
+    @Transactional
     public RichiestaSupportoResponse inviaRichiestaSupporto(RichiestaSupportoRequest request) {
         if(request==null) throw new EntityNotFoundException();
         Team team=repositoryTeam.findTeamById(request.getTeamId()).orElseThrow(EntityNotFoundException::new);
-        Hackathon hackathon=repositoryHackathon.findHackathonById(team.getHackathon().getId()).orElseThrow(EntityNotFoundException::new);
+        Hackathon hackathon=repositoryHackathon.findHackathonById(request.getHackathonId()).orElseThrow(EntityNotFoundException::new);
         if(hackathon.getStato()!= StatoHackathon.IN_CORSO) throw new EntityNotFoundException("L'hackathon non è in corso, impossibile inviare richiesta di supporto");
 
         MembroStaff mentore=repositoryMembriStaff.findMembroStaffById(request.getMentoreId()).orElseThrow();
@@ -46,13 +48,14 @@ public class RichiestaSupportoService implements IRichiestaSupportoService {
         RichiestaSupportoMapper map= new RichiestaSupportoMapper();
         RichiestaSupporto richiestaSupporto=map.toEntity(request);
         repositoryRichiestaSupporto.insertInto(richiestaSupporto);
+        repositoryRichiestaSupporto.updateRichiestaSupporto(richiestaSupporto);
 
         hackathon.getRichiesteSupporto().add(richiestaSupporto);
         repositoryHackathon.updateHackathon(hackathon);
 
-        if(repositoryRichiestaSupporto.findRichiestaSupportoById(richiestaSupporto.getId()).isPresent())
+        //if(repositoryRichiestaSupporto.findRichiestaSupportoById(richiestaSupporto.getId()).isPresent())
             return map.toResponse(richiestaSupporto);
-        throw new EntityNotFoundException("Richiesta di supporto non inviata");
+        //throw new EntityNotFoundException("Richiesta di supporto non inviata");
     }
 
     @Override

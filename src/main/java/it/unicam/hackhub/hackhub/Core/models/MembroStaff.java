@@ -20,20 +20,20 @@ public class MembroStaff extends Utente{
 
     //membro assegnato ad uno specifico hackathon a cui lui partecipa in questo slot di tempo
     //se non sta partecipando ad hackathon in corso il campo rimarrà nullo
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hackathon_id")
     private Hackathon hackathon;
 
     //lista degli hackathon che ha organizzato
-    @OneToMany(mappedBy = "organizzatore")
+    @OneToMany(mappedBy = "organizzatore", fetch = FetchType.LAZY)
     private List<Hackathon> hackathonsOrganizzatore;
 
     //lista degli hackathon a cui è assegnato e a cui ha partecipato come giudice
-    @OneToMany(mappedBy = "giudice")
+    @OneToMany(mappedBy = "giudice", fetch = FetchType.LAZY)
     private List<Hackathon> hackathonsGiudice;
 
     //lista degli hackathon a cui è assegnato e a cui ha partecipato come mentore
-    @ManyToMany(mappedBy = "mentori")
+    @ManyToMany(mappedBy = "mentori", fetch = FetchType.LAZY)
     private List<Hackathon> hackathonsMentore;
 
     //override di setRuolo per evitare che i ruoli assegnabili a membroStaff siano quelli utilizzati da utente
