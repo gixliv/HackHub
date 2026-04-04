@@ -1,14 +1,14 @@
 package it.unicam.hackhub.hackhub.Application.Service;
 
-import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryTeam;
-import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryUtenti;
+import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.*;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.ITeamService;
+import it.unicam.hackhub.hackhub.Application.DTO.Mapper.RichiestaSupportoMapper;
 import it.unicam.hackhub.hackhub.Application.DTO.Mapper.TeamMapper;
+import it.unicam.hackhub.hackhub.Application.DTO.Request.RichiestaSupportoRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
 import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
-import it.unicam.hackhub.hackhub.Core.models.Hackathon;
-import it.unicam.hackhub.hackhub.Core.models.Team;
-import it.unicam.hackhub.hackhub.Core.models.Utente;
+import it.unicam.hackhub.hackhub.Core.enums.StatoHackathon;
+import it.unicam.hackhub.hackhub.Core.models.*;
 import it.unicam.hackhub.hackhub.Presentation.Exeptions.MemberNotFoundInTeamException;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,7 +23,7 @@ public class TeamService implements ITeamService {
     private final IRepositoryTeam repositoryTeam;
     private final IRepositoryUtenti repositoryUtenti;
 
-    public TeamService(IRepositoryTeam repositoryTeam, IRepositoryUtenti repositoryUtenti) {
+    public TeamService(IRepositoryTeam repositoryTeam, IRepositoryUtenti repositoryUtenti, IRepositoryHackathon repositoryHackathon, IRepositoryRichiestaSupporto repositoryRichiestaSupporto, IRepositoryMembriStaff repositoryMembriStaff) {
         this.repositoryTeam = repositoryTeam;
         this.repositoryUtenti = repositoryUtenti;
     }

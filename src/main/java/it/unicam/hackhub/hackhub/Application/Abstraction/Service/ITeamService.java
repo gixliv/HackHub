@@ -1,5 +1,6 @@
 package it.unicam.hackhub.hackhub.Application.Abstraction.Service;
 
+import it.unicam.hackhub.hackhub.Application.DTO.Request.RichiestaSupportoRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
 import it.unicam.hackhub.hackhub.Core.models.Hackathon;
 import it.unicam.hackhub.hackhub.Core.models.Team;
@@ -20,4 +21,5 @@ public interface ITeamService {
     Hackathon getHackathon(Long idTeam);
     List<Team> getAllTeams();
     boolean abbandonaTeam(Long idUtente, Long idTeam);
+
 }

@@ -22,14 +22,14 @@ public class SottomissioneController {
     }
 
     @PostMapping("/invia")
-    @PreAuthorize("hasRole('MEMBRO_TEAM')")
+    @PreAuthorize("hasRole('MEMBRO_TEAM') || hasRole('CREATORE_TEAM')")
     public SottomissioneResponse inviaSottomissione(@RequestBody SottomissioneRequest request){
         if(request == null) throw new IllegalArgumentException();
         return sottomissioneService.inviaSottomissione(request);
     }
 
     @PutMapping("/midifica/{idSottomissione}")
-    @PreAuthorize("hasRole('MEMBRO_TEAM')")
+    @PreAuthorize("hasRole('MEMBRO_TEAM') || hasRole('CREATORE_TEAM')")
     public SottomissioneResponse aggiornaSottomissione(@PathVariable Long idSottomissione, @RequestParam String titolo, @RequestParam String descrizione, @RequestParam String linkRepository){
         if(idSottomissione==null) throw new IllegalArgumentException("Sottomissione non inserita");
         SottomissioneRequest request=new SottomissioneRequest();
