@@ -5,6 +5,8 @@ import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IHackathonServi
 import it.unicam.hackhub.hackhub.Application.DTO.Mapper.HackathonMapper;
 import it.unicam.hackhub.hackhub.Application.DTO.Mapper.HackathonStaffMapper;
 import it.unicam.hackhub.hackhub.Application.DTO.Mapper.TeamMapper;
+import it.unicam.hackhub.hackhub.Application.DTO.Request.HackathonRequest;
+import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.HackathonResponse;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.HackathonStaffResponse;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.TeamResponse;
@@ -98,11 +100,11 @@ public class HackathonController {
     //il membro dello staff, attraverso il suo id, può visualizzare tutti i nomi degli hackathon a cui viene assegnato come staff
     @GetMapping("/myHackathons/{idUtente}")
     @PreAuthorize("hasRole('MEMBRO_STAFF')")
-    public List<String> getAllMyHackathons(@PathVariable Long idUtente){
+    public List<String> getAllMyHackathons(@PathVariable Long idUtente) {
         List<String> nomiResponse = new ArrayList<>();
         List<Hackathon> hackathons = hackathonService.getAllMyHackathon(idUtente);
-        if(!hackathons.isEmpty()) {
-            for(Hackathon h : hackathons) {
+        if (!hackathons.isEmpty()) {
+            for (Hackathon h : hackathons) {
                 nomiResponse.add(h.getNome());
             }
             return nomiResponse;
@@ -114,11 +116,11 @@ public class HackathonController {
     //sugli altri membri staff rispetto all'utente normale
     @GetMapping("/myHackathons/{idUtente}/{nomeHackathon}")
     @PreAuthorize("hasRole('MEMBRO_STAFF')")
-    public HackathonStaffResponse getMyHackathon(@PathVariable Long idUtente, @PathVariable String nomeHackathon){
-        if(idUtente==null || nomeHackathon==null) throw new IllegalArgumentException();
+    public HackathonStaffResponse getMyHackathon(@PathVariable Long idUtente, @PathVariable String nomeHackathon) {
+        if (idUtente == null || nomeHackathon == null) throw new IllegalArgumentException();
         List<String> hackathons = getAllMyHackathons(idUtente);
-        for (String nomeH : hackathons){
-            if(nomeH.equals(nomeHackathon)){
+        for (String nomeH : hackathons) {
+            if (nomeH.equals(nomeHackathon)) {
                 Hackathon hackathon = hackathonService.getHackathonByName(nomeHackathon);
                 HackathonStaffMapper mapper = new HackathonStaffMapper();
                 return mapper.toResponse(hackathon);
@@ -137,11 +139,28 @@ public class HackathonController {
 
     @PutMapping("/{idHackathon}/{idUtente}")
     @PreAuthorize("hasRole('ORGANIZZATORE')")
-    public String addMembro(@PathVariable Long idUtente,@PathVariable Long idHackathon) {
+    public String addMembro(@PathVariable Long idUtente, @PathVariable Long idHackathon) {
         if (idUtente == null) throw new IllegalArgumentException();
         if (idHackathon == null) throw new IllegalArgumentException();
         hackathonService.addMentore(idUtente, idHackathon);
         return "Membro aggiunto";
+    }
+
+    @PostMapping
+    @PreAuthorize("hasRole('ORGANIZZATORE')")
+    public String creaHackathon(@RequestBody HackathonRequest request, @RequestParam Long idOrganizzatore) {
+        if (request == null) throw new IllegalArgumentException();
+        if (idOrganizzatore == null) throw new IllegalArgumentException("Id organizzatore nullo");
+        hackathonService.creaHackathon(request, idOrganizzatore);
+        return "Hackathon creato";
+    }
+
+    @DeleteMapping("/{idHackathon}/delete")
+    @PreAuthorize("hasRole('ORGANIZZATORE')")
+    public String eliminaHackathon(@PathVariable Long idHackathon) {
+        if (idHackathon == null) throw new IllegalArgumentException("Id hackathon nullo");
+        hackathonService.eliminaHackathon(idHackathon);
+        return "Hackathon eliminato";
     }
 
 }

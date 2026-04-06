@@ -1,5 +1,6 @@
 package it.unicam.hackhub.hackhub.Application.Abstraction.Service;
 
+import it.unicam.hackhub.hackhub.Application.DTO.Request.HackathonRequest;
 import it.unicam.hackhub.hackhub.Core.models.Hackathon;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 
@@ -22,4 +23,8 @@ public interface IHackathonService {
     boolean annullaHackathon(Long idHackathon);
 
     boolean addMentore(Long idUtente, Long idHackathon);
+
+    boolean eliminaHackathon(Long idHackathon);
+
+    Hackathon creaHackathon(HackathonRequest request, Long idOrganizzatore);
 }

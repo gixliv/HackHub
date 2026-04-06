@@ -2,7 +2,6 @@ package it.unicam.hackhub.hackhub.Infrastructure.Adapter;
 
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryHackathon;
 import it.unicam.hackhub.hackhub.Core.models.Hackathon;
-import it.unicam.hackhub.hackhub.Core.models.Team;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositoryHackathonJpa;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Repository;
@@ -41,9 +40,14 @@ public class RepositoryHackathonAdp implements IRepositoryHackathon {
 
     @Override
     public Optional<Hackathon> deleteHackathonById(Long id) {
-        Hackathon hackathon = repositoryHackathonJpa.findById(id).orElseThrow(() -> new EntityNotFoundException("Hackathon non trovato")) ;
+        Hackathon hackathon = repositoryHackathonJpa.findById(id).orElseThrow(() -> new EntityNotFoundException("Hackathon non trovato"));
         repositoryHackathonJpa.delete(hackathon);
         return Optional.of(hackathon);
+    }
+
+    @Override
+    public Optional<Hackathon> insertInto(Hackathon hackathon) {
+        return Optional.of(repositoryHackathonJpa.save(hackathon));
     }
 
 
