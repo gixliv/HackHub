@@ -25,6 +25,19 @@ public class HackathonMapper {
         hackathon.setLuogo(hackathonRequest.getLuogo());
         hackathon.setDimensioneMaxTeam(hackathonRequest.getDimensioneMaxTeam());
         hackathon.setNumMaxTeam(hackathonRequest.getNumMaxTeam());
+
+        MembroStaff giudice= new MembroStaff();
+        giudice.setId(hackathonRequest.getIdGiudice());
+        hackathon.setGiudice(giudice);
+
+        List<MembroStaff> mentori=new ArrayList<>();
+        MembroStaff mentore= new MembroStaff();
+        for(Long idMentore: hackathonRequest.getIdMentori()){
+            mentore.setId(idMentore);
+            mentori.add(mentore);
+        }
+        hackathon.setMentori(mentori);
+
         return hackathon;
     }
 

@@ -15,7 +15,6 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "hackathons")
-@Builder
 public class Hackathon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +51,6 @@ public class Hackathon {
 
     //lista dei team partecipanti ad uno specifico hackathon
     @OneToMany(mappedBy = "hackathon", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Builder.Default
     private List<Team> teams;
 
     //utente membro dello staff che ha organizzato uno specifico hackathon
@@ -72,15 +70,12 @@ public class Hackathon {
             joinColumns = @JoinColumn(name = "hackathon_id"),
             inverseJoinColumns = @JoinColumn(name = "mentore_id")
     )
-    @Builder.Default
     private List<MembroStaff> mentori;
 
     @OneToMany(mappedBy = "hackathon", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Builder.Default
     private List<Sottomissione> sottomissioni = new ArrayList<>();
 
     @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY)
-    @Builder.Default
     private List<RichiestaSupporto> richiesteSupporto = new ArrayList<>();
 
 

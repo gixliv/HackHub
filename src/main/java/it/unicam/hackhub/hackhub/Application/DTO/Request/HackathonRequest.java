@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Setter
 @Getter
@@ -19,5 +20,6 @@ public class HackathonRequest {
     private String luogo;
     private int dimensioneMaxTeam;
     private int numMaxTeam;
-
+    private Long idGiudice;
+    private List<Long> idMentori;
 }

@@ -5,6 +5,7 @@ import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryM
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryTeam;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryUtenti;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IHackathonService;
+import it.unicam.hackhub.hackhub.Application.Builder.HackathonBuilder;
 import it.unicam.hackhub.hackhub.Application.DTO.Request.HackathonRequest;
 import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
 import it.unicam.hackhub.hackhub.Core.enums.StatoHackathon;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -130,16 +132,7 @@ public class HackathonService implements IHackathonService {
         return repositoryHackathon.findHackathonById(hackathon.getId()).isEmpty();
     }
 
-    /**
-     * Crea un nuovo hackathon nel sistema.
-     *
-     * @param request         i dati dell'hackathon da creare
-     * @param idOrganizzatore l'id del membro dello staff che sarà l'organizzatore
-     * @return l'hackathon creato
-     * @throws EntityNotFoundException se l'organizzatore non esiste
-     * @throws IllegalStateException   se l'organizzatore è già assegnato a un hackathon
-     * @throws EntityExistsException   se esiste già un hackathon con lo stesso nome
-     */
+    //Crea un nuovo hackathon nel sistema
     @Override
     public Hackathon creaHackathon(HackathonRequest request, Long idOrganizzatore) {
         MembroStaff organizzatore = repositoryMembriStaff
@@ -154,7 +147,16 @@ public class HackathonService implements IHackathonService {
             throw new EntityExistsException("Hackathon già esistente con questo nome");
         }
 
-        Hackathon hackathon = Hackathon.builder()
+        MembroStaff giudice = repositoryMembriStaff.findMembroStaffById(request.getIdGiudice()).orElseThrow(() -> new EntityNotFoundException("Giudice non trovato"));
+
+        List<MembroStaff> mentori = new ArrayList<>();
+        for (Long idMentore : request.getIdMentori()) {
+            MembroStaff mentore = repositoryMembriStaff.findMembroStaffById(idMentore).orElseThrow(() -> new EntityNotFoundException("Mentore non trovato"));
+            mentori.add(mentore);
+        }
+
+        //creazione dell'hackathon tramite il design pattern Builder
+        Hackathon hackathon = new HackathonBuilder()
                 .nome(request.getNome())
                 .regolamento(request.getRegolamento())
                 .scadenzaIscrizioni(request.getScadenzaIscrizioni())
@@ -163,51 +165,46 @@ public class HackathonService implements IHackathonService {
                 .luogo(request.getLuogo())
                 .dimensioneMaxTeam(request.getDimensioneMaxTeam())
                 .numMaxTeam(request.getNumMaxTeam())
-                .stato(StatoHackathon.IN_ISCRIZIONE)
                 .organizzatore(organizzatore)
+                .giudice(giudice)
+                .mentori(mentori)
                 .build();
+        hackathon.setStato(StatoHackathon.IN_ISCRIZIONE);
+
+        //validazione dei dati per l'inserimento del nuovo hackathon
+        if (hackathon.getDataInizio().isBefore(hackathon.getScadenzaIscrizioni())) throw new IllegalArgumentException("Data inizio non valida");
+        if (hackathon.getDataFine().isBefore(hackathon.getDataInizio())) throw new IllegalArgumentException("Data fine non valida");
+        if (hackathon.getNumMaxTeam()<=0) throw new IllegalArgumentException("Numero massimo di team non valido");
+        if (hackathon.getDimensioneMaxTeam()<=0) throw new IllegalArgumentException("Dimensione massima di team non valida");
+        if (hackathon.getRegolamento()==null || hackathon.getRegolamento().isEmpty()) throw new IllegalArgumentException("Regolamento non valido");
 
         hackathon = repositoryHackathon.insertInto(hackathon)
                 .orElseThrow(() -> new EntityNotFoundException("Errore nel salvataggio dell'hackathon"));
 
+        //assegnazione del nuovo hackathon come hackathon corrente per tutti i membri staff
         organizzatore.setHackathon(hackathon);
+        giudice.setHackathon(hackathon);
+        for (MembroStaff mentore : mentori) {
+            mentore.setHackathon(hackathon);
+        }
 
+        //aggiornamento delle entità nel database
         repositoryMembriStaff.updateMembroStaff(organizzatore);
+        repositoryMembriStaff.updateMembroStaff(giudice);
+        for (MembroStaff mentore : mentori) repositoryMembriStaff.updateMembroStaff(mentore);
 
         return hackathon;
     }
 
-    /**
-     * Elimina un hackathon solo se il suo stato è {@link StatoHackathon#CONCLUSO}.
-     *
-     * @param idHackathon l'id dell'hackathon da eliminare
-     * @return {@code true} se l'hackathon è stato eliminato, {@code false} altrimenti
-     * @throws EntityNotFoundException se l'hackathon non esiste
-     * @throws IllegalStateException   se l'hackathon non è concluso
-     */
-
+    //Elimina un hackathon solo se il suo stato è CONCLUSO.
     @Override
+    @Transactional
     public boolean eliminaHackathon(Long idHackathon) {
         Hackathon hackathon = repositoryHackathon.findHackathonById(idHackathon).orElseThrow(() -> new EntityNotFoundException("Hackathon non presente"));
         if (hackathon.getStato() != StatoHackathon.CONCLUSO) {
             throw new IllegalStateException("Hackathon non concluso");
         }
 
-        List<Team> teams = hackathon.getTeams();
-
-        for (Team team : teams) {
-            team.setHackathon(null);
-            repositoryTeam.updateTeam(team);
-        }
-
-        List<MembroStaff> membri = hackathon.getMentori();
-        membri.add(hackathon.getGiudice());
-        membri.add(hackathon.getOrganizzatore());
-
-        for (MembroStaff membro : membri) {
-            membro.setHackathon(null);
-            repositoryMembriStaff.updateMembroStaff(membro);
-        }
         repositoryHackathon.deleteHackathonById(hackathon.getId());
         return repositoryHackathon.findHackathonById(hackathon.getId()).isEmpty();
     }

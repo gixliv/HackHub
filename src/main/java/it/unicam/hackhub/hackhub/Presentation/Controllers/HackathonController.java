@@ -146,21 +146,21 @@ public class HackathonController {
         return "Membro aggiunto";
     }
 
-    @PostMapping
+    @PostMapping("/crea")
     @PreAuthorize("hasRole('ORGANIZZATORE')")
-    public String creaHackathon(@RequestBody HackathonRequest request, @RequestParam Long idOrganizzatore) {
+    public HackathonResponse creaHackathon(@RequestBody HackathonRequest request, @RequestParam Long idOrganizzatore) {
         if (request == null) throw new IllegalArgumentException();
         if (idOrganizzatore == null) throw new IllegalArgumentException("Id organizzatore nullo");
-        hackathonService.creaHackathon(request, idOrganizzatore);
-        return "Hackathon creato";
+        Hackathon hackathon=hackathonService.creaHackathon(request, idOrganizzatore);
+        HackathonMapper mapper = new HackathonMapper();
+        return mapper.toResponse(hackathon);
     }
 
     @DeleteMapping("/{idHackathon}/delete")
     @PreAuthorize("hasRole('ORGANIZZATORE')")
-    public String eliminaHackathon(@PathVariable Long idHackathon) {
+    public boolean eliminaHackathon(@PathVariable Long idHackathon) {
         if (idHackathon == null) throw new IllegalArgumentException("Id hackathon nullo");
-        hackathonService.eliminaHackathon(idHackathon);
-        return "Hackathon eliminato";
+        return hackathonService.eliminaHackathon(idHackathon);
     }
 
 }
