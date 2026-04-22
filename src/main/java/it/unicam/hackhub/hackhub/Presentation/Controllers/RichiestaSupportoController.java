@@ -1,5 +1,6 @@
 package it.unicam.hackhub.hackhub.Presentation.Controllers;
 
+import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IRichiestaSupportoService;
 import it.unicam.hackhub.hackhub.Application.DTO.Mapper.RichiestaSupportoMapper;
 import it.unicam.hackhub.hackhub.Application.DTO.Request.RichiestaSupportoRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Response.RichiestaSupportoResponse;
@@ -14,9 +15,9 @@ import java.util.List;
 @RequestMapping("api/richiestaSupporto")
 public class RichiestaSupportoController {
 
-    private final it.unicam.hackhub.hackhub.Application.Abstraction.Service.IRichiestaSupportoService richiestaSupportoService;
+    private final IRichiestaSupportoService richiestaSupportoService;
 
-    public RichiestaSupportoController(it.unicam.hackhub.hackhub.Application.Abstraction.Service.IRichiestaSupportoService richiestaSupportoService) {
+    public RichiestaSupportoController(IRichiestaSupportoService richiestaSupportoService) {
         this.richiestaSupportoService = richiestaSupportoService;
     }
 
