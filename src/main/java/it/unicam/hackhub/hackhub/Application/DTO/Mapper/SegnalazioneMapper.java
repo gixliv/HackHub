@@ -7,7 +7,7 @@ import it.unicam.hackhub.hackhub.Core.models.MembroStaff;
 import it.unicam.hackhub.hackhub.Core.models.Segnalazione;
 import it.unicam.hackhub.hackhub.Core.models.Team;
 
-public class SeganalzioneMapper {
+public class SegnalazioneMapper {
     public Segnalazione toEntity(SegnalazioneRequest request) {
         if (request == null) return null;
         Segnalazione segnalazione = new Segnalazione();
