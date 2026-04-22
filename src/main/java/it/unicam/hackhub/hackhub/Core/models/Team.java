@@ -48,5 +48,8 @@ public class Team {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sottomissione_id")
     private Sottomissione sottomissione;
+
+    @OneToMany(mappedBy = "teamSegnalato", fetch = FetchType.LAZY)
+    private List<Segnalazione> segnalazioni;
     
 }

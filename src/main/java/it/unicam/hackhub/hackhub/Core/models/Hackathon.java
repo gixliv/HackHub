@@ -73,10 +73,13 @@ public class Hackathon {
     private List<MembroStaff> mentori;
 
     @OneToMany(mappedBy = "hackathon", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Sottomissione> sottomissioni = new ArrayList<>();
+    private List<Sottomissione> sottomissioni;
 
     @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY)
-    private List<RichiestaSupporto> richiesteSupporto = new ArrayList<>();
+    private List<RichiestaSupporto> richiesteSupporto;
+
+    @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY)
+    private List<Segnalazione> segnalazioni;
 
 
 }
