@@ -10,5 +10,5 @@ public interface IRepositorySegnalazione {
     Optional<Segnalazione> findSegnalazioneById(Long idSegnalazione);
     Optional<Segnalazione> insertInto(Segnalazione segnalazione);
     List<Segnalazione> findAllSegnalazioni(Long idHackathon);
-
+    List<Segnalazione> findAllSegnalazioniByTeamId(Long idTeam);
 }

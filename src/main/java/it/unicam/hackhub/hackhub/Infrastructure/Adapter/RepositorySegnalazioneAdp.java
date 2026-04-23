@@ -4,9 +4,12 @@ import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryS
 import it.unicam.hackhub.hackhub.Core.models.Segnalazione;
 import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositorySegnalazioneJpa;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class RepositorySegnalazioneAdp implements IRepositorySegnalazione {
     private final RepositorySegnalazioneJpa repositorySegnalazioneJpa;
 
@@ -29,5 +32,15 @@ public class RepositorySegnalazioneAdp implements IRepositorySegnalazione {
     @Override
     public Optional<Segnalazione> insertInto(Segnalazione segnalazione) {
         return Optional.of(repositorySegnalazioneJpa.save(segnalazione));
+    }
+
+    @Override
+    public List<Segnalazione> findAllSegnalazioni(Long idHackathon) {
+        return repositorySegnalazioneJpa.findAllByHackathonId(idHackathon);
+    }
+
+    @Override
+    public List<Segnalazione> findAllSegnalazioniByTeamId(Long idTeam){
+        return repositorySegnalazioneJpa.findAllByTeamId(idTeam);
     }
 }

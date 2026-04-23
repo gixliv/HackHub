@@ -1,18 +1,13 @@
 package it.unicam.hackhub.hackhub.Application.Service;
 
-import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryHackathon;
-import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryMembriStaff;
-import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryTeam;
-import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.IRepositoryUtenti;
+import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.*;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.IHackathonService;
 import it.unicam.hackhub.hackhub.Application.Builder.HackathonBuilder;
 import it.unicam.hackhub.hackhub.Application.DTO.Request.HackathonRequest;
 import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
 import it.unicam.hackhub.hackhub.Core.enums.StatoHackathon;
-import it.unicam.hackhub.hackhub.Core.models.Hackathon;
-import it.unicam.hackhub.hackhub.Core.models.MembroStaff;
-import it.unicam.hackhub.hackhub.Core.models.Team;
-import it.unicam.hackhub.hackhub.Core.models.Utente;
+import it.unicam.hackhub.hackhub.Core.models.*;
+import it.unicam.hackhub.hackhub.Infrastructure.Repository.RepositorySegnalazioneJpa;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -30,12 +25,14 @@ public class HackathonService implements IHackathonService {
     private final IRepositoryUtenti repositoryUtenti;
     private final IRepositoryTeam repositoryTeam;
     private final IRepositoryMembriStaff repositoryMembriStaff;
+    private final IRepositorySegnalazione repositorySegnalazione;
 
-    public HackathonService(IRepositoryHackathon repositoryHackathon, IRepositoryUtenti repositoryUtenti, IRepositoryTeam repositoryTeam, IRepositoryMembriStaff repositoryMembriStaff) {
+    public HackathonService(IRepositoryHackathon repositoryHackathon, IRepositoryUtenti repositoryUtenti, IRepositoryTeam repositoryTeam, IRepositoryMembriStaff repositoryMembriStaff, IRepositorySegnalazione repositorySegnalazione) {
         this.repositoryHackathon = repositoryHackathon;
         this.repositoryUtenti = repositoryUtenti;
         this.repositoryTeam = repositoryTeam;
         this.repositoryMembriStaff = repositoryMembriStaff;
+        this.repositorySegnalazione = repositorySegnalazione;
     }
 
     @Override
@@ -226,5 +223,23 @@ public class HackathonService implements IHackathonService {
         return false;
     }
 
+
+    @Override
+    @Transactional
+    public boolean espelliTeam(Long idTeam, Long idHackathon) {
+        Hackathon hackathon = repositoryHackathon.findHackathonById(idHackathon).orElseThrow(() -> new EntityNotFoundException("Hackathon non presente"));
+        Team team = repositoryTeam.findTeamById(idTeam).orElseThrow(() -> new EntityNotFoundException("Team non presente"));
+        List<Segnalazione> segnalazioni = repositorySegnalazione.findAllSegnalazioniByTeamId(idTeam);
+        team.getSegnalazioni().removeAll(segnalazioni);
+        hackathon.getSegnalazioni().removeAll(segnalazioni);
+        for (Segnalazione s : segnalazioni){
+            repositorySegnalazione.deleteSegnalazione(s.getId());
+        }
+        hackathon.getTeams().remove(team);
+        team.setHackathon(null);
+        repositoryTeam.updateTeam(team);
+        repositoryHackathon.updateHackathon(hackathon);
+        return true;
+    }
 
 }
