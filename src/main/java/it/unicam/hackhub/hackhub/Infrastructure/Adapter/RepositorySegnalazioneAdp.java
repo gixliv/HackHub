@@ -41,6 +41,6 @@ public class RepositorySegnalazioneAdp implements IRepositorySegnalazione {
 
     @Override
     public List<Segnalazione> findAllSegnalazioniByTeamId(Long idTeam){
-        return repositorySegnalazioneJpa.findAllByTeamId(idTeam);
+        return repositorySegnalazioneJpa.findAllByTeamSegnalatoId(idTeam);
     }
 }

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface RepositorySegnalazioneJpa extends JpaRepository<Segnalazione, Long> {
     List<Segnalazione> findAllByHackathonId(Long hackathonId);
-    List<Segnalazione> findAllByTeamId(Long teamId);
+    List<Segnalazione> findAllByTeamSegnalatoId(Long teamId);
 }
