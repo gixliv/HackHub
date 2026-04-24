@@ -29,4 +29,6 @@ public interface IHackathonService {
     Hackathon creaHackathon(HackathonRequest request, Long idOrganizzatore);
 
     boolean espelliTeam(Long idTeam, Long idHackathon);
+
+    Hackathon changeStato(Long idHackathon);
 }

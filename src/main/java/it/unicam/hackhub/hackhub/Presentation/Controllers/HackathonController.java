@@ -163,7 +163,7 @@ public class HackathonController {
         return hackathonService.eliminaHackathon(idHackathon);
     }
 
-    @PutMapping("/espell/{idTeam}/{idHackathon}")
+    @PutMapping("/espelli/{idTeam}/{idHackathon}")
     @PreAuthorize("hasRole('ORGANIZZATORE')")
     public boolean espelliTeam(@PathVariable Long idTeam, @PathVariable Long idHackathon){
         if (idTeam == null) throw new IllegalArgumentException("Id team nullo");
@@ -171,4 +171,10 @@ public class HackathonController {
         return hackathonService.espelliTeam(idTeam, idHackathon);
     }
 
+    @PutMapping("/cambiaStato/{idHackathon}")
+    public HackathonResponse changeStato(@PathVariable Long idHackathon){
+        if (idHackathon == null) throw new IllegalArgumentException("Id hackathon nullo");
+        HackathonMapper mapper = new HackathonMapper();
+        return mapper.toResponse(hackathonService.changeStato(idHackathon));
+    }
 }

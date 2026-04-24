@@ -242,4 +242,19 @@ public class HackathonService implements IHackathonService {
         return true;
     }
 
+    @Override
+    public Hackathon changeStato(Long idHackathon) {
+        Hackathon hackathon = repositoryHackathon.findHackathonById(idHackathon).orElseThrow(() -> new EntityNotFoundException("Hackathon non presente"));
+        switch (hackathon.getStato()) {
+            case IN_ISCRIZIONE: hackathon.setStato(StatoHackathon.IN_CORSO);
+            break;
+            case IN_CORSO: hackathon.setStato(StatoHackathon.IN_VALUTAZIONE);
+            break;
+            case IN_VALUTAZIONE: hackathon.setStato(StatoHackathon.CONCLUSO);
+            break;
+        }
+        repositoryHackathon.updateHackathon(hackathon);
+        return hackathon;
+    }
+
 }
