@@ -22,7 +22,8 @@ insert into utenti (username, nome, cognome, sesso, email, password, telefono, i
 ('Giudice1', 'Marco', 'Neri', 'M', 'marconeri@staff.it', 'pass1', '1111111111', 'IT1111111111111111111111111', '1980-01-01', 'GIUDICE'),
 ('Organizzatore1', 'Anna', 'Viola', 'F', 'annaviola@staff.it', 'pass2', '2222222222', 'IT2222222222222222222222222', '1985-01-01', 'ORGANIZZATORE'),
 ('Mentore1', 'Paolo', 'Verdi', 'M', 'paoloverdi@staff.it', 'pass3', '3333333333', 'IT3333333333333333333333333', '1982-03-10', 'MENTORE'),
-('Mentore2', 'Elena', 'Neri', 'F', 'elenaneri@staff.it', 'pass4', '4444444444', 'IT4444444444444444444444444', '1987-07-22', 'MENTORE')
+('Mentore2', 'Elena', 'Neri', 'F', 'elenaneri@staff.it', 'pass4', '4444444444', 'IT4444444444444444444444444', '1987-07-22', 'MENTORE'),
+('Organizzatore2', 'Sara', 'Gialli', 'F', 'saragialli@staff.it', 'pass5', '22222222226', 'IT55555555555555555555', '1986-01-01', 'ORGANIZZATORE')
 ;
 
 --hackathon
@@ -32,7 +33,9 @@ insert into hackathons (nome, scadenza_iscrizioni, data_inizio, data_fine, luogo
 insert into membro_staff (id_utente, hackathon_id, codice_fiscale) VALUES
 (6, 1, 'AAH97KJNKJEN567HA'),
 (7, 1, 'AAH97KTRETRT567DS'),
-(8, 1, 'AAH97LJNLJEZ567OA');
+(8, 1, 'AAH97LJNLJEZ567OA'),
+(9,null,'AAH97LJNLJEZ567QE')
+;
 
 update hackathons
 set organizzatore_id = 7, GIUDICE_ID=6
