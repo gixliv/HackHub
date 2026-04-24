@@ -223,18 +223,30 @@ public class HackathonService implements IHackathonService {
         return false;
     }
 
-
+    //Espulsione del team da parte dell'organizzatore a seguito di una segnalazione
     @Override
     @Transactional
     public boolean espelliTeam(Long idTeam, Long idHackathon) {
+        //Verifica se il team e l'hackathon siano presenti nel database
         Hackathon hackathon = repositoryHackathon.findHackathonById(idHackathon).orElseThrow(() -> new EntityNotFoundException("Hackathon non presente"));
         Team team = repositoryTeam.findTeamById(idTeam).orElseThrow(() -> new EntityNotFoundException("Team non presente"));
+        //Verifica se il team è iscritto all'hackathon
+        if (!team.getHackathon().getId().equals(hackathon.getId())) throw new EntityNotFoundException("Team non iscritto all'hackathon");
+        //Verifica che l'hackathon sia in corso
+        if (hackathon.getStato() != StatoHackathon.IN_CORSO) throw new RuntimeException("Hackathon non in corso");
+
         List<Segnalazione> segnalazioni = repositorySegnalazione.findAllSegnalazioniByTeamId(idTeam);
+        //verifica se ci sono segnalazioni
+        if (segnalazioni.isEmpty()) throw new RuntimeException();
+        //eliminazione delle segnalazioni dal team e dall'hackathon
         team.getSegnalazioni().removeAll(segnalazioni);
         hackathon.getSegnalazioni().removeAll(segnalazioni);
+        //eliminazione delle segnalazioni dal database
         for (Segnalazione s : segnalazioni){
             repositorySegnalazione.deleteSegnalazione(s.getId());
         }
+
+        //eliminazione del team dall'hackathon
         hackathon.getTeams().remove(team);
         team.setHackathon(null);
         repositoryTeam.updateTeam(team);
@@ -242,6 +254,7 @@ public class HackathonService implements IHackathonService {
         return true;
     }
 
+    //Cambio dello stato di uno specifico hackathon
     @Override
     public Hackathon changeStato(Long idHackathon) {
         Hackathon hackathon = repositoryHackathon.findHackathonById(idHackathon).orElseThrow(() -> new EntityNotFoundException("Hackathon non presente"));

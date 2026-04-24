@@ -34,35 +34,43 @@ public class RichiestaSupportoService implements IRichiestaSupportoService {
         this.repositoryMembriStaff = repositoryMembriStaff;
     }
 
+    //Creazione e invio di una nuova richiesta di supporto
     @Override
     @Transactional
     public RichiestaSupporto inviaRichiestaSupporto(RichiestaSupportoRequest request) {
         if(request==null) throw new EntityNotFoundException();
+
+        //verifica se team e hackathon siano presenti, se il team è iscritto all'hackathon e se l'hackathon sia inn corso.
         Team team=repositoryTeam.findTeamById(request.getTeamId()).orElseThrow(EntityNotFoundException::new);
         Hackathon hackathon=repositoryHackathon.findHackathonById(request.getHackathonId()).orElseThrow(EntityNotFoundException::new);
+        if(team.getHackathon()==null) throw new EntityNotFoundException("Il team non è inscritto all'hackathon, impossibile inviare richiesta di supporto");
         if(hackathon.getStato()!= StatoHackathon.IN_CORSO) throw new EntityNotFoundException("L'hackathon non è in corso, impossibile inviare richiesta di supporto");
 
+        //verifica del mentore e della sua appartenenza all'hackathon
         MembroStaff mentore=repositoryMembriStaff.findMembroStaffById(request.getMentoreId()).orElseThrow();
         if(!mentore.getHackathon().getId().equals(hackathon.getId())) throw new IllegalArgumentException("mentore non appartenente all'hackathon");
 
+        //creazione del mapper per l'entità
         RichiestaSupportoMapper map= new RichiestaSupportoMapper();
         RichiestaSupporto richiestaSupporto=map.toEntity(request);
 
+        //Le entità team, mentore e hackathon vengono impostate manualmente per evitare deferenziazioni
         richiestaSupporto.setTeam(team);
         richiestaSupporto.setHackathon(hackathon);
         richiestaSupporto.setMentore(mentore);
 
         repositoryRichiestaSupporto.insertInto(richiestaSupporto);
-        repositoryRichiestaSupporto.updateRichiestaSupporto(richiestaSupporto);
 
         hackathon.getRichiesteSupporto().add(richiestaSupporto);
         repositoryHackathon.updateHackathon(hackathon);
 
-        //if(repositoryRichiestaSupporto.findRichiestaSupportoById(richiestaSupporto.getId()).isPresent())
+        //se la richiesta di supporto è stata aggiunta con successo viene restituita
+        if(repositoryRichiestaSupporto.findRichiestaSupportoById(richiestaSupporto.getId()).isPresent())
             return richiestaSupporto;
-        //throw new EntityNotFoundException("Richiesta di supporto non inviata");
+        throw new EntityNotFoundException("Richiesta di supporto non inviata");
     }
 
+    //Lista di tutte le richieste di supporto di un hackathon
     @Override
     public List<RichiestaSupporto> getAllRichiesteSupporto(Long idHackathon) {
         if(idHackathon==null) throw new IllegalArgumentException();

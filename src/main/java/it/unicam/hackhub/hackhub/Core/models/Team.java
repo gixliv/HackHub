@@ -45,10 +45,12 @@ public class Team {
     @JoinColumn(name = "hackathon_id")
     private Hackathon hackathon;
 
+    //Sottomissione appartenente a uno specifico team
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sottomissione_id")
     private Sottomissione sottomissione;
 
+    //lista delle segnalazioni per uno specifico team
     @OneToMany(mappedBy = "teamSegnalato", fetch = FetchType.LAZY)
     private List<Segnalazione> segnalazioni;
     

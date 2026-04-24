@@ -24,10 +24,12 @@ public class Sottomissione {
     @Column(nullable = false, unique = true)
     private String linkRepository;
 
+    //hackathon a cui è associata la sottomissione
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hackathon_id")
     private Hackathon hackathon;
 
+    //team a cui è associata la sottomissione
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teams_id")
     private Team team;

@@ -18,15 +18,18 @@ public class RichiestaSupporto {
     @Column(nullable = false)
     private String descrizione;
 
+    //Mentore che gestisce la richiesta di supporto
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentore_id")
     @SQLRestriction("ruolo = 'MENTORE' ")
     private MembroStaff mentore;
 
+    //Hackathon a cui è associata la richiesta di supporto
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hackathon_id")
     private Hackathon hackathon;
 
+    //Team che ha inviato la richiesta di supporto
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teams_id")
     private Team team;

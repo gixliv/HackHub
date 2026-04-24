@@ -13,19 +13,6 @@ public class SegnalazioneMapper {
         Segnalazione segnalazione = new Segnalazione();
         segnalazione.setTitolo(request.getTitolo());
         segnalazione.setDescrizione(request.getDescrizione());
-
-        Team team = new Team();
-        team.setId(request.getIdTeam());
-        segnalazione.setTeamSegnalato(team);
-
-        Hackathon hackathon = new Hackathon();
-        hackathon.setId(request.getIdHackathon());
-        segnalazione.setHackathon(hackathon);
-
-        MembroStaff mentore = new MembroStaff();
-        mentore.setId(request.getIdMentore());
-        segnalazione.setMentore(mentore);
-
         return segnalazione;
     }
 
@@ -34,9 +21,15 @@ public class SegnalazioneMapper {
         SegnalazioneResponse response = new SegnalazioneResponse();
         response.setTitolo(segnalazione.getTitolo());
         response.setDescrizione(segnalazione.getDescrizione());
-        response.setNomeTeamSegnalato(segnalazione.getTeamSegnalato().getNome());
-        response.setNomeHackathon(segnalazione.getHackathon().getNome());
-        response.setUsernameMentore(segnalazione.getMentore().getUsername());
+
+        Team team= segnalazione.getTeamSegnalato();
+        response.setNomeTeamSegnalato(team.getNome());
+
+        Hackathon hackathon= segnalazione.getHackathon();
+        response.setNomeHackathon(hackathon.getNome());
+
+        MembroStaff mentore= segnalazione.getMentore();
+        response.setUsernameMentore(mentore.getUsername());
         return response;
     }
 }

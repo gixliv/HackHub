@@ -6,6 +6,7 @@ import it.unicam.hackhub.hackhub.Core.models.*;
 import java.time.LocalDate;
 import java.util.List;
 
+//Implementazione del design pattern builder utilizzato per la creazione di un hackathon
 public class HackathonBuilder implements IHackathonBuilder{
     private final Hackathon hackathon;
 

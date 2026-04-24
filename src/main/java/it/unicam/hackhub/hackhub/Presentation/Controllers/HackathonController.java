@@ -129,6 +129,7 @@ public class HackathonController {
         throw new EntityNotFoundException("Nome hackathon non trovato");
     }
 
+    //interruzione di un hackathon quando si trova ancora nello stato "IN_ISCRIZIONE"
     @DeleteMapping("/{idHackathon}")
     @PreAuthorize("hasRole('ORGANIZZATORE')")
     public String annullaHackathon(@PathVariable Long idHackathon) {
@@ -137,6 +138,7 @@ public class HackathonController {
         return "Hackathon eliminato";
     }
 
+    //Aggiunta di un nuovo mentore alla lista dei mentore di uno specifico hackathon
     @PutMapping("/{idHackathon}/{idUtente}")
     @PreAuthorize("hasRole('ORGANIZZATORE')")
     public String addMembro(@PathVariable Long idUtente, @PathVariable Long idHackathon) {
@@ -146,6 +148,7 @@ public class HackathonController {
         return "Membro aggiunto";
     }
 
+    //creazione di un nuovo hackathon
     @PostMapping("/crea")
     @PreAuthorize("hasRole('ORGANIZZATORE')")
     public HackathonResponse creaHackathon(@RequestBody HackathonRequest request, @RequestParam Long idOrganizzatore) {
@@ -156,6 +159,7 @@ public class HackathonController {
         return mapper.toResponse(hackathon);
     }
 
+    //eliminazione da parte di un organizzatore, di uno specifico hackathon, dallo storico degli hackathon dopo la sua conclusione
     @DeleteMapping("/{idHackathon}/delete")
     @PreAuthorize("hasRole('ORGANIZZATORE')")
     public boolean eliminaHackathon(@PathVariable Long idHackathon) {
@@ -163,6 +167,7 @@ public class HackathonController {
         return hackathonService.eliminaHackathon(idHackathon);
     }
 
+    //Espulsione del team da parte dell'organizzatore a seguito di una segnalazione
     @PutMapping("/espelli/{idTeam}/{idHackathon}")
     @PreAuthorize("hasRole('ORGANIZZATORE')")
     public boolean espelliTeam(@PathVariable Long idTeam, @PathVariable Long idHackathon){
@@ -171,6 +176,7 @@ public class HackathonController {
         return hackathonService.espelliTeam(idTeam, idHackathon);
     }
 
+    //Cambio dello stato di uno specifico hackathon
     @PutMapping("/cambiaStato/{idHackathon}")
     public HackathonResponse changeStato(@PathVariable Long idHackathon){
         if (idHackathon == null) throw new IllegalArgumentException("Id hackathon nullo");

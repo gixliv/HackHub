@@ -21,6 +21,7 @@ public class RichiestaSupportoController {
         this.richiestaSupportoService = richiestaSupportoService;
     }
 
+    //Invio di una nuova richiesta di supporto da parte di un membro del team
     @PostMapping("/invia")
     @PreAuthorize("hasRole('MEMBRO_TEAM') || hasRole('CREATORE_TEAM')")
     public RichiestaSupportoResponse inviaRichiestaSupporto(@RequestBody RichiestaSupportoRequest request) {
@@ -30,6 +31,7 @@ public class RichiestaSupportoController {
         return map.toResponse(richiestaSupporto);
     }
 
+    //Lista di tutte le richieste di supporto associate ad uno specifico hackathon
     @GetMapping("/all/{idHackathon}")
     @PreAuthorize("hasRole('MEMBRO_STAFF')")
     public List<RichiestaSupportoResponse> getAllRichiesteSupporto(@PathVariable Long idHackathon) {

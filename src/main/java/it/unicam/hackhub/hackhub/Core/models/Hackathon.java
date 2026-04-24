@@ -72,12 +72,15 @@ public class Hackathon {
     )
     private List<MembroStaff> mentori;
 
+    //lista delle sottomissioni per uno specifico hackathon
     @OneToMany(mappedBy = "hackathon", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Sottomissione> sottomissioni;
 
+    //lista delle richieste di supporto per uno specifico hackathon
     @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY)
     private List<RichiestaSupporto> richiesteSupporto;
 
+    //lista delle segnalazioni per uno specifico hackathon
     @OneToMany(mappedBy = "hackathon", fetch = FetchType.LAZY)
     private List<Segnalazione> segnalazioni;
 

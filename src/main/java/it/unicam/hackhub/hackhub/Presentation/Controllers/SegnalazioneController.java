@@ -21,15 +21,17 @@ public class SegnalazioneController {
         this.segnalazioneService = segnalazioneService;
     }
 
-
+    //Invio di una nuova segnalazione da parte di un mentore verso un team
     @PostMapping("/invia")
     @PreAuthorize("hasRole('MENTORE')")
     public SegnalazioneResponse inviaSegnalazione(@RequestBody SegnalazioneRequest segnalazioneRequest){
         if(segnalazioneRequest==null) throw new IllegalArgumentException("dati non validi");
         SegnalazioneMapper mapper= new SegnalazioneMapper();
-        return mapper.toResponse(segnalazioneService.inviaSegnalazione(segnalazioneRequest));
+        Segnalazione segnalazione=segnalazioneService.inviaSegnalazione(segnalazioneRequest);
+        return mapper.toResponse(segnalazione);
     }
 
+    //Lista di tutte le segnalazioni associate ad uno specifico hackathon
     @GetMapping("/all/{idHackathon}")
     public List<SegnalazioneResponse> getAllSegnalazioni(@PathVariable Long idHackathon){
         if(idHackathon==null) throw new IllegalArgumentException("dati non validi");

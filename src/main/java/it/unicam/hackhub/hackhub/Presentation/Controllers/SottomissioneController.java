@@ -21,6 +21,7 @@ public class SottomissioneController {
         this.sottomissioneService = sottomissioneService;
     }
 
+    //invio di una nuova sottomissione da parte del team
     @PostMapping("/invia")
     @PreAuthorize("hasRole('MEMBRO_TEAM') || hasRole('CREATORE_TEAM')")
     public SottomissioneResponse inviaSottomissione(@RequestBody SottomissioneRequest request){
@@ -30,6 +31,7 @@ public class SottomissioneController {
         return response.toResponse(sottomissione);
     }
 
+    //Aggiornamento di una sottomissione già esistente
     @PutMapping("/modifica/{idSottomissione}")
     @PreAuthorize("hasRole('MEMBRO_TEAM') || hasRole('CREATORE_TEAM')")
     public SottomissioneResponse aggiornaSottomissione(@PathVariable Long idSottomissione, @RequestParam String titolo, @RequestParam String descrizione, @RequestParam String linkRepository){
@@ -42,6 +44,7 @@ public class SottomissioneController {
         return mapp.toResponse(sottomissioneService.aggiornaSottomissione(idSottomissione, request));
     }
 
+    //Lista di tutte le sottomissioni di uno specifico hackathon
     @GetMapping("/all/{idHackathon}")
     @PreAuthorize("hasRole('GIUDICE')")
     public List<SottomissioneResponse> getAllSottomissioni(@PathVariable Long idHackathon){
