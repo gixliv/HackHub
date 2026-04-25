@@ -37,8 +37,8 @@ public class InvitiService implements IInvitiService {
         Utente utenteDest = repositoryUtenti.findById(request.getDestinatarioId()).orElseThrow(EntityNotFoundException::new);
         Utente utenteMitt = repositoryUtenti.findById(request.getMittenteId()).orElseThrow(EntityNotFoundException::new);
 
-        //il tenetativo di invitare un utente ad unirsi ad un team, di cui l'utente non ne è il creatore, genera un eccezione.
-        if(repositoryTeam.findTeamById(utenteMitt.getTeam().getId()).isEmpty() || utenteMitt.getTeam()==null) throw new EntityNotFoundException("Team non trovato o nullo");
+        //il tentativo di invitare un utente ad unirsi ad un team, di cui l'utente non ne è il creatore, genera un eccezione.
+        if(utenteMitt.getTeam()==null || repositoryTeam.findTeamById(utenteMitt.getTeam().getId()).isEmpty()) throw new EntityNotFoundException("Team non trovato o nullo");
         Invito invito = new Invito();
 
         //dalla request viene effettivamente creato un nuovo oggetto

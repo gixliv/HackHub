@@ -44,7 +44,7 @@ public class RichiestaSupportoService implements IRichiestaSupportoService {
         Team team=repositoryTeam.findTeamById(request.getTeamId()).orElseThrow(EntityNotFoundException::new);
         Hackathon hackathon=repositoryHackathon.findHackathonById(request.getHackathonId()).orElseThrow(EntityNotFoundException::new);
         if(team.getHackathon()==null) throw new EntityNotFoundException("Il team non è inscritto all'hackathon, impossibile inviare richiesta di supporto");
-        if(hackathon.getStato()!= StatoHackathon.IN_CORSO) throw new EntityNotFoundException("L'hackathon non è in corso, impossibile inviare richiesta di supporto");
+        if(hackathon.getStato()!= StatoHackathon.IN_CORSO) throw new IllegalStateException("L'hackathon non è in corso, impossibile inviare richiesta di supporto");
 
         //verifica del mentore e della sua appartenenza all'hackathon
         MembroStaff mentore=repositoryMembriStaff.findMembroStaffById(request.getMentoreId()).orElseThrow();

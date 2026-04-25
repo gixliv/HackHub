@@ -1,4 +1,4 @@
-package it.unicam.hackhub.hackhub.Presentation.Exeptions;
+package it.unicam.hackhub.hackhub.Presentation.Exceptions;
 
 public class MemberNotFoundInTeamException extends RuntimeException {
     public MemberNotFoundInTeamException() {

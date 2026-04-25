@@ -70,7 +70,7 @@ public class UtentiService implements IUtentiService {
     //modificaProfilo viene utilizzata dall'utente in caso di modifica di alcuni o tutti i dati inseriti durante la registrazione
     //in caso di modifica parziale, i campi non modificati restano invariati
     @Override
-    public Utente ModificaProfilo(Long id, String username, String nome, String cognome, char sesso, String email, String password, String telefono, String iban, LocalDate dataNascita) {
+    public Utente modificaProfilo(Long id, String username, String nome, String cognome, char sesso, String email, String password, String telefono, String iban, LocalDate dataNascita) {
         Utente utente = repositoryUtenti.findById(id).orElseThrow(EntityNotFoundException::new);
         if (username != null && !username.isBlank()) utente.setUsername(username);
         if (nome != null && !nome.isBlank()) utente.setNome(nome);

@@ -2,20 +2,16 @@ package it.unicam.hackhub.hackhub.Application.Service;
 
 import it.unicam.hackhub.hackhub.Application.Abstraction.Repository.*;
 import it.unicam.hackhub.hackhub.Application.Abstraction.Service.ITeamService;
-import it.unicam.hackhub.hackhub.Application.DTO.Mapper.RichiestaSupportoMapper;
 import it.unicam.hackhub.hackhub.Application.DTO.Mapper.TeamMapper;
-import it.unicam.hackhub.hackhub.Application.DTO.Request.RichiestaSupportoRequest;
 import it.unicam.hackhub.hackhub.Application.DTO.Request.TeamRequest;
 import it.unicam.hackhub.hackhub.Core.enums.Ruolo;
-import it.unicam.hackhub.hackhub.Core.enums.StatoHackathon;
 import it.unicam.hackhub.hackhub.Core.models.*;
-import it.unicam.hackhub.hackhub.Presentation.Exeptions.MemberNotFoundInTeamException;
+import it.unicam.hackhub.hackhub.Presentation.Exceptions.MemberNotFoundInTeamException;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,9 +33,9 @@ public class TeamService implements ITeamService {
             throw new EntityExistsException("Team esistente");
         }
 
-        TeamMapper teamMapper=new TeamMapper();
-        Team team= teamMapper.toEntity(request);
-        team= repositoryTeam.insertInto(team).orElseThrow(EntityNotFoundException::new);
+        TeamMapper teamMapper = new TeamMapper();
+        Team team = teamMapper.toEntity(request);
+        team = repositoryTeam.insertInto(team).orElseThrow(EntityNotFoundException::new);
         creatore.setRuolo(Ruolo.CREATORE_TEAM);
         creatore.setTeam(team);
         repositoryUtenti.updateUtente(creatore);
@@ -112,13 +108,13 @@ public class TeamService implements ITeamService {
     @Override
     public Utente getMembroById(Long idUtente, Long idTeam) {
         Utente utente = repositoryUtenti.findById(idUtente).orElseThrow(EntityNotFoundException::new);
-        if(repositoryTeam.checkMembroById(idUtente, idTeam)) return utente;
+        if (repositoryTeam.checkMembroById(idUtente, idTeam)) return utente;
         throw new MemberNotFoundInTeamException();
     }
 
     @Override
     public Hackathon getHackathon(Long idTeam) {
-        Team team  = repositoryTeam.findTeamById(idTeam).orElseThrow(EntityNotFoundException::new);
+        Team team = repositoryTeam.findTeamById(idTeam).orElseThrow(EntityNotFoundException::new);
         return team.getHackathon();
     }
 
@@ -141,11 +137,11 @@ public class TeamService implements ITeamService {
     //abbandonaTeam viene utilizzata qualora un membro del team decide di uscire dal team
     @Override
     public boolean abbandonaTeam(Long idUtente, Long idTeam) {
-        Utente utente=repositoryUtenti.findById(idUtente).orElseThrow(EntityNotFoundException::new);
-        Team team=repositoryTeam.findTeamById(idTeam).orElseThrow(EntityNotFoundException::new);
+        Utente utente = repositoryUtenti.findById(idUtente).orElseThrow(EntityNotFoundException::new);
+        Team team = repositoryTeam.findTeamById(idTeam).orElseThrow(EntityNotFoundException::new);
 
-        if(utente.getTeam().getNome().equals(team.getNome())){
-            eliminaMembro(idUtente,idTeam);
+        if (utente.getTeam().getNome().equals(team.getNome())) {
+            eliminaMembro(idUtente, idTeam);
             repositoryTeam.updateTeam(team);
             return true;
         }

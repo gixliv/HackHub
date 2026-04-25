@@ -16,7 +16,7 @@ public interface IUtentiService {
 
     boolean registrazione(UtenteRequest utente);
 
-    Utente ModificaProfilo(Long id, String username, String nome, String cognome, char sesso, String email, String password, String telefono, String iban, LocalDate dataNascita);
+    Utente modificaProfilo(Long id, String username, String nome, String cognome, char sesso, String email, String password, String telefono, String iban, LocalDate dataNascita);
 
     boolean login(String username, String password);
 }
